@@ -47,7 +47,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 ${NAME}: ${OBJECTS} ${HEADERS} Makefile ${LIBFT} ${MLX}
 	@mkdir -p $(@D)
 	@gcc $(CFLAGS) -o ${NAME} ${OBJECTS} -Iinclude/libft/include -Linclude/libft/bin -lft \
-	-I$(MLXDIR) -L$(MLXDIR) -Imlx_linux -lXext -lX11 -lm -lz AppKit
+	-I$(MLXDIR) -L$(MLXDIR) -Imlx_linux -lXext -lX11 -lm -lz
 	@printf "\n$(COLOR)$(KAOMOJI_SUCCESS) Successfully compiled!$(COLOR_RESET)"
 endif
 
