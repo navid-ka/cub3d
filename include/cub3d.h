@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/15 20:45:04 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/15 21:02:11 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <libft.h>
 #include <unistd.h>
 #include <stdio.h>
+
+#define ARGC "Too many arguments\n"
 
 typedef struct s_cub
 {
