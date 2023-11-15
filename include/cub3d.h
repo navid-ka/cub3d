@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/15 20:20:51 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/15 20:45:04 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@
 
 typedef struct s_cub
 {
+    char **map;
     char *path;
+    char *no;
+    char *so;
+    char *we;
+    char *ea;
+    char *f_color;
+    char *c_color;
 } t_cub;
 
 // PARSER
