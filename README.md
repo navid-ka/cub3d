@@ -60,7 +60,7 @@ You must create a "realistic" 3D graphical representation of the inside of a maz
   - Example of the mandatory part with a minimalist .cub scene:
 
 
-`NO ./path_to_the_north_texture
+NO ./path_to_the_north_texture
 SO ./path_to_the_south_texture
 WE ./path_to_the_west_texture
 EA ./path_to_the_east_texture
@@ -79,7 +79,7 @@ C 225,30,0
 10000000000000001101010010001
 11000001110101011111011110N0111
 11110111 1110101 101111010001
-11111111 1111111 111111111111`
+11111111 1111111 111111111111
 
 - If any misconfiguration of any kind is encountered in the file, the program
 must exit properly and return "Error\n" followed by an explicit error message
