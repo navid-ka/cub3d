@@ -85,3 +85,6 @@ C 225,30,0
 - If any misconfiguration of any kind is encountered in the file, the program
 must exit properly and return "Error\n" followed by an explicit error message
 of your choice.
+
+## Resources
+- [Cub3D Documentation](https://harm-smits.github.io/42docs/projects/cub3d)
