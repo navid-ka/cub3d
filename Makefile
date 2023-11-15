@@ -42,7 +42,7 @@ else
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@printf "$(COLOR)\rCompiling (╮°-°)╮┳━┳ : $(COLOR_RESET)$<"
 	@mkdir -p $(@D)
-	@gcc $(CFLAGS) -03 -c $< -o $@ -Iinclude/libft/include -I$(MLXDIR)
+	@gcc $(CFLAGS) -c $< -o $@ -Iinclude/libft/include -I$(MLXDIR)
 
 ${NAME}: ${OBJECTS} ${HEADERS} Makefile ${LIBFT} ${MLX}
 	@mkdir -p $(@D)
