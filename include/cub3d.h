@@ -6,7 +6,7 @@
 /*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/17 23:33:22 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/11/18 01:08:54 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ void    cub_init(t_cub *init, char **argv);
 // FD checker
 void    check_extension(t_cub *cub);
 void    check_fd_integrity(t_cub *cub);
+
+//Garbage collectors
+void	free_tab(char **args);
 
 #endif

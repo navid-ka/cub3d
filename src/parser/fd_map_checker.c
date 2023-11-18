@@ -6,7 +6,7 @@
 /*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/18 00:29:24 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/11/18 01:14:21 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@ void    check_extension(t_cub *cub)
 		exit(1);
 	}
 }
+char *fd_setter(char *line)
+{
+	char	**opt;
+	char	*dup;
+	
+	opt = ft_split(line, ' ');
+	dup = ft_strdup(opt[1]);
+	free_tab(opt);
+	return(dup);
+}
+char *fd_getter(char *line, char *value)
+{
+	
+}
 
 void    check_fd_integrity(t_cub *cub)
 {
@@ -40,7 +54,8 @@ void    check_fd_integrity(t_cub *cub)
 	{
 		line = get_next_line(fd);
 		if (line && ft_strnstr(line, "SO", 3))
-			printf("%s", line);
+			cub->so = fd_setter(line);
 	}
+	printf("%s", cub->so);
 	close(fd);
 }
