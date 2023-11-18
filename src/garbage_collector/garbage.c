@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2023/11/17 23:32:24 by nkeyani-         ###   ########.fr       */
+/*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
+/*   Updated: 2023/11/18 01:07:53 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void    parser(t_cub *cub, char **argv)
+void	free_tab(char **args)
 {
-	cub_init(cub, argv);
-	check_extension(cub);
-	check_fd_integrity(cub);
+	int	i;
+
+	i = 0;
+	if (!args)
+		return ;
+	if (args)
+	{
+		while (args[i] != NULL)
+		{
+			free(args[i]);
+			i++;
+		}
+		free(args);
+		args = NULL;
+	}
 }
