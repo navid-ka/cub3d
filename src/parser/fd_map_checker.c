@@ -6,12 +6,11 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/25 16:18:50 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/25 17:20:55 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
 
 void fd_error(t_cub *cub)
 {
@@ -52,9 +51,8 @@ char *fd_setter(char *line)
 		free_tab(opt);
 		return (NULL);
 	}
-	opt[1] = ft_strtrim(opt[1], "\n");
-	printf("setter: %s \n", opt[1]);
-	dup = ft_strdup(opt[1]);
+	dup = ft_strtrim(opt[1], "\n");
+	printf("setter: %s \n", dup);
 	free_tab(opt);
 	return(dup);
 }
@@ -108,6 +106,7 @@ void    check_fd_integrity(t_cub *cub)
 	line = ft_strdup("");
 	while (line)
 	{
+		free(line);
 		flag = 0;
 		line = get_next_line(fd);
 		if (orientation_checker(cub, line, &flag))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/17 23:09:19 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:19:24 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@ int main(int argc, char **argv)
 		return (printf(ARGC));
 	parser(&cub, argv + 1);
 	printf("%s\n", cub.path);
+	free(cub.path);
+	fd_error(&cub);
 	return (0);
 }
