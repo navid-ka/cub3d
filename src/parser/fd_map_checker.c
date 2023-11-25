@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/25 18:46:45 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/25 19:47:57 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,13 @@ int	color_validator(t_cub *cub, char *color, char type)
 	{
 		cub->ceiling.r = ft_atoi(colors[0]);
 		cub->ceiling.g = ft_atoi(colors[1]);
-		cub->ceiling.g = ft_atoi(colors[2]);
+		cub->ceiling.b = ft_atoi(colors[2]);
 	}
 	if (type == 'f')
 	{
 		cub->floor.r = ft_atoi(colors[0]);
 		cub->floor.g = ft_atoi(colors[1]);
-		cub->floor.g = ft_atoi(colors[2]);
+		cub->floor.b = ft_atoi(colors[2]);
 	}
 	free_tab(colors);
 	return (0);
