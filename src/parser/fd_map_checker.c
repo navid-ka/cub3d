@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_map_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/25 14:02:23 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/11/25 16:18:50 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,17 @@ void    check_extension(t_cub *cub)
 		exit(1);
 	}
 }
-char *fd_texture_setter(char *line)
+char *fd_setter(char *line)
 {
 	char	**opt;
 	char	*dup;
 	
 	opt = ft_split(line, ' ');
+	if (opt[2])
+	{
+		free_tab(opt);
+		return (NULL);
+	}
 	opt[1] = ft_strtrim(opt[1], "\n");
 	printf("setter: %s \n", opt[1]);
 	dup = ft_strdup(opt[1]);
@@ -68,25 +73,25 @@ int	orientation_checker(t_cub *cub, char *line, int *flag)
 {
 	if (line && ft_strnstr(line, "NO", 3))
 	{
-		cub->no = fd_texture_setter(line);
+		cub->no = fd_setter(line);
 		if (fd_texture_checker(cub->no))
 			flag += 1;
 	}
 	if (line && ft_strnstr(line, "SO", 3))
 	{
-		cub->so = fd_texture_setter(line);
+		cub->so = fd_setter(line);
 		if (fd_texture_checker(cub->so))
 			flag += 1;
 	}
 	if (line && ft_strnstr(line, "WE", 3))
 	{
-		cub->we = fd_texture_setter(line);
+		cub->we = fd_setter(line);
 		if (fd_texture_checker(cub->we))
 			flag += 1;
 	}
 	if (line && ft_strnstr(line, "EA", 3))
 	{
-		cub->ea = fd_texture_setter(line);
+		cub->ea = fd_setter(line);
 		if (fd_texture_checker(cub->ea))
 			flag += 1;
 	}
