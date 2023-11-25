@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/18 01:08:54 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/11/25 18:34:24 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,25 @@
 
 #define ARGC "Error\nToo many arguments\n"
 
+typedef struct s_color
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+} t_color;
+
 typedef struct s_cub
 {
-	char **map;
-	char *path;
-	char *no;
-	char *so;
-	char *we;
-	char *ea;
-	char *f_color;
-	char *c_color;
+	char	**map;
+	char	*path;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*f_color;
+	t_color	floor;
+	char	*c_color;
+	t_color	ceiling;
 } t_cub;
 
 // Parser
@@ -44,5 +53,6 @@ void    check_fd_integrity(t_cub *cub);
 
 //Garbage collectors
 void	free_tab(char **args);
+void	fd_error(t_cub *cub);
 
 #endif
