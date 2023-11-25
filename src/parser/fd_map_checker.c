@@ -6,12 +6,11 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/25 16:18:50 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/25 18:46:45 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
 
 void fd_error(t_cub *cub)
 {
@@ -52,9 +51,8 @@ char *fd_setter(char *line)
 		free_tab(opt);
 		return (NULL);
 	}
-	opt[1] = ft_strtrim(opt[1], "\n");
-	printf("setter: %s \n", opt[1]);
-	dup = ft_strdup(opt[1]);
+	dup = ft_strtrim(opt[1], "\n");
+	printf("setter: %s \n", dup);
 	free_tab(opt);
 	return(dup);
 }
@@ -69,6 +67,7 @@ int	fd_texture_checker(char *line)
 	close(fd);
 	return (0);
 }
+
 int	orientation_checker(t_cub *cub, char *line, int *flag)
 {
 	if (line && ft_strnstr(line, "NO", 3))
@@ -97,6 +96,54 @@ int	orientation_checker(t_cub *cub, char *line, int *flag)
 	}
 	return (*flag);
 }
+
+//TODO: check if each color is digit maybe change atoi.
+int	color_validator(t_cub *cub, char *color, char type)
+{
+	char **colors;
+
+	colors = ft_split(color, ',');
+	if (colors[3])
+	{
+		ft_printf("Error\nColors could not be loaded\n");
+		free_tab(colors);
+		return (1);
+	}
+	if (type == 'c')
+	{
+		cub->ceiling.r = ft_atoi(colors[0]);
+		cub->ceiling.g = ft_atoi(colors[1]);
+		cub->ceiling.g = ft_atoi(colors[2]);
+	}
+	if (type == 'f')
+	{
+		cub->floor.r = ft_atoi(colors[0]);
+		cub->floor.g = ft_atoi(colors[1]);
+		cub->floor.g = ft_atoi(colors[2]);
+	}
+	free_tab(colors);
+	return (0);
+}
+
+int	fd_color_checker(t_cub *cub, char *line, int *flag)
+{
+	if (line && ft_strnstr(line, "F", 2))
+	{
+		cub->f_color = fd_setter(line);
+		if (color_validator(cub, cub->f_color, 'c'))
+			flag += 1;
+		free(cub->f_color);
+	}
+	if (line && ft_strnstr(line, "C", 2))
+	{
+		cub->c_color = fd_setter(line);
+		if (color_validator(cub, cub->c_color, 'f'))
+			flag += 1;
+		free(cub->c_color);
+	}
+	return (*flag);
+}
+
 void    check_fd_integrity(t_cub *cub)
 {
 	int			fd;
@@ -108,9 +155,11 @@ void    check_fd_integrity(t_cub *cub)
 	line = ft_strdup("");
 	while (line)
 	{
+		free(line);
 		flag = 0;
 		line = get_next_line(fd);
-		if (orientation_checker(cub, line, &flag))
+		if (orientation_checker(cub, line, &flag) \
+			|| fd_color_checker(cub, line, &flag))
 			fd_error(cub);
 	}
 	printf("%s\n", cub->so);
