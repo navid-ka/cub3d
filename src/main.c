@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/25 17:19:24 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/25 18:44:16 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int main(int argc, char **argv)
 	parser(&cub, argv + 1);
 	printf("%s\n", cub.path);
 	free(cub.path);
-	fd_error(&cub);
+	//fd_error(&cub); TODO: hacer una Garbage collector decente. 
 	return (0);
 }
