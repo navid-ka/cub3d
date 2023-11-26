@@ -1,46 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   garbage.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/26 12:14:35 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/26 12:15:03 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	free_tab(char **args)
+char *fd_setter(char *line)
 {
-	int	i;
-
-	i = 0;
-	if (!args)
-		return ;
-	if (args)
+	char	**opt;
+	char	*dup;
+	
+	opt = ft_split(line, ' ');
+	if (opt[2])
 	{
-		while (args[i] != NULL)
-		{
-			free(args[i]);
-			i++;
-		}
-		free(args);
-		args = NULL;
+		free_tab(opt);
+		return (NULL);
 	}
-}
-
-void fd_error(t_cub *cub)
-{
-	if (cub->no)
-		free(cub->no);
-	if (cub->so)
-		free(cub->so);
-	if (cub->ea)
-		free(cub->ea);
-	if (cub->we)
-		free(cub->we);
-	ft_printf("Error\nTexture could not be loaded\n");
-	exit(1);
+	dup = ft_strtrim(opt[1], "\n");
+	printf("setter: %s \n", dup);
+	free_tab(opt);
+	return(dup);
 }

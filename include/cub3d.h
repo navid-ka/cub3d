@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/25 18:34:24 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/26 12:17:43 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,20 @@ typedef struct s_cub
 } t_cub;
 
 // Parser
-
 void    parser(t_cub *cub, char **argv);
-// Init structs 
 
+// Init structs 
 void    cub_init(t_cub *init, char **argv);
+
+
+// FD utils 
+char	*fd_setter(char *line);
+
+// orientation
+int		orientation_checker(t_cub *cub, char *line, int *flag);
+
+// colors
+int		fd_color_checker(t_cub *cub, char *line, int *flag);
 
 // FD checker
 void    check_extension(t_cub *cub);
