@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/26 12:17:43 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/26 13:14:51 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void    cub_init(t_cub *init, char **argv);
 
 // FD utils 
 char	*fd_setter(char *line);
+int		cub_atoi(const char *str);
 
 // orientation
 int		orientation_checker(t_cub *cub, char *line, int *flag);
