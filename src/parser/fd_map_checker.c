@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/25 22:35:03 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/11/26 11:51:35 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char *fd_setter(char *line)
 	free_tab(opt);
 	return(dup);
 }
+
 int	fd_texture_checker(char *line)
 {
 	int	fd;
@@ -97,7 +98,36 @@ int	orientation_checker(t_cub *cub, char *line, int *flag)
 	return (*flag);
 }
 
-//TODO: check if each color is digit maybe change atoi.
+int is_digit_str(char *str) 
+{
+    while (*str) 
+	{
+        if (!ft_isdigit(*str)) 
+		{
+            return (0);
+        }
+        str++;
+    }
+    return (1);
+}
+
+int	validate_color_component(char **colors)
+{
+    int i;
+
+	i = 0;
+    while (i < 3) 
+	{
+        if (!is_digit_str(colors[i])) 
+		{
+            ft_printf("Error\nNon-numeric value in color\n");
+            free_tab(colors);
+            return (1);
+        }
+        i++;
+    }
+    return (0);
+}
 int	color_validator(t_cub *cub, char *color, char type)
 {
 	char **colors;
@@ -109,6 +139,8 @@ int	color_validator(t_cub *cub, char *color, char type)
 		free_tab(colors);
 		return (1);
 	}
+	if (validate_color_component(colors))
+        return (1);
 	if (type == 'c')
 	{
 		cub->ceiling.r = ft_atoi(colors[0]);
@@ -151,7 +183,8 @@ void    check_fd_integrity(t_cub *cub)
 	int			flag;
 
 	fd = open(cub->path, O_RDONLY);
-	printf("%d\n", fd);
+	if (fd == -1)
+		ft_printf("Error\n.cub file could not be loaded\n");
 	line = ft_strdup("");
 	while (line)
 	{
