@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 00:23:03 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 22:51:06 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	fd_texture_checker(char *line)
 	int	fd;
 
 	fd = open(line, O_RDONLY);
-	printf("line: [%s] fd: [%d]\n", line, fd);
+	printf("Texture: [%s] fd: [%d]\n", line, fd);
 	if (fd == -1)
-		return (1);
+		return (-1);
 	close(fd);
 	return (0);
 }
@@ -28,26 +28,26 @@ int	orientation_checker(t_cub *cub, char *line, int *flag)
 {
 	if (line && ft_strnstr(line, "NO", 3))
 	{
-		cub->no = fd_setter(line);
-		if (fd_texture_checker(cub->no))
+		cub->no = fd_setter(cub, line);
+		if (fd_texture_checker(cub->no) < 0)
 			flag += 1;
 	}
 	if (line && ft_strnstr(line, "SO", 3))
 	{
-		cub->so = fd_setter(line);
-		if (fd_texture_checker(cub->so))
+		cub->so = fd_setter(cub, line);
+		if (fd_texture_checker(cub->so) < 0)
 			flag += 1;
 	}
 	if (line && ft_strnstr(line, "WE", 3))
 	{
-		cub->we = fd_setter(line);
-		if (fd_texture_checker(cub->we))
+		cub->we = fd_setter(cub, line);
+		if (fd_texture_checker(cub->we) < 0)
 			flag += 1;
 	}
 	if (line && ft_strnstr(line, "EA", 3))
 	{
-		cub->ea = fd_setter(line);
-		if (fd_texture_checker(cub->ea))
+		cub->ea = fd_setter(cub, line);
+		if (fd_texture_checker(cub->ea) < 0)
 			flag += 1;
 	}
 	return (*flag);

@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 19:02:41 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 22:50:42 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_cub
 	t_color	floor;
 	char	*c_color;
 	t_color	ceiling;
+	int		count;
 	int		err;
 } t_cub;
 
@@ -52,7 +53,7 @@ void    cub_init(t_cub *init, char **argv);
 
 // FD utils 
 int		open_path(t_cub *cub);
-char	*fd_setter(char *line);
+char *fd_setter(t_cub *cub, char *line);
 int		cub_atoi(const char *str);
 void    fd_print(t_cub *cub);
 
