@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 02:22:08 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 19:05:09 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,17 @@ void    fd_print(t_cub *cub)
 		printf("map :%s\n", cub->map[i]);
 		i++;
 	}
+}
+int	open_path(t_cub *cub)
+{
+	int fd;
+
+	fd = open(cub->path, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_printf("Error\n.cub file could not be loaded\n");
+		cub->err = -1;
+		fd_error(cub, cub->err);
+	}
+	return (fd);
 }
