@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/03 12:04:14 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 22:51:48 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void    cub_init(t_cub *init, char **argv)
 	init->tmp = NULL;
 	init->new_tmp = NULL;
 	init->err = 0;
+	init->count = 0;
 	ft_memset(&init->floor, 0, sizeof(t_color));
 	ft_memset(&init->ceiling, 0, sizeof(t_color));
 }

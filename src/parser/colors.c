@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/02 23:30:45 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 22:50:14 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ int	fd_color_checker(t_cub *cub, char *line, int *flag)
 {
 	if (line && ft_strnstr(line, "F", 2))
 	{
-		cub->f_color = fd_setter(line);
+		cub->f_color = fd_setter(cub, line);
 		if (color_validator(cub, cub->f_color, 'f'))
 			flag += 1;
 		free(cub->f_color);
 	}
 	if (line && ft_strnstr(line, "C", 2))
 	{
-		cub->c_color = fd_setter(line);
+		cub->c_color = fd_setter(cub, line);
 		if (color_validator(cub, cub->c_color, 'c'))
 			flag += 1;
 		free(cub->c_color);
