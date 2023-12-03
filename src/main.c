@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/11/25 18:44:16 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 02:54:58 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int main(int argc, char **argv)
 	if (argc > 2 || argc < 2)
 		return (printf(ARGC));
 	parser(&cub, argv + 1);
-	printf("%s\n", cub.path);
-	free(cub.path);
-	//fd_error(&cub); TODO: hacer una Garbage collector decente. 
+	garbage_collector(&cub);
 	return (0);
 }
