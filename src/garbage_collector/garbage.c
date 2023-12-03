@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 12:34:35 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 19:05:49 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,13 @@ void fd_error_2(t_cub *cub)
 
 void	fd_error(t_cub *cub, int err)
 {
+    if (err == -1)
+        free_null(&cub->path);
     if (err == 1)
         fd_error_1(cub);
     else if (err == 2)
         fd_error_2(cub);
+    exit(1);
 }
 
 void garbage_collector(t_cub *cub)

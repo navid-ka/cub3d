@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 18:51:53 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 18:58:22 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,11 @@ void    read_map(t_cub *cub, char *line)
 
 int	check_map_fd(t_cub *cub, int map_started)
 {
-    int fd;
-    char *line;
+    int     fd;
+    char    *line;
 
+    fd = open_path(cub);
     cub->tmp = ft_strdup("");
-    fd = open(cub->path, O_RDONLY);
-    if (fd == -1)
-        return (0);
     line = ft_strdup("");
     while (line)
     {
@@ -83,9 +81,7 @@ void    check_fd_integrity(t_cub *cub)
 	char		*line;
 	int			flag;
 
-	fd = open(cub->path, O_RDONLY);
-	if (fd == -1)
-		ft_printf("Error\n.cub file could not be loaded\n");
+    fd = open_path(cub);
 	line = ft_strdup("");
 	while (line)
 	{
