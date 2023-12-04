@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 18:58:22 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 22:59:19 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ int	check_map_fd(t_cub *cub, int map_started)
 
 void    check_fd_integrity(t_cub *cub)
 {
-	int			fd;
-	char		*line;
-	int			flag;
+	int		fd;
+	char	*line;
+	int		flag;
 
     fd = open_path(cub);
 	line = ft_strdup("");
@@ -88,15 +88,18 @@ void    check_fd_integrity(t_cub *cub)
 		free(line);
 		line = get_next_line(fd);
 		flag = 0;
-		if (line && !is_map(line) && (orientation_checker(cub, line, &flag) \
+		if (line && !is_map(line)\
+			&& (orientation_checker(cub, line, &flag) \
 			|| fd_color_checker(cub, line, &flag)))
 			cub->err = 1;
 	}
 	close(fd);
+	if (cub->count < 6)
+		cub->err = 1;
 	check_map_fd(cub, 0);
 	if (cub->err)
 		fd_error(cub, cub->err);
-	if (!cub->err)
-		cub->map = ft_split(cub->tmp, '\n');
+	cub->map = ft_split(cub->tmp, '\n');
+	free(cub->tmp);
 	fd_print(cub);
 }
