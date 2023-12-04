@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 19:05:09 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/03 22:49:23 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	cub_atoi(const char *str)
 	return (num);
 }
 
-char *fd_setter(char *line)
+char *fd_setter(t_cub *cub, char *line)
 {
 	char	**opt;
 	char	*trimmed;
@@ -46,6 +46,7 @@ char *fd_setter(char *line)
 	dup = ft_strdup(trimmed);
 	free(trimmed);
 	free_tab(opt);
+	cub->count++;
 	return(dup);
 }
 
