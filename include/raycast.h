@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:36 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/05 23:59:25 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/06 00:05:05 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
  #define RAYCAST_H
 
 #define PI 3.1415926535
+#include <math.h>
 
 typedef struct s_player
 {
