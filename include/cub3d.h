@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 22:50:42 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/05 23:57:19 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@
 # include <stdio.h>
 # include <fcntl.h>
 
+# include "raycast.h"
+
 #define ARGC "Error\nToo many arguments\n"
+
+typedef struct s_player t_player;
 
 typedef struct s_color
 {

@@ -3,10 +3,18 @@ CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 SRCDIR = src
 OBJDIR = obj
 UNAME  = $(shell uname)
-HEADERS = include/cub3d.h
-SRC = src/main.c src/parser/parser.c src/parser/structs_init.c \
-	src/parser/fd_map_checker.c src/garbage_collector/garbage.c \
-	src/parser/colors.c src/parser/utils.c src/parser/orientations.c
+HEADERS = include/cub3d.h include/raycast.h
+SRC = src/main.c \
+		src/garbage_collector/garbage.c \
+		src/parser/parser.c \
+		src/parser/structs_init.c \
+		src/parser/fd_map_checker.c \
+		src/parser/colors.c \
+		src/parser/utils.c \
+		src/parser/orientations.c \
+		src/raycast/raycast.c \
+		src/raycast/raycast_utils.c
+
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
 COLOR_RESET = $(shell tput sgr0)
 COLOR = $(shell tput setaf 2)
