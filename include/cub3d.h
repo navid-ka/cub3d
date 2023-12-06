@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 13:07:55 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 15:34:06 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <stdlib.h>
+# include <math.h>
+# include <mlx.h>
 
 # include "raycast.h"
 
@@ -23,12 +26,27 @@
 
 typedef struct s_player t_player;
 
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+} t_img;
+
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*win;
+	t_img	*img;
+} t_mlx;
+
 typedef struct s_map
 {
 	int			width;
 	int			height;
 	char		**map;
-	t_player	player;
 	int			pos_x;
 	int			pos_y;
 	int			orientation;
@@ -84,6 +102,9 @@ void    fd_check_integrity(t_cub *cub, t_map *map);
 
 // Map parser
 void    map_parser(t_cub *cub, t_map *map);
+
+// Mlx
+void    window_init(t_mlx *window);
 
 //Garbage collectors
 void	free_tab(char **args);

@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 15:29:12 by bifrost          ###   ########.fr       */
+/*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
+/*   Updated: 2023/12/06 15:28:57 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
-int main(int argc, char **argv)
+void    window_init(t_mlx *window)
 {
-	t_cub		cub;
-	t_player	p1;
-	t_mlx		window;
-
-	(void)p1;
-	if (argc > 2 || argc < 2)
-		return (printf(ARGC));
-	
-	fd_parser(&cub, argv + 1);
-    ft_cast_rays(&p1, cub.map);
-	window_init(&window);
-	//garbage_collector(&cub);
-	return (0);
+    window->mlx = mlx_init();
+    window->win = mlx_new_window(window->mlx, 640, 480, "Hello world!");
+    mlx_loop(window->mlx);
 }
