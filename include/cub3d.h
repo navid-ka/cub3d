@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 16:35:48 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 17:48:56 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ typedef struct s_img
 	int		line_length;
 	int		endian;
 } t_img;
-
-typedef struct s_mlx
-{
-	void	*mlx;
-	void	*win;
-	t_img	*img;
-} t_mlx;
 
 typedef struct s_map
 {
@@ -82,12 +75,22 @@ typedef struct s_cub
 	int		err;
 } t_cub;
 
+typedef struct s_mlx
+{
+	t_cub	*cub;
+	t_map	*map;
+	void	*mlx;
+	void	*win;
+	t_img	*img;
+} t_mlx;
+
 // Parser
-void    fd_parser(t_cub *cub, char **argv);
+void    fd_parser(t_cub *cub, t_map *map, char **argv);
 
 // Init structs 
 void    cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
+void    window_init(t_mlx *window);
 
 // FD utils 
 int		open_path(t_cub *cub);
@@ -109,11 +112,11 @@ void    fd_check_integrity(t_cub *cub, t_map *map);
 void    map_parser(t_cub *cub, t_map *map);
 
 // Mlx
-void    window_init(t_mlx *window);
+void    mlx_window(t_mlx *window);
 
 //Garbage collectors
 void	free_tab(char **args);
 void	fd_error(t_cub *cub, int err);
-void	garbage_collector(t_cub *cub);
+void	garbage_collector(t_cub *cub, t_map *map);
 
 #endif
