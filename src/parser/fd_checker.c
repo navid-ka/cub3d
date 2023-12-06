@@ -6,13 +6,13 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 22:59:19 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 11:42:52 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void    check_extension(t_cub *cub)
+void    fd_check_extension(t_cub *cub)
 {
 	char    *str;
 	int     len;
@@ -51,7 +51,7 @@ void    read_map(t_cub *cub, char *line)
     cub->tmp = cub->new_tmp;
 }
 
-int	check_map_fd(t_cub *cub, int map_started)
+int	fd_check_map(t_cub *cub, int map_started)
 {
     int     fd;
     char    *line;
@@ -75,7 +75,7 @@ int	check_map_fd(t_cub *cub, int map_started)
     return (cub->err);
 }
 
-void    check_fd_integrity(t_cub *cub)
+void    fd_check_integrity(t_cub *cub)
 {
 	int		fd;
 	char	*line;
@@ -89,14 +89,14 @@ void    check_fd_integrity(t_cub *cub)
 		line = get_next_line(fd);
 		flag = 0;
 		if (line && !is_map(line)\
-			&& (orientation_checker(cub, line, &flag) \
+			&& (fd_orientation_checker(cub, line, &flag) \
 			|| fd_color_checker(cub, line, &flag)))
 			cub->err = 1;
 	}
 	close(fd);
 	if (cub->count < 6)
 		cub->err = 1;
-	check_map_fd(cub, 0);
+	fd_check_map(cub, 0);
 	if (cub->err)
 		fd_error(cub, cub->err);
 	cub->map = ft_split(cub->tmp, '\n');

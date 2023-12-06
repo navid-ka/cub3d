@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 22:51:06 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 11:42:59 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	fd_texture_checker(char *line)
 	return (0);
 }
 
-int	orientation_checker(t_cub *cub, char *line, int *flag)
+int	fd_orientation_checker(t_cub *cub, char *line, int *flag)
 {
 	if (line && ft_strnstr(line, "NO", 3))
 	{

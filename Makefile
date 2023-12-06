@@ -8,7 +8,7 @@ SRC = src/main.c \
 		src/garbage_collector/garbage.c \
 		src/parser/parser.c \
 		src/parser/structs_init.c \
-		src/parser/fd_map_checker.c \
+		src/parser/fd_checker.c \
 		src/parser/colors.c \
 		src/parser/utils.c \
 		src/parser/orientations.c \
