@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/05 23:57:19 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/06 11:43:52 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,26 @@ typedef struct s_cub
 } t_cub;
 
 // Parser
-void    parser(t_cub *cub, char **argv);
+void    fd_parser(t_cub *cub, char **argv);
 
 // Init structs 
 void    cub_init(t_cub *init, char **argv);
 
-
 // FD utils 
 int		open_path(t_cub *cub);
-char *fd_setter(t_cub *cub, char *line);
+char	*fd_setter(t_cub *cub, char *line);
 int		cub_atoi(const char *str);
 void    fd_print(t_cub *cub);
 
 // orientation
-int		orientation_checker(t_cub *cub, char *line, int *flag);
+int		fd_orientation_checker(t_cub *cub, char *line, int *flag);
 
 // colors
 int		fd_color_checker(t_cub *cub, char *line, int *flag);
 
 // FD checker
-void    check_extension(t_cub *cub);
-void    check_fd_integrity(t_cub *cub);
-void	fd_map_checker(t_cub *cub);
+void    fd_check_extension(t_cub *cub);
+void    fd_check_integrity(t_cub *cub);
 
 //Garbage collectors
 void	free_tab(char **args);
