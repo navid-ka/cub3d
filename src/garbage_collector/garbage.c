@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 17:52:36 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 18:05:27 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,57 +31,57 @@ void	free_tab(char **args)
 	}
 }
 
-void free_null(char **ptr)
+void	free_null(char **ptr)
 {
-    free(*ptr);
-    *ptr = NULL;
+	free(*ptr);
+	*ptr = NULL;
 }
 
-void free_textures(t_cub *cub)
+void	free_textures(t_cub *cub)
 {
 	if (cub->path)
-        free_null(&cub->path);
-    if (cub->no)
-        free_null(&cub->no);
-    if (cub->so)
-        free_null(&cub->so);
-    if (cub->ea)
-        free_null(&cub->ea);
-    if (cub->we)
+		free_null(&cub->path);
+	if (cub->no)
+		free_null(&cub->no);
+	if (cub->so)
+		free_null(&cub->so);
+	if (cub->ea)
+		free_null(&cub->ea);
+	if (cub->we)
 		free_null(&cub->we);
 }
 
-void fd_error_1(t_cub *cub)
+void	fd_error_1(t_cub *cub)
 {
-    free_textures(cub);
-    ft_printf("Error\nTexture could not be loaded\n");
-    exit(1);
+	free_textures(cub);
+	ft_printf("Error\nTexture could not be loaded\n");
+	exit(1);
 }
 
-void fd_error_2(t_cub *cub)
+void	fd_error_2(t_cub *cub)
 {
-    free_textures(cub);
-    if (cub->map)
-        free_tab(cub->map);
-    printf("Error\nMap not valid\n");
-    exit(1);
+	free_textures(cub);
+	if (cub->map)
+		free_tab(cub->map);
+	printf("Error\nMap not valid\n");
+	exit(1);
 }
 
 void	fd_error(t_cub *cub, int err)
 {
-    if (err == -1)
-        free_null(&cub->path);
-    if (err == 1)
-        fd_error_1(cub);
-    else if (err == 2)
-        fd_error_2(cub);
-    exit(1);
+	if (err == -1)
+		free_null(&cub->path);
+	if (err == 1)
+		fd_error_1(cub);
+	else if (err == 2)
+		fd_error_2(cub);
+	exit(1);
 }
 
-void garbage_collector(t_cub *cub, t_map *map)
+void	garbage_collector(t_cub *cub, t_map *map)
 {
-    free_textures(cub);
-    free_tab(cub->map);
-    free_tab(map->map);
-    printf("garbage collector\n");
+	free_textures(cub);
+	free_tab(cub->map);
+	free_tab(map->map);
+	printf("garbage collector\n");
 }

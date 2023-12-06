@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/06 17:57:10 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 18:19:19 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int window_destroy(t_mlx *window)
 
     cub = window->cub;
     map = window->map;
-    printf("cub->path: %s\n", cub->path);
-    printf("map: %i\n", map->orientation);
-    //garbage_collector(cub, map);
+    garbage_collector(cub, map);
     mlx_destroy_window(window->mlx, window->win);
     exit(0);
 }
