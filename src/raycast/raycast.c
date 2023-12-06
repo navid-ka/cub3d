@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 00:00:15 by plinscho         ###   ########.fr       */
+/*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
+/*   Updated: 2023/12/05 23:59:02 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
-int main(int argc, char **argv)
+void    ft_cast_rays(t_player *p1, char **map)
 {
-	t_cub		cub;
-	t_player	p1;
-
 	(void)p1;
-	if (argc > 2 || argc < 2)
-		return (printf(ARGC));
+	(void)map;
 	
-	parser(&cub, argv + 1);
-    ft_cast_rays(&p1, cub.map);
-	garbage_collector(&cub);
-	return (0);
+	ft_printf("[RAYCAST] Ready\n");
+	return ;
 }

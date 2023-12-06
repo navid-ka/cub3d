@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   raycast.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 00:00:15 by plinscho         ###   ########.fr       */
+/*   Created: 2023/12/05 23:33:36 by plinscho          #+#    #+#             */
+/*   Updated: 2023/12/05 23:59:25 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#ifndef RAYCAST_H
+ #define RAYCAST_H
 
-int main(int argc, char **argv)
+#define PI 3.1415926535
+
+typedef struct s_player
 {
-	t_cub		cub;
-	t_player	p1;
+    double  x; //position
+    double  y;
+    double  fov;
+}t_player;
 
-	(void)p1;
-	if (argc > 2 || argc < 2)
-		return (printf(ARGC));
-	
-	parser(&cub, argv + 1);
-    ft_cast_rays(&p1, cub.map);
-	garbage_collector(&cub);
-	return (0);
-}
+void    ft_cast_rays(t_player *p1, char **map);
+
+#endif
