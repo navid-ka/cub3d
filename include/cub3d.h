@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 11:43:52 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 13:07:55 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@
 #define ARGC "Error\nToo many arguments\n"
 
 typedef struct s_player t_player;
+
+typedef struct s_map
+{
+	int			width;
+	int			height;
+	char		**map;
+	t_player	player;
+	int			pos_x;
+	int			pos_y;
+	int			orientation;
+} t_map;
 
 typedef struct s_color
 {
@@ -53,6 +64,7 @@ void    fd_parser(t_cub *cub, char **argv);
 
 // Init structs 
 void    cub_init(t_cub *init, char **argv);
+void	map_init(t_map *map);
 
 // FD utils 
 int		open_path(t_cub *cub);
@@ -68,7 +80,10 @@ int		fd_color_checker(t_cub *cub, char *line, int *flag);
 
 // FD checker
 void    fd_check_extension(t_cub *cub);
-void    fd_check_integrity(t_cub *cub);
+void    fd_check_integrity(t_cub *cub, t_map *map);
+
+// Map parser
+void    map_parser(t_cub *cub, t_map *map);
 
 //Garbage collectors
 void	free_tab(char **args);

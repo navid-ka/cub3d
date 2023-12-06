@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fd_map_checker.c                                   :+:      :+:    :+:   */
+/*   fd_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 11:42:52 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 12:43:02 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	fd_check_map(t_cub *cub, int map_started)
     return (cub->err);
 }
 
-void    fd_check_integrity(t_cub *cub)
+void    fd_check_integrity(t_cub *cub, t_map *map)
 {
 	int		fd;
 	char	*line;
@@ -88,7 +88,7 @@ void    fd_check_integrity(t_cub *cub)
 		free(line);
 		line = get_next_line(fd);
 		flag = 0;
-		if (line && !is_map(line)\
+		if (line && !is_map(line) \
 			&& (fd_orientation_checker(cub, line, &flag) \
 			|| fd_color_checker(cub, line, &flag)))
 			cub->err = 1;
@@ -100,6 +100,7 @@ void    fd_check_integrity(t_cub *cub)
 	if (cub->err)
 		fd_error(cub, cub->err);
 	cub->map = ft_split(cub->tmp, '\n');
+	map->map = ft_split(cub->tmp, '\n');
 	free(cub->tmp);
 	fd_print(cub);
 }
