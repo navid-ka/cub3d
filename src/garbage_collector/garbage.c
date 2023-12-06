@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 19:05:49 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 17:52:36 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void free_textures(t_cub *cub)
         free_null(&cub->ea);
     if (cub->we)
 		free_null(&cub->we);
-	if (cub->tmp)
-		free_null(&cub->tmp);
 }
 
 void fd_error_1(t_cub *cub)
@@ -80,19 +78,10 @@ void	fd_error(t_cub *cub, int err)
     exit(1);
 }
 
-void garbage_collector(t_cub *cub)
+void garbage_collector(t_cub *cub, t_map *map)
 {
-    if (cub->no)
-        free_null(&cub->no);
-    if (cub->so)
-        free_null(&cub->so);
-    if (cub->ea)
-        free_null(&cub->ea);
-    if (cub->we)
-        free_null(&cub->we);
-    if (cub->path)
-        free_null(&cub->path);
-    if (cub->map)
-        free_tab(cub->map);
+    free_textures(cub);
+    free_tab(cub->map);
+    free_tab(map->map);
     printf("garbage collector\n");
 }
