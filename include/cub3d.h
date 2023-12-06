@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 15:34:06 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 16:10:13 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <mlx.h>
 
 # include "raycast.h"
+
+//Keycodes Linux
+# define KEY_ESC 65307
+//Keycodes Mac
+//# define KEY_ESC 53
 
 #define ARGC "Error\nToo many arguments\n"
 
