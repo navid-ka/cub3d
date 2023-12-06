@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/06 12:38:23 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/06 17:46:23 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,10 @@ void	map_init(t_map *map)
 	map->pos_x = 0;
 	map->pos_y = 0;
 	map->orientation = 0;
+}
+
+void    window_init(t_mlx *window)
+{
+	window->mlx = NULL;
+	window->win = NULL;
 }
