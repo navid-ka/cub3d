@@ -8,12 +8,14 @@ SRC = src/main.c \
 		src/garbage_collector/garbage.c \
 		src/parser/parser.c \
 		src/parser/structs_init.c \
-		src/parser/fd_map_checker.c \
+		src/parser/fd_checker.c \
 		src/parser/colors.c \
 		src/parser/utils.c \
 		src/parser/orientations.c \
+		src/parser/map_parser.c \
 		src/raycast/raycast.c \
-		src/raycast/raycast_utils.c
+		src/raycast/raycast_utils.c \
+		src/window/window.c
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
 COLOR_RESET = $(shell tput sgr0)
@@ -26,10 +28,13 @@ ifeq ($(UNAME), Darwin)
 MLXDIR = include/mlx/
 OLD_MAKE = /usr/bin/make3.81 #make
 MLX = $(MLXDIR)libmlx.a
+LMLX = -Iinclude/libft/include -Linclude/libft/bin -lft \
+	-I$(MLXDIR) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit
 else
 MLXDIR = include/mlx_linux/
 OLD_MAKE = make
 MLX = $(MLXDIR)libmlx.a
+LMLX = -Iinclude/libft/include -Linclude/libft/bin -lft -I$(MLXDIR) -L$(MLXDIR) -lmlx -lXext -lX11 -lm -lz
 endif
 
 all: 
@@ -44,8 +49,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 ${NAME}: ${OBJECTS} ${HEADERS} Makefile ${LIBFT} ${MLX}
 	@mkdir -p $(@D)
-	@gcc $(CFLAGS) -o ${NAME} ${OBJECTS} -Iinclude/libft/include -Linclude/libft/bin -lft \
-	-I$(MLXDIR) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit
+	@gcc $(CFLAGS) ${OBJECTS} $(LMLX) -o ${NAME} 
 	@printf "\n$(COLOR)$(KAOMOJI_SUCCESS) Successfully compiled!$(COLOR_RESET)"
 else
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
@@ -55,8 +59,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 ${NAME}: ${OBJECTS} ${HEADERS} Makefile ${LIBFT} ${MLX}
 	@mkdir -p $(@D)
-	@gcc $(CFLAGS) -o ${NAME} ${OBJECTS} -Iinclude/libft/include -Linclude/libft/bin -lft \
-	-I$(MLXDIR) -L$(MLXDIR) -Imlx_linux -lXext -lX11 -lm -lz
+	@gcc $(CFLAGS) $(SRC) $(LMLX) -o $(NAME)
 	@printf "\n$(COLOR)$(KAOMOJI_SUCCESS) Successfully compiled!$(COLOR_RESET)"
 endif
 
