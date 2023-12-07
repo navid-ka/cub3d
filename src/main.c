@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 00:00:15 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:20:44 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 int main(int argc, char **argv)
 {
 	t_cub		cub;
+	t_map		map;
 	t_player	p1;
+	t_mlx		window;
 
 	(void)p1;
 	if (argc > 2 || argc < 2)
 		return (printf(ARGC));
-	
-	parser(&cub, argv + 1);
+	fd_parser(&cub, &map, argv + 1);
     ft_cast_rays(&p1, cub.map);
-	garbage_collector(&cub);
+	window.cub = &cub;
+	window.map = &map;
+	mlx_window(&window);
+	garbage_collector(&cub, &map);
 	return (0);
 }
