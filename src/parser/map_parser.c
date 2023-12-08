@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/06 15:00:11 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/08 13:51:07 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void   map_lengh(t_map *map)
     }
     map->height = i;
 }
+
 int map_valid_orientation(t_cub *cub, t_map *map)
 {
     int i;
@@ -45,13 +46,13 @@ int map_valid_orientation(t_cub *cub, t_map *map)
                 || cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
             {
                 if (cub->map[i][j] == 'N')
-                    map->orientation = 0;
-                else if (cub->map[i][j] == 'S')
-                    map->orientation = 180;
-                else if (cub->map[i][j] == 'W')
-                    map->orientation = 270;
-                else if (cub->map[i][j] == 'E')
                     map->orientation = 90;
+                else if (cub->map[i][j] == 'S')
+                    map->orientation = 270;
+                else if (cub->map[i][j] == 'W')
+                    map->orientation = 180;
+                else if (cub->map[i][j] == 'E')
+                    map->orientation = 0;
                 return (1);
             }
         }
@@ -65,7 +66,7 @@ int map_has_valid_char(t_cub *cub)
 	int     j;
     int     i;
 
-    valid_chars = "012NSEW ";
+    valid_chars = "01NSEW ";
 	i = 0;
 	while (cub->map[i])
 	{
@@ -80,6 +81,7 @@ int map_has_valid_char(t_cub *cub)
 	}
 	return (1);
 }
+
 int map_check_walls(t_cub *cub) //TODO: check if map is surrounded by walls NOT WORKING
 {
     int i;
