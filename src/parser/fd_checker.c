@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 18:21:51 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/10 18:10:08 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void    fd_check_extension(t_cub *cub)
 
 	str = cub->path;
 	len = ft_strlen(str);
+	printf("str: %s\n", str);
 	if (!(str[len - 1] == 'b' && str[len - 2] == 'u' && str[len - 3] == 'c'
 			&& str[len - 4] == '.'))
 	{
