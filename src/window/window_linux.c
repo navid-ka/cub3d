@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_linux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/10 19:48:41 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:39:54 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 int window_destroy(t_game *game)
 {
-
     mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->win);
     garbage_collector(game);
     exit(0);
@@ -38,7 +37,6 @@ int	handle_no_event(void *data)
     return (0);
 }
 
-
 void    mlx_window(t_game *game)
 {
     t_mlx   *window;
@@ -49,8 +47,8 @@ void    mlx_window(t_game *game)
     window->win = mlx_new_window(window->mlx_p, 640, 480, "Cub3D");
     sl_image_init(game->mlx_s);
     draw_player(game);
-    mlx_loop_hook(window->mlx_p, &handle_no_event, window);
+    mlx_loop_hook(window->mlx_p, &handle_no_event, game);
     mlx_hook(window->win, 2, 0, &handle_input, game);
-	mlx_hook(window->win, 17, 1L<<0, &window_destroy, window);
+	mlx_hook(window->win, 17, 1L<<0, &window_destroy, game);
     mlx_loop(window->mlx_p);
 }
