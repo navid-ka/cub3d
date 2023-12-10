@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/06 18:05:27 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/10 18:04:00 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_tab(char **args)
 	{
 		while (args[i] != NULL)
 		{
-			free(args[i]);
+			free(args[i]);	//ojo
 			i++;
 		}
 		free(args);
@@ -78,10 +78,14 @@ void	fd_error(t_cub *cub, int err)
 	exit(1);
 }
 
-void	garbage_collector(t_cub *cub, t_map *map)
+void	garbage_collector(t_game *game)
 {
-	free_textures(cub);
-	free_tab(cub->map);
-	free_tab(map->map);
+	free_textures(game->cub_s);	//ok
+	free_tab(game->cub_s->map);	//ok
+	free_tab(game->map_s->map);	//ok
+	free(game->map_s);			//ok
+	free(game->cub_s);			//ok
+	free(game->mlx_s);			//ok
+	free(game->player_s);		//ok
 	printf("garbage collector\n");
 }

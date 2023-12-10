@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/06 17:46:23 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/10 17:21:35 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void    cub_init(t_cub *init, char **argv)
 	init->so = NULL;
 	init->we = NULL;
     init->ea = NULL;
-    init->f_color = NULL;
-    init->c_color = NULL;
+	init->f_color = NULL;
+	init->c_color = NULL;
 	init->map = NULL;
 	init->tmp = NULL;
 	init->new_tmp = NULL;
@@ -34,13 +34,21 @@ void	map_init(t_map *map)
 	map->width = 0;
 	map->height = 0;
 	map->map = NULL;
-	map->pos_x = 0;
-	map->pos_y = 0;
 	map->orientation = 0;
 }
 
+void	player_init(t_player *player)
+{
+	player->pos_x = 0;
+	player->pos_y = 0;
+	player->dir_x = 0;
+	player->dir_y = 0;
+	player->fov = 0;
+}
+
+
 void    window_init(t_mlx *window)
 {
-	window->mlx = NULL;
+	window->mlx_p = NULL;
 	window->win = NULL;
 }

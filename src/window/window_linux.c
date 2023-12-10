@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window.c                                           :+:      :+:    :+:   */
+/*   window_linux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/06 18:19:19 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/10 18:07:40 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,33 @@
 
 //https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h for keycodes
 
-int window_destroy(t_mlx *window)
+int window_destroy(t_game *game)
 {
-    t_cub   *cub;
-    t_map   *map;
 
-    cub = window->cub;
-    map = window->map;
-    garbage_collector(cub, map);
-    mlx_destroy_window(window->mlx, window->win);
+    mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->win);
+    garbage_collector(game);
     exit(0);
 }
-int	handle_input(int keysym, t_mlx *window)
+
+int	handle_input(int keysym, t_game *game)
 {
     printf("keycode: %d\n", keysym);
     if (keysym == XK_Escape)
-        window_destroy(window);
+        return (window_destroy(game));
     return (0);
 }
 
-void    mlx_window(t_mlx *window)
+void    mlx_window(t_game *game)
 {
+    t_mlx   *window;
+
+    window = game->mlx_s;
     window_init(window);
-    window->mlx = mlx_init();
-    window->win = mlx_new_window(window->mlx, 640, 480, "Cub3D");
-    mlx_key_hook(window->win, handle_input, window);
-	mlx_hook(window->win, 17, 0, window_destroy, window);
-    mlx_hook(window->win, 2, 0, handle_input, window);
-    mlx_loop(window->mlx);
+    window->mlx_p = mlx_init();
+    window->win = mlx_new_window(window->mlx_p, 640, 480, "Cub3D");
+    mlx_key_hook(window->win, handle_input, game);
+	mlx_hook(window->win, 17, 0, window_destroy, game);
+    if (mlx_hook(window->win, 2, 0, handle_input, game) == 1)
+        return ;
+    mlx_loop(window->mlx_p);
 }
