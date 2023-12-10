@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/10 18:07:40 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:48:41 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,18 @@ int window_destroy(t_game *game)
 int	handle_input(int keysym, t_game *game)
 {
     printf("keycode: %d\n", keysym);
+    key_press(keysym, game);
     if (keysym == XK_Escape)
         return (window_destroy(game));
     return (0);
 }
+
+int	handle_no_event(void *data)
+{
+    (void)data;
+    return (0);
+}
+
 
 void    mlx_window(t_game *game)
 {
@@ -39,9 +47,10 @@ void    mlx_window(t_game *game)
     window_init(window);
     window->mlx_p = mlx_init();
     window->win = mlx_new_window(window->mlx_p, 640, 480, "Cub3D");
-    mlx_key_hook(window->win, handle_input, game);
-	mlx_hook(window->win, 17, 0, window_destroy, game);
-    if (mlx_hook(window->win, 2, 0, handle_input, game) == 1)
-        return ;
+    sl_image_init(game->mlx_s);
+    draw_player(game);
+    mlx_loop_hook(window->mlx_p, &handle_no_event, window);
+    mlx_hook(window->win, 2, 0, &handle_input, game);
+	mlx_hook(window->win, 17, 1L<<0, &window_destroy, window);
     mlx_loop(window->mlx_p);
 }

@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/10 18:09:28 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:34:33 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <math.h>
 # include <mlx.h>
 
+#define PI 3.14159265358979323846
 # include "raycast.h"
 
 # define KEY_ESC 53
@@ -110,6 +111,9 @@ void    fd_parser(t_game *game, char **argv);
 void    cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
 void    window_init(t_mlx *window);
+void	draw_player(t_game *game);		// Funcion reciclada de raycast branch
+int     key_press(int keycode, t_game *game);
+void	sl_image_init(t_mlx *g);
 
 // FD utils 
 int		open_path(t_cub *cub);
