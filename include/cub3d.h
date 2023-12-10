@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/08 14:03:48 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/10 18:09:28 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,23 @@
 
 #define ARGC "Error\nToo many arguments\n"
 
-typedef struct s_player t_player;
 
-typedef struct s_img
+typedef struct s_player
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-} t_img;
+    double  pos_x; //position
+    double  pos_y;
+	double	dir_x; //direction
+	double	dir_y;
+    double  fov;
+}t_player;
+
 
 typedef struct s_map
 {
 	int			width;
 	int			height;
 	char		**map;
-	int			pos_x;
-	int			pos_y;
+	char		**tmp_map;
 	int			orientation;
 } t_map;
 
@@ -73,17 +72,39 @@ typedef struct s_cub
 	int		err;
 } t_cub;
 
+typedef struct s_image
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+} t_img;
+
 typedef struct s_mlx
 {
-	t_cub	*cub;
-	t_map	*map;
-	void	*mlx;
+	void	*mlx_p;
 	void	*win;
 	t_img	*img;
+	int		screen_height;
+	int		screen_width;
+	
 } t_mlx;
 
+
+
+// New struct for game.
+typedef struct s_game
+{
+	t_mlx		*mlx_s;
+	t_map		*map_s;
+	t_cub		*cub_s;
+	t_player	*player_s;
+} t_game;
+
+
 // Parser
-void    fd_parser(t_cub *cub, t_map *map, char **argv);
+void    fd_parser(t_game *game, char **argv);
 
 // Init structs 
 void    cub_init(t_cub *init, char **argv);
@@ -107,14 +128,14 @@ void    fd_check_extension(t_cub *cub);
 void    fd_check_integrity(t_cub *cub, t_map *map);
 
 // Map parser
-void    map_parser(t_cub *cub, t_map *map);
+void    map_parser(t_game *game, t_cub *cub, t_map *map);
 
 // Mlx
-void    mlx_window(t_mlx *window);
+void    mlx_window(t_game *game);
 
 //Garbage collectors
 void	free_tab(char **args);
 void	fd_error(t_cub *cub, int err);
-void	garbage_collector(t_cub *cub, t_map *map);
+void	garbage_collector(t_game *game);
 
 #endif

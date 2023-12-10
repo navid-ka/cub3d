@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/08 13:51:07 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/10 17:19:58 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int map_check_walls(t_cub *cub) //TODO: check if map is surrounded by walls NOT 
     }
     return (0);
 }
-void map_get_player_pos(t_map *map)
+void map_get_player_pos(t_map *map, t_player *player)
 {
     int i;
     int j;
@@ -119,8 +119,8 @@ void map_get_player_pos(t_map *map)
             if(map->map[i][j] == 'N' || map->map[i][j] == 'S' 
                 || map->map[i][j] == 'W' || map->map[i][j] == 'E')
             {
-                    map->pos_x = j;
-                    map->pos_y = i;
+                    player->pos_x = j;
+                    player->pos_y = i;
             }
             j++;
         }
@@ -128,18 +128,20 @@ void map_get_player_pos(t_map *map)
     }    
 }
 
-void map_parser(t_cub *cub, t_map *map)
+void map_parser(t_game *game, t_cub *cub, t_map *map)
 {
-    int is_valid;
+    int         is_valid;
+    t_player    *player;
 
+    player = game->player_s;
     map_lengh(map);
     is_valid = map_has_valid_char(cub)
         && map_valid_orientation(cub, map) 
         && map_check_walls(cub);
     if (!is_valid)
         printf("Error\nMap did not meet requirements.\n");\
-    map_get_player_pos(map);
-    printf("player pos x: [%d]\n", map->pos_x);
-    printf("player pos y: [%d]\n", map->pos_y);
+    map_get_player_pos(map, game->player_s);
+    printf("player pos x: [%f]\n", player->pos_x);
+    printf("player pos y: [%f]\n", player->pos_y);
     printf("map orientation: [%d]\n", map->orientation);
 }
