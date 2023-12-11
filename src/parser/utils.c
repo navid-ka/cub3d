@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/03 22:49:23 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/11 15:12:24 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	open_path(t_cub *cub)
 	{
 		ft_printf("Error\n.cub file could not be loaded\n");
 		cub->err = -1;
+		close(fd);
 		fd_error(cub, cub->err);
 	}
 	return (fd);

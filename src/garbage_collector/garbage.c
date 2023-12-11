@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/10 18:04:00 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:19:47 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ void	fd_error(t_cub *cub, int err)
 void	garbage_collector(t_game *game)
 {
 	free_textures(game->cub_s);	//ok
-	free_tab(game->cub_s->map);	//ok
-	free_tab(game->map_s->map);	//ok
-	free(game->map_s);			//ok
-	free(game->cub_s);			//ok
-	free(game->mlx_s);			//ok
+	//free_tab(game->cub_s->map);	//ok
+	//free_tab(game->map_s->map);	//ok
+	//free(game->map_s);			//ok
+	//free(game->cub_s);			//ok
+	//free(game->mlx_s);			//ok
 	free(game->player_s);		//ok
 	printf("garbage collector\n");
 }
