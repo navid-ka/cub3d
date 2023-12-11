@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   player_linux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 19:19:23 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/11 12:41:27 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:41:21 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
+#include <X11/keysym.h>
 #define MOVE_SPEED 4
 #define ROTATION_SPEED 5
+
 
 int     key_press(int keycode, t_game *game)
 {
@@ -21,7 +22,7 @@ int     key_press(int keycode, t_game *game)
     static  double    counter = 1;
 
     player = game->player_s;
-    if (keycode == 13) // 'w' key
+    if (keycode == 0x77 || keycode == XK_W) // 'w' key
     {
         //player->pos_x += cos(player->fov) * MOVE_SPEED;
         printf("counter: %f\n", counter);
@@ -30,7 +31,7 @@ int     key_press(int keycode, t_game *game)
         counter++;
         draw_player(game);
     }
-    else if (keycode == 1) // 's' key
+    else if (keycode == 0x73 || keycode == XK_S) // 's' key
     {
         if (counter > 1)
             counter--;
@@ -39,14 +40,14 @@ int     key_press(int keycode, t_game *game)
         player->pos_y += MOVE_SPEED;
         draw_player(game);
     }
-    else if (keycode == 0) // 'a' key
+    else if (keycode == 0x61 || keycode == XK_A) // 'a' key
     {
         mlx_clear_window(game->mlx_s->mlx_p, game->mlx_s->win);
         player->pos_x -= MOVE_SPEED;
         draw_player(game);
 //        player->pos_y += cos(player->fov) * MOVE_SPEED;
     }
-    else if (keycode == 2) // 'd' key
+    else if (keycode == 0x64 || keycode == XK_D) // 'd' key
     {
         mlx_clear_window(game->mlx_s->mlx_p, game->mlx_s->win);
         player->pos_x += MOVE_SPEED;

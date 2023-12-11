@@ -7,7 +7,6 @@ HEADERS = include/cub3d.h include/raycast.h
 SRC = src/main.c \
 		src/garbage_collector/garbage.c \
 		src/map_renderer/draw_map.c \
-		src/map_renderer/player.c \
 		src/parser/parser.c \
 		src/parser/structs_init.c \
 		src/parser/fd_checker.c \
@@ -27,6 +26,8 @@ KAOMOJI_REMOVE = (ノಠ益ಠ)ノ彡┻━┻
 LIBFT = include/libft/bin/libft.a
 
 ifeq ($(UNAME), Darwin)
+SRC += src/window/window.c
+SRC += src/map_renderer/player.c
 MLXDIR = include/mlx/
 OLD_MAKE = /usr/bin/make3.81 #make
 MLX = $(MLXDIR)libmlx.a
@@ -34,6 +35,7 @@ LMLX = -Iinclude/libft/include -Linclude/libft/bin -lft \
 	-I$(MLXDIR) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit
 else
 SRC += src/window/window_linux.c
+SRC += src/map_renderer/player_linux.c
 MLXDIR = include/mlx_linux/
 OLD_MAKE = make
 MLX = $(MLXDIR)libmlx.a
