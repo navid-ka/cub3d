@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/12 02:37:24 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/12 02:45:19 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int	check_possiblty(char c)
 
 int check_map(t_cub *cub)
 {
-    int i, j;
+    int i;
+	int j;
 
     i = 0;
     while (cub->map[i])
@@ -174,11 +175,14 @@ int map_has_valid_char(t_cub *cub)
 
 	valid_chars = "01NSEW ";
 	i = 0;
+	cub->count = 0;
 	while (cub->map[i])
 	{
 		j = 0;
 		while (cub->map[i][j])
 		{
+			if (orientation_char(cub->map[i][j]))
+				cub->count++;
 			if (ft_strchr(valid_chars, cub->map[i][j]) == NULL)
 				return (0);
 			j++;
@@ -280,7 +284,7 @@ void map_parser(t_game *game, t_cub *cub, t_map *map)
 	map_get_player_pos(map, game->player_s);
 	is_valid = map_has_valid_char(cub)
 		&& map_valid_orientation(cub, map)
-		&& check_map(cub);
+		&& check_map(cub) && cub->count == 1;
 	if (!is_valid)
 	{
 		printf("Error\nMap did not meet requirements.\n");
