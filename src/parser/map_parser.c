@@ -50,23 +50,7 @@ void   map_lengh(t_map *map)
 	map->height = i;
 }
 
-int map_check_len(t_cub *cub)
-{
-    size_t	len;
-    int		i;
 
-    i = 0;
-    len = ft_strlen(cub->map[i]);
-    i++;
-    while (cub->map[i] != NULL)
-    {
-        if (cub->map[i] && len != ft_strlen(cub->map[i]))
-            return (0);
-        printf("len and strlen: %zu %zu\n", len, ft_strlen(cub->map[i]));
-        i++;
-    }
-    return (1);
-}
 int orientation_char(char cub)
 {
 	if (cub == 'N' || cub == 'S' || cub == 'W' || cub == 'E')
@@ -89,7 +73,7 @@ int around_zero(t_cub *cub, int index, char *line, int i)
     return (0);
 }
 
-int around_ps(t_cub *cub, int i, int index)
+int around_pl(t_cub *cub, int i, int index)
 {
     if (cub->map[index + 1] == 0 ||
         index - 1 < 0 ||
@@ -124,7 +108,7 @@ int check_map(t_cub *cub)
         while (cub->map[i][j])
         {
             if (orientation_char(cub->map[i][j]))
-            	around_ps(cub, j, i);
+            	around_pl(cub, j, i);
             else if (cub->map[i][j] == '0')
 			{
                 if (around_zero(cub, i, cub->map[i], j))
@@ -190,66 +174,6 @@ int map_has_valid_char(t_cub *cub)
 		i++;
 	}
 	return (1);
-}
-
-void map_dfs(t_game *g, int i, int j)
-{
-    int height = g->map_s->height;
-    int width = g->map_s->width;
-
-    if (i < 0 || j < 0 || i >= height || j >= width
-		|| g->cub_s->map[i][j] == '\0'
-        || g->cub_s->map[i][j] == 'X'
-		|| g->cub_s->map[i][j] == ' ' 
-		)
-        return ;
-    g->cub_s->map[i][j] = 'X';
-    map_dfs(g, i + 1, j);
-    map_dfs(g, i - 1, j);
-    map_dfs(g, i, j + 1);
-    map_dfs(g, i, j - 1);
-}
-
-int check_visited(t_cub *cub)
-{
-    int i = 0;
-    int j;
-
-    while (cub->map[i])
-    {
-        j = 0;
-        while (cub->map[i][j])
-        {
-            if (cub->map[i][j] != ' ' && cub->map[i][j] != 'X')
-                return (1);
-            j++;
-        }
-        i++;
-    }
-    return (0);
-}
-
-int map_check_dfs(t_cub *cub, t_game *g)
-{
-    int i;
-    int j;
-    int result;
-
-    i = 0;
-    while (cub->map[i])
-    {
-        j = 0;
-        while (cub->map[i][j])
-        {
-            map_dfs(g, i, j);
-            result = check_visited(cub);
-            return (result);
-        }
-        	j++;
-        
-        i++;
-    }
-    return (1);
 }
 
 void map_get_player_pos(t_map *map, t_player *player)
