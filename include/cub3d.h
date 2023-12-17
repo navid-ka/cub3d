@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/12 01:21:57 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/17 11:37:35 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_player
 	double	dir_x; //direction
 	double	dir_y;
     double  fov;
+	int		is_moving;
 }t_player;
 
 

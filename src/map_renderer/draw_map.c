@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:00:44 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/10 19:15:57 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/17 12:07:51 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void print_map(t_game *game)
 
 void draw_player(t_game *game)
 {
-    int tile_size = 8; // Assuming each tile is 32x32 pixels
+    int tile_size = 32; // Assuming each tile is 32x32 pixels
 
     // Get the player's position in the map
     int player_row = (int)game->player_s->pos_y;
