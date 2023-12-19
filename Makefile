@@ -15,7 +15,8 @@ SRC = src/main.c \
 		src/parser/orientations.c \
 		src/parser/map_parser.c \
 		src/raycast/raycast.c \
-		src/raycast/raycast_utils.c
+		src/raycast/raycast_utils.c \
+		src/window/window.c
 		
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
@@ -26,7 +27,7 @@ KAOMOJI_REMOVE = (ノಠ益ಠ)ノ彡┻━┻
 LIBFT = include/libft/bin/libft.a
 
 ifeq ($(UNAME), Darwin)
-SRC += src/window/window.c
+SRC += src/inputs/input.c
 SRC += src/map_renderer/player.c
 MLXDIR = include/mlx/
 OLD_MAKE = /usr/bin/make3.81 #make
@@ -34,7 +35,7 @@ MLX = $(MLXDIR)libmlx.a
 LMLX = -Iinclude/libft/include -Linclude/libft/bin -lft \
 	-I$(MLXDIR) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit
 else
-SRC += src/window/window_linux.c
+SRC += src/inputs/input_linux.c
 SRC += src/map_renderer/player_linux.c
 MLXDIR = include/mlx_linux/
 OLD_MAKE = make
