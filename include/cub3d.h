@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/17 11:37:35 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/19 12:21:02 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@
 # include <mlx.h>
 
 #define PI 3.14159265358979323846
+# define ESC	53
+# define ARROW_LEFT 123
+# define ARROW_RIGHT 124
+# define ARROW_UP 126
+# define ARROW_DOWN 125
+# define A 0
+# define W 13
+# define S 1
+# define D 2
+
 # include "raycast.h"
 
 # define KEY_ESC 53
@@ -112,7 +122,6 @@ void    fd_parser(t_game *game, char **argv);
 void    cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
 void    window_init(t_mlx *window);
-void	draw_player(t_game *game);		// Funcion reciclada de raycast branch
 int     key_press(int keycode, t_game *game);
 void	sl_image_init(t_mlx *g);
 
@@ -138,7 +147,16 @@ void    map_parser(t_game *game, t_cub *cub, t_map *map);
 // Mlx
 void    mlx_window(t_game *game);
 
+// Draw player
+void	draw_player(t_game *game);
+void	clear_player(t_game *game);
+
+//Inputs
+int     on_key_press(int keycode, t_game *game);
+int     on_key_release(int keycode, t_game *game);
+
 //Garbage collectors
+int		window_destroy(t_game *game);
 void	free_tab(char **args);
 void	fd_error(t_cub *cub, int err);
 void	garbage_collector(t_game *game);
