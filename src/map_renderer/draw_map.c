@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:00:44 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/17 12:07:51 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/19 12:28:40 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ void	sl_image_init(t_mlx *g)
 	
 	h = 32;
 	w = 32;
-	g->img = malloc(sizeof(t_img) * (2 + 1));
+	g->img = malloc(sizeof(t_img) * (3 + 1));
 	g->img[0].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/wall.xpm", &w, &h);
 	g->img[1].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/path.xpm", &w, &h);
+	g->img[2].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/clear.xpm", &w, &h);
 }
 /*
 static void print_map(t_game *game)
@@ -39,17 +40,20 @@ static void print_map(t_game *game)
 }
 */
 
+void clear_player(t_game *game)
+{
+	//old player position
+	int y = (int)game->player_s->pos_y * 32;
+	int x = (int)game->player_s->pos_x * 32;
+	mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->img[2].img, x, y);
+	
+}
+
 void draw_player(t_game *game)
 {
-    int tile_size = 32; // Assuming each tile is 32x32 pixels
-
     // Get the player's position in the map
-    int player_row = (int)game->player_s->pos_y;
-    int player_col = (int)game->player_s->pos_x;
-
-    // Calculate the position to draw the player tile on the screen
-    int x = player_col * tile_size;
-    int y = player_row * tile_size;
+	int y = (int)game->player_s->pos_y * 32;
+	int x = (int)game->player_s->pos_x * 32;
 
     // Draw the player tile on the screen
 //    printf("Player tile: %c\n", game->map_s->map[player_row][player_col]);
