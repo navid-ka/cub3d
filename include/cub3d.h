@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <mlx.h>
+# include <errno.h>
 
 #define PI 3.14159265358979323846
 # define ESC	53
