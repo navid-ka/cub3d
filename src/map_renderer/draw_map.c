@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:00:44 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/19 12:28:40 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:16:14 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ void	sl_image_init(t_mlx *g)
 	h = 32;
 	w = 32;
 	g->img = malloc(sizeof(t_img) * (3 + 1));
+	if (!g->img)
+	{
+		printf("Error\n[errno: %d] Malloc failed\n", errno);
+		exit(0);
+	}
 	g->img[0].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/wall.xpm", &w, &h);
 	g->img[1].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/path.xpm", &w, &h);
 	g->img[2].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/clear.xpm", &w, &h);

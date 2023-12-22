@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/11 15:12:24 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:34:43 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	cub_atoi(const char *str)
 		num = num * 10 + (str[i] - '0');
 		if (num > 255) 
 		{
-			ft_printf("Error\nNumber out of range (0-255)\n");
+			ft_printf("Number out of range (0-255)\n");
 			exit (1); //TODO; aqui puede que tengamos que hacer garbage collection
 		}
 		i++;
@@ -71,9 +71,8 @@ int	open_path(t_cub *cub)
 	fd = open(cub->path, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_printf("Error\n.cub file could not be loaded\n");
+		ft_printf("Error\n[errno: %d] .cub file could not be loaded.\n", errno);
 		cub->err = -1;
-		close(fd);
 		fd_error(cub, cub->err);
 	}
 	return (fd);
