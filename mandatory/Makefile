@@ -36,6 +36,7 @@ LMLX = -Iinclude/libft/include -Linclude/libft/bin -lft \
 	-I$(MLXDIR) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit
 else
 SRC += src/inputs/input_linux.c
+SRC += src/inputs/movement.c
 SRC += src/map_renderer/player_linux.c
 MLXDIR = include/mlx_linux/
 OLD_MAKE = make

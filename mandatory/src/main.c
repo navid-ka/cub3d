@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/10 18:04:12 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/29 21:20:06 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ void	game_init(t_game *game)
 	}
 }
 
+
+void render(t_game *game)
+{
+	(void)game;
+//	rdr_angles(game);	// Gets the position from player and sets the direction vector
+//	rdr_rays(game);		// Casts rays and stores the distance to the wall
+	
+}
+
 int main(int argc, char **argv)
 {
 	t_game		game;
@@ -37,6 +46,7 @@ int main(int argc, char **argv)
 	game_init(&game);
 	fd_parser(&game, argv + 1);	
 	mlx_window(&game);
+	render(&game);
 	garbage_collector(&game);
 	return (0);
 }
