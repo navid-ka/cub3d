@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/19 12:21:02 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/12/29 21:07:37 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 
 #define PI 3.14159265358979323846
+#define ROTATE_SPEED 0.1
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
@@ -46,7 +47,7 @@ typedef struct s_player
     double  pos_y;
 	double	dir_x; //direction
 	double	dir_y;
-    double  fov;
+    double  angle;
 	int		is_moving;
 }t_player;
 
@@ -155,6 +156,9 @@ void	clear_player(t_game *game);
 //Inputs
 int     on_key_press(int keycode, t_game *game);
 int     on_key_release(int keycode, t_game *game);
+
+//Raycast
+void    ft_cast_rays(t_game *game);
 
 //Garbage collectors
 int		window_destroy(t_game *game);

@@ -6,17 +6,15 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/06 00:04:47 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/29 21:00:58 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void    ft_cast_rays(t_player *p1, char **map)
-{
-	(void)p1;
-	(void)map;
-	
+void    ft_cast_rays(t_game *game)
+{	
+	(void)game;
 	ft_printf("[RAYCAST] Ready\n");
 	return ;
 }
