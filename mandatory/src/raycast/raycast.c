@@ -6,16 +6,23 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/29 21:00:58 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/30 00:06:29 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void    ft_cast_rays(t_game *game)
-{	
-	(void)game;
-	ft_printf("[RAYCAST] Ready\n");
+// to start, we need the player position and the player direction
+void    ray_init(t_game *game)
+{
+	game->player_s->dir_x = cos(game->player_s->angle);
+	game->player_s->dir_y = sin(game->player_s->angle);
+	return ;
+}
+
+void    raycast(t_game *game)
+{
+	ray_init(game);	
 	return ;
 }
 
