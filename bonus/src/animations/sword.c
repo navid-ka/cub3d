@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/29 00:17:38 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/29 11:35:22 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void    load_sword_img(t_mlx *g)
     g->sword = malloc(sizeof(t_img) * 31 + 1);
     while (i < 30)
     {
-        printf("file: %s\n", add_file_extension(file, i));
+        //printf("file: %s\n", add_file_extension(file, i));
         g->sword[i].img = mlx_xpm_file_to_image(g->mlx_p,
         add_file_extension(file, i), &sword_width, &sword_height);
         i++;

@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/29 00:14:04 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/29 11:39:09 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int check_input(t_game *game)
 
 int    game_start(t_game *game)
 {
+	if (game->state == TITLE && game->state != GAME)
+		game->state = screen_manager(game, TITLE);
 	if (game->state == GAME)
 	{
 		//draw_map(game);
@@ -72,7 +74,7 @@ void    mlx_window(t_game *game)
 	window->win = mlx_new_window(window->mlx_p, fact*16, fact*9, "Cub3D");
 	sl_image_init(window);
 	load_sword_img(window);
-	game->state = screen_manager(game, TITLE);
+	//game->state = screen_manager(game, TITLE);
 	check_input(game);
 	mlx_loop_hook(window->mlx_p, &game_start, game);
 	mlx_loop(window->mlx_p);
