@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/29 21:55:21 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/29 22:11:58 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int     on_key_press(int keycode, t_game *game)
 		player->angle -= ROTATE_SPEED;
 	else if (keycode ==  0xff53 || keycode == XK_Right) // 'right arrow' key
 		player->angle += ROTATE_SPEED;
-	printf("x: %f, y: %f\n \nAngle: %f degrees\n(from looking right)", player->pos_x, player->pos_y, player->angle);
+	printf("x: %f, y: %f\n \nAngle: %f degrees\n(from looking right)\n", player->pos_x, player->pos_y, player->angle);
 	return (0);
 }
 

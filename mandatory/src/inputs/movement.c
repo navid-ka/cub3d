@@ -6,12 +6,12 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 21:25:00 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/29 22:01:46 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/29 22:11:45 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-#define WALL_SAYS printf("\nYou touch the wall...\nIt's Cold\n");
+#define WALL_SAYS printf("\nYou touch the wall...\nIt's Cold.\n");
 #include <X11/keysym.h>
 
 double	move_y(t_player *p, char **map, int dir)
