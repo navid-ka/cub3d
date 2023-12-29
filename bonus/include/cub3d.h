@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/28 23:52:04 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/29 14:42:04 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,6 @@ typedef struct s_mlx
 	
 } t_mlx;
 
-
-
-// New struct for game.
 typedef struct s_game
 {
 	t_mlx		*mlx_s;
@@ -113,6 +110,8 @@ typedef struct s_game
 	t_cub		*cub_s;
 	t_player	*player_s;
 	int 		state;
+	int			sword_state;
+	int 		fps;
 } t_game;
 
 enum e_state
@@ -122,12 +121,20 @@ enum e_state
 	END
 };
 
+enum e_sword
+{
+	IDLE,
+	ATACK
+};
+
 typedef struct state_manager
 {
     int (*f)(t_game *);
 } t_state_manager;
 
-int screen_manager(t_game *g, enum e_state state);
+
+
+int		screen_manager(t_game *g, enum e_state state);
 int    game_start(t_game *game);
 
 // Parser
@@ -170,9 +177,14 @@ void	clear_player(t_game *game);
 int     on_key_press(int keycode, t_game *game);
 int     on_key_release(int keycode, t_game *game);
 
+// Anim 
+int	update(t_game *game);
+
 // Sword
 void    load_sword_img(t_mlx *g);
-void    draw_single_sword(t_game *game);
+int		draw_idle(t_game *game);
+int		draw_sword_animation(t_game *game);
+int		sword_manager(t_game *g, enum e_sword state);
 
 //Garbage collectors
 int		window_destroy(t_game *game);
