@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/29 11:39:09 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/29 14:50:57 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ int check_input(t_game *game)
 {
 	mlx_hook(game->mlx_s->win, 2, 0, &on_key_press, game);
 	mlx_hook(game->mlx_s->win, 3, 0, &on_key_release, game);
+	if (game->state == GAME)
+		mlx_hook(game->mlx_s->win, 4, 0x4, &on_key_press, game);
 	mlx_hook(game->mlx_s->win, 17, 1L<<0, &window_destroy, game);
 	return (0);
 }
 
 int    game_start(t_game *game)
 {
+	
 	if (game->state == TITLE && game->state != GAME)
 		game->state = screen_manager(game, TITLE);
 	if (game->state == GAME)
@@ -56,7 +59,9 @@ int    game_start(t_game *game)
 		//draw_map(game);
 		//clear_player(game);
 		//draw_player(game);
-		draw_single_sword(game);
+		//draw_single_sword(game);
+		game->sword_state = sword_manager(game, IDLE);
+		update(game);
 	}
 	return (GAME);
 }
@@ -67,6 +72,7 @@ void    mlx_window(t_game *game)
 	int	    fact;
 
 	fact = 80;
+	game->fps = 30;
 	ft_memset(&window, 0, sizeof(t_mlx));
 	window = game->mlx_s;
 	window_init(window);
@@ -74,7 +80,6 @@ void    mlx_window(t_game *game)
 	window->win = mlx_new_window(window->mlx_p, fact*16, fact*9, "Cub3D");
 	sl_image_init(window);
 	load_sword_img(window);
-	//game->state = screen_manager(game, TITLE);
 	check_input(game);
 	mlx_loop_hook(window->mlx_p, &game_start, game);
 	mlx_loop(window->mlx_p);
