@@ -1,0 +1,11 @@
+EA textures/ea.xpm
+NO textures/no.xpm
+SO textures/so.xpm
+WE textures/we.xpm
+
+F 20,20,20
+C 200,200,200
+
+111111111111111111111
+1W0000000000000000001
+111111111111111111111
