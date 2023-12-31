@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/31 17:21:12 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/31 19:00:15 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@
 
 #define PI 3.14159265358979323846
 #define MOVE_SPEED 1
-#define ROTATE_SPEED 0.02
+#define ROTATE_SPEED 0.04
+#define	FOV 90
+#define RENDER_DIST 100 
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
@@ -44,6 +46,7 @@
 
 typedef struct s_player
 {
+	double	fov;
     double  pos_x; //position
     double  pos_y;
 	double	dir_x; //direction
