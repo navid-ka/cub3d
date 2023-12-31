@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/29 23:39:55 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/31 18:15:13 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,17 @@ int check_input(t_game *game)
 	mlx_hook(game->mlx_s->win, 2, 0, &on_key_press, game);
 	mlx_hook(game->mlx_s->win, 3, 0, &on_key_release, game);
 	mlx_hook(game->mlx_s->win, 17, 1L<<0, &window_destroy, game);
+	
 	return (0);
 }
 
 int    game_start(t_game *game)
 {
+	check_input(game);
 	draw_map(game);
 	clear_player(game);
 	draw_player(game);
+	
 	return (0);
 }
 
