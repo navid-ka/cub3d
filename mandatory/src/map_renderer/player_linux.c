@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   player_linux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 19:19:23 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/11 12:41:21 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/12/29 23:34:33 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 #include <X11/keysym.h>
-#define MOVE_SPEED 4
-#define ROTATION_SPEED 5
+//#define MOVE_SPEED 4
 
-
+/*
 int     key_press(int keycode, t_game *game)
 {
     t_player *player;
@@ -58,6 +57,7 @@ int     key_press(int keycode, t_game *game)
 }
 
 // LA MIERDA AQUI ABAJO
+*/
 
 /*
 void player_init(t_player* player, float a, float b, float angle) 

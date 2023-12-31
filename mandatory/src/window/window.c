@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/29 21:24:41 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/31 19:08:31 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void draw_map(t_game *game)
 			if (game->map_s->map[i][j] == '1')
 				mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, 
 					game->mlx_s->img[0].img, j * 32, i *32);
+			else if (game->map_s->map[i][j] == '0' || ft_strchr("NSEW", game->map_s->map[i][j]))
+				mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, 
+					game->mlx_s->img[1].img, j * 32, i *32);
 			j++;
 		}
 		i++;
@@ -44,14 +47,19 @@ int check_input(t_game *game)
 	mlx_hook(game->mlx_s->win, 2, 0, &on_key_press, game);
 	mlx_hook(game->mlx_s->win, 3, 0, &on_key_release, game);
 	mlx_hook(game->mlx_s->win, 17, 1L<<0, &window_destroy, game);
+	
 	return (0);
 }
 
 int    game_start(t_game *game)
 {
+	check_input(game);
+	usleep(50);
 	draw_map(game);
+	raycast(game);
 	clear_player(game);
 	draw_player(game);
+	
 	return (0);
 }
 
