@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/29 14:42:04 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/31 15:32:23 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <mlx.h>
+# include <stdint.h>
 # include <errno.h>
 
 #define PI 3.14159265358979323846
@@ -48,6 +49,11 @@ typedef struct s_player
 	int		is_moving;
 }t_player;
 
+typedef struct s_position
+{
+    int x;
+    int y;
+}              t_position;
 
 typedef struct s_map
 {
@@ -87,8 +93,8 @@ typedef struct s_image
 {
 	void	*img;
 	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
+	int		bpp;
+	int		line_len;
 	int		endian;
 } t_img;
 
@@ -135,7 +141,9 @@ typedef struct state_manager
 
 
 int		screen_manager(t_game *g, enum e_state state);
-int    game_start(t_game *game);
+int		game_start(t_game *game);
+t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
+void	draw_resized_img(t_mlx *g, t_img *img, int pos[2], int size[2]);
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
@@ -174,6 +182,7 @@ void	draw_player(t_game *game);
 void	clear_player(t_game *game);
 
 //Inputs
+int		on_mouse_click(int button, int x, int y, t_game *game);
 int     on_key_press(int keycode, t_game *game);
 int     on_key_release(int keycode, t_game *game);
 

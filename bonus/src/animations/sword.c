@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/31 01:27:35 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/31 11:05:58 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int    draw_idle(t_game *game)
     //if (++i < 4)
    // {
    //     usleep(1000000 / game->fps * 5);
-        mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->sword[0].img, x, y + 90);
+    mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->sword[0].img, x, y + 90);
    // }
    // else
    //     i = 0;

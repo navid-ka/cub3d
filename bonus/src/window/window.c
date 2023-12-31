@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/31 01:22:36 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/31 19:59:53 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void draw_map(t_game *game)
 
 int check_input(t_game *game)
 {
+	mlx_mouse_hook(game->mlx_s->win, &on_mouse_click, game);
 	mlx_hook(game->mlx_s->win, 2, 0, &on_key_press, game);
 	mlx_hook(game->mlx_s->win, 3, 0, &on_key_release, game);
 	if (game->state == GAME)
@@ -49,31 +50,32 @@ int check_input(t_game *game)
 	return (0);
 }
 
-int    game_start(t_game *game)
+int game_start(t_game *game)
 {
-	
-	if (game->state == TITLE && game->state != GAME)
-		game->state = screen_manager(game, TITLE);
-	if (game->state == GAME)
-	{
-		//draw_map(game);
-		//clear_player(game);
-		//draw_player(game);
-		//draw_single_sword(game);
-		
-		//game->sword_state = draw_sword_animation(game);
-		//game->sword_state = sword_manager(game, IDLE);
-		update(game);
-	}
-	return (GAME);
+    if (game->state == TITLE && game->state != GAME)
+        game->state = screen_manager(game, TITLE);
+    if (game->state == GAME)
+    {
+        //draw_map(game);
+        //clear_player(game);
+        //draw_player(game);
+        //draw_single_sword(game);
+
+        //game->sword_state = draw_sword_animation(game);
+        //game->sword_state = sword_manager(game, IDLE);
+		// esto tiene que ser una nueva funcion
+		mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, 
+			game->mlx_s->img[4].img, 20, 20);
+        update(game);
+    }
+    return (GAME);
 }
 
 void    mlx_window(t_game *game)
 {
 	t_mlx   *window;
-	int	    fact;
+	static int	    fact = 80;
 
-	fact = 80;
 	game->fps = 30;
 	ft_memset(&window, 0, sizeof(t_mlx));
 	window = game->mlx_s;
