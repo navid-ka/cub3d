@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 21:25:00 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/30 00:03:23 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/31 18:36:30 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,14 @@ double	move_rot(t_player *p, char **map, int dir)
 	(void)map;
 	if (dir == XK_Left) // moving left
 	{
-		p->angle -= ROTATE_SPEED;
-		if (p->angle < 0)
-			p->angle += 2 * PI;
+		if (p->angle - ROTATE_SPEED < 0)
+			p->angle = 2 * PI;
 		return (ROTATE_SPEED);
 	}
 	else// if (dir == 0x64) // moving right
 	{
-		p->angle += ROTATE_SPEED;
-		if (p->angle > 2 * PI)
-			p->angle -= 2 * PI;
+		if (p->angle + ROTATE_SPEED > 2 * PI)
+			p->angle = 0;
 		return (ROTATE_SPEED);
 	}
 }

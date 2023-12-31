@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/29 23:31:59 by plinscho         ###   ########.fr       */
+/*   Updated: 2023/12/31 17:21:12 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <errno.h>
 
 #define PI 3.14159265358979323846
-#define MOVE_SPEED 0.5
-#define ROTATE_SPEED 0.05
+#define MOVE_SPEED 1
+#define ROTATE_SPEED 0.02
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
