@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/29 14:54:26 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/31 01:27:35 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,30 +66,18 @@ void    load_sword_img(t_mlx *g)
     
 }
 
-int update(t_game *game) 
-{
-    static uint64_t updated_at = 0;
-
-    if (timestamp_in_ms() - updated_at < (uint64_t)(1000 / game->fps))
-        return 0;
-    updated_at = timestamp_in_ms();
-    printf("timestamp: %ld\t update: %ld, FPS: %d\n", timestamp_in_ms(), updated_at, game->fps);  
-
-    return 0;
-}
-
 int    draw_idle(t_game *game)
 {
-    static int i = 0;
+    //static int i = 0;
     int y = (int)game->player_s->pos_y;
     int x = (int)game->player_s->pos_x;
-    if (++i < 4)
-    {
-        usleep(1000000 / game->fps * 5);
-        mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->sword[i].img, x, y + 90);
-    }
-    else
-        i = 0;
+    //if (++i < 4)
+   // {
+   //     usleep(1000000 / game->fps * 5);
+        mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->sword[0].img, x, y + 90);
+   // }
+   // else
+   //     i = 0;
     return (IDLE);
 }
 
@@ -104,9 +92,14 @@ int draw_sword_animation(t_game *game)
         mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->sword[i].img, x, y + 90);
         i++;
     }
-    else
+    if (i == 30)
+    {
+        game->sword_state = IDLE;
         i = 0;
-    return (ATACK);
+    }
+    else
+        game->sword_state = ATACK;
+    return (game->sword_state);
 }
 
 int	sword_manager(t_game *g, enum e_sword state)
@@ -120,3 +113,14 @@ int	sword_manager(t_game *g, enum e_sword state)
 	return (sword_state_lookup[state].f(g));
 }
 
+int update(t_game *game) 
+{
+    static uint64_t updated_at = 0;
+
+    if (timestamp_in_ms() - updated_at < (uint64_t)(1000 / game->fps))
+        return 0;
+    updated_at = timestamp_in_ms();
+    printf("timestamp: %ld\t update: %ld, FPS: %d\n", timestamp_in_ms(), updated_at, game->fps);  
+    game->sword_state = sword_manager(game, game->sword_state);
+    return 0;
+}

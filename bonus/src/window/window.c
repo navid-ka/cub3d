@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/29 14:50:57 by bifrost          ###   ########.fr       */
+/*   Updated: 2023/12/31 01:22:36 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ int    game_start(t_game *game)
 		//clear_player(game);
 		//draw_player(game);
 		//draw_single_sword(game);
-		game->sword_state = sword_manager(game, IDLE);
+		
+		//game->sword_state = draw_sword_animation(game);
+		//game->sword_state = sword_manager(game, IDLE);
 		update(game);
 	}
 	return (GAME);
