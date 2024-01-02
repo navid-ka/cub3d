@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/31 19:59:53 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/02 18:31:58 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int game_start(t_game *game)
         //clear_player(game);
         //draw_player(game);
         //draw_single_sword(game);
-
         //game->sword_state = draw_sword_animation(game);
         //game->sword_state = sword_manager(game, IDLE);
 		// esto tiene que ser una nueva funcion
@@ -82,6 +81,7 @@ void    mlx_window(t_game *game)
 	window_init(window);
 	window->mlx_p = mlx_init();
 	window->win = mlx_new_window(window->mlx_p, fact*16, fact*9, "Cub3D");
+	game->state = TITLE;
 	sl_image_init(window);
 	load_sword_img(window);
 	check_input(game);
