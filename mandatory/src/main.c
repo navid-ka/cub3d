@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/29 21:20:06 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/02 20:36:36 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	game_init(t_game *game)
 	game->map_s = malloc(sizeof(t_map));
 	game->mlx_s = malloc(sizeof(t_mlx));
 	game->player_s = malloc(sizeof(t_player));
-
 	if (!game->cub_s || !game->map_s || !game->mlx_s || !game->player_s)
 	{
 		ft_printf("Error\nMalloc error\n");
 		exit(1);
 	}
+	player_init(game->player_s);
 }
 
 
@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 		return (printf(ARGC));
 
 	game_init(&game);
-	fd_parser(&game, argv + 1);	
+	fd_parser(&game, argv + 1);
 	mlx_window(&game);
 	render(&game);
 	garbage_collector(&game);
