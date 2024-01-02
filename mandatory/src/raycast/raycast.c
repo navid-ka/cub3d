@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/02 20:43:26 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/02 20:50:41 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void    draw_line(t_game *game, double x0, double y0, double angle)
 	for (int i = 0 ; i < RENDER_DIST ; i++)
 	{
 		// check if it hits a wall. Will need the map.
-		mlx_pixel_put(game->mlx_s->mlx_p, game->mlx_s->win, (x0), (y0), 0x00FFFF00);
+		mlx_pixel_put(game->mlx_s->mlx_p, game->mlx_s->win, (x0), (y0), 0x00AAFF00);
 		x0 += 1 * cos(angle);
 		y0 += 1 * sin(angle);
 		if (check_wall
@@ -53,7 +53,7 @@ void    raycast(t_game *game)
 	while (ray_angle < game->player_s->fov + game->player_s->angle)
 	{
 		draw_line(game, x0, y0, ray_angle);
-		ray_angle += 0.025;
+		ray_angle += 0.020;
 	}
 	return ;
 }
