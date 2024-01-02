@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/31 19:00:15 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/02 20:51:04 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #define MOVE_SPEED 1
 #define ROTATE_SPEED 0.04
 #define	FOV 90
-#define RENDER_DIST 100 
+#define RENDER_DIST 150 
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
@@ -43,6 +43,11 @@
 
 #define ARGC "Error\nToo many arguments\n"
 
+typedef struct s_camera
+{
+	double	plane_x;
+	double	plane_y;
+}	t_camera;
 
 typedef struct s_player
 {
@@ -53,7 +58,7 @@ typedef struct s_player
 	double	dir_y;
     double  angle;	// in radians
 	int		is_moving;
-}t_player;
+}	t_player;
 
 
 typedef struct s_map
@@ -63,14 +68,14 @@ typedef struct s_map
 	char		**map;
 	char		**tmp_map;
 	int			orientation;
-} t_map;
+}	t_map;
 
 typedef struct s_color
 {
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
-} t_color;
+}	t_color;
 
 typedef struct s_cub
 {
@@ -88,7 +93,7 @@ typedef struct s_cub
 	t_color	ceiling;
 	int		count;
 	int		err;
-} t_cub;
+}	t_cub;
 
 typedef struct s_image
 {
@@ -97,7 +102,7 @@ typedef struct s_image
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-} t_img;
+}	t_img;
 
 typedef struct s_mlx
 {
@@ -107,7 +112,7 @@ typedef struct s_mlx
 	int		screen_height;
 	int		screen_width;
 	
-} t_mlx;
+}	t_mlx;
 
 
 
@@ -136,6 +141,7 @@ void    raycast(t_game *game);
 // Init structs 
 void    cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
+void	player_init(t_player *player);
 void    window_init(t_mlx *window);
 int     key_press(int keycode, t_game *game);
 void	sl_image_init(t_mlx *g);
