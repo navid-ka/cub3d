@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:00:44 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/31 15:38:24 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/02 17:42:29 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void	sl_image_init(t_mlx *g)
 		exit(0);
 	}
 	g->img[0].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/wall.xpm", &w, &h);
+	g->img[0].addr = mlx_get_data_addr(g->img[0].img, &g->img[0].bpp, &g->img[0].line_len, &g->img[0].endian);
 	g->img[1].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/path.xpm", &w, &h);
+	g->img[1].addr = mlx_get_data_addr(g->img[1].img, &g->img[1].bpp, &g->img[1].line_len, &g->img[1].endian);
 	g->img[2].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/clear.xpm", &w, &h);
 	g->img[3].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/start.xpm", &w_w, &w_h);
 	g->img[4].img = mlx_xpm_file_to_image(g->mlx_p, "textures/player/portrait.xpm", &p_w, &p_h);
@@ -49,13 +51,14 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 
 t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh)
 {
-    static t_position	od = {128, 128};
+    static t_position	od = {32, 32};
     t_img				*ri;
     int					c;
     t_position			p = {0, 0};
     t_position			op;
 
-    ri = malloc(sizeof(t_img));
+	printf("%p\n", img->img);
+   	ri = malloc(sizeof(t_img));
     ri->img = mlx_new_image(g->mlx_p, nw, nh);
     ri->addr = mlx_get_data_addr(ri->img, &ri->bpp, &ri->line_len, &ri->endian);
     while (p.y < nh)

@@ -18,7 +18,8 @@ SRC = src/main.c \
 		src/raycast/raycast_utils.c \
 		src/window/window.c \
 		src/screen_manager/screen_manager.c \
-		src/animations/sword.c
+		src/animations/sword.c \
+		src/minimap/draw_minimap.c
 		
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))

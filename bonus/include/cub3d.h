@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/31 15:32:23 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/02 18:18:42 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int		screen_manager(t_game *g, enum e_state state);
 int		game_start(t_game *game);
 t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
 void	draw_resized_img(t_mlx *g, t_img *img, int pos[2], int size[2]);
+void	img_pix_put(t_img *img, int x, int y, int color);
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
@@ -194,6 +195,10 @@ void    load_sword_img(t_mlx *g);
 int		draw_idle(t_game *game);
 int		draw_sword_animation(t_game *game);
 int		sword_manager(t_game *g, enum e_sword state);
+
+// minimap 
+void	draw_minimap(t_game *g);
+void draw_square(t_mlx *g, int x, int y, int width, int height);
 
 //Garbage collectors
 int		window_destroy(t_game *game);
