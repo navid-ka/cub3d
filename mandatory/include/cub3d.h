@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/02 20:34:49 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/02 20:51:04 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #define MOVE_SPEED 1
 #define ROTATE_SPEED 0.04
 #define	FOV 90
-#define RENDER_DIST 100 
+#define RENDER_DIST 150 
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
