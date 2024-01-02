@@ -6,11 +6,12 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/02 20:37:10 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/02 20:43:26 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+int	check_wall(t_game *game, double x0, double y0);
 
 // to start, we need the player position and the player direction
 void    draw_line(t_game *game, double x0, double y0, double angle)
@@ -21,8 +22,23 @@ void    draw_line(t_game *game, double x0, double y0, double angle)
 		mlx_pixel_put(game->mlx_s->mlx_p, game->mlx_s->win, (x0), (y0), 0x00FFFF00);
 		x0 += 1 * cos(angle);
 		y0 += 1 * sin(angle);
+		if (check_wall
+		(game, x0, y0))
+			break ;
 	}
 	return ;
+}
+
+int	check_wall(t_game *game, double x0, double y0)
+{
+	int i;
+	int j;
+	
+	i = (int)(x0 / 32);
+	j = (int)(y0 / 32);
+	if (game->map_s->map[j][i] == '1')
+		return (1);
+	return (0);
 }
 
 void    raycast(t_game *game)
