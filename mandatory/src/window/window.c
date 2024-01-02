@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/31 19:08:31 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/02 20:35:46 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int check_input(t_game *game)
 int    game_start(t_game *game)
 {
 	check_input(game);
-	usleep(50);
 	draw_map(game);
 	raycast(game);
 	clear_player(game);
