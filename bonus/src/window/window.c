@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/02 18:31:58 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/03 03:47:19 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,36 @@ int check_input(t_game *game)
 	return (0);
 }
 
+void clear_image(t_img *img)
+{
+    int x, y;
+
+    for (y = 0; y < img->height; y++)
+    {
+        for (x = 0; x < img->width; x++)
+        {
+            put_pixel_img(img, x, y, 0);
+        }
+    }
+}
+
 int game_start(t_game *game)
 {
     if (game->state == TITLE && game->state != GAME)
+	{
         game->state = screen_manager(game, TITLE);
+		mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->buffer->img, 0, 0);
+	}
     if (game->state == GAME)
     {
-        //draw_map(game);
-        //clear_player(game);
-        //draw_player(game);
-        //draw_single_sword(game);
-        //game->sword_state = draw_sword_animation(game);
-        //game->sword_state = sword_manager(game, IDLE);
-		// esto tiene que ser una nueva funcion
-		mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, 
-			game->mlx_s->img[4].img, 20, 20);
+		//mlx_clear_window(game->mlx_s->mlx_p, game->mlx_s->win);
+		//draw_minimap(game);
+		//put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
+		clear_image(game->mlx_s->buffer);
         update(game);
+		//mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->buffer->img, 0, 0);
     }
+	
     return (GAME);
 }
 
@@ -75,13 +88,24 @@ void    mlx_window(t_game *game)
 	t_mlx   *window;
 	static int	    fact = 80;
 
+	game->mlx_s->screen_width = 1280;
+	game->mlx_s->screen_height = 720;
 	game->fps = 30;
 	ft_memset(&window, 0, sizeof(t_mlx));
 	window = game->mlx_s;
 	window_init(window);
 	window->mlx_p = mlx_init();
 	window->win = mlx_new_window(window->mlx_p, fact*16, fact*9, "Cub3D");
+	window->buffer = malloc(sizeof(t_img));
+	if (!window->buffer)
+		exit(1);
+	window->buffer->img = mlx_new_image(window->mlx_p, fact*16, fact*9);
+	window->buffer->addr = mlx_get_data_addr(window->buffer->img, &window->buffer->bpp, &window->buffer->line_len, &window->buffer->endian);
+	window->buffer->width = fact*16;
+	window->buffer->height = fact*9;
+	mlx_clear_window(window->mlx_p, window->win);
 	game->state = TITLE;
+	game->sword_state = 0;
 	sl_image_init(window);
 	load_sword_img(window);
 	check_input(game);

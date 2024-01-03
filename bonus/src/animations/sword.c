@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/31 11:05:58 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/03 11:49:33 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,59 +37,53 @@ char *add_file_extension(char *file, int num)
 
     new_file = malloc(ft_strlen(file) + 10);
     num_str = ft_itoa(num);
-    ft_memcpy(new_file, file, ft_strlen(file) + 1); // Copia también el carácter nulo
+    ft_memcpy(new_file, file, ft_strlen(file) + 1);
     ft_strlcat(new_file, num_str, ft_strlen(file) + ft_strlen(num_str) + 1);
     ft_strlcat(new_file, ".xpm", ft_strlen(file) + ft_strlen(num_str) + 5);
     free(num_str);
     return new_file;
 }
 
-void    load_sword_img(t_mlx *g)
+void load_sword_img(t_mlx *g)
 {
     int i;
-    int sword_width;
-    int sword_height;
     char *file;
 
-    sword_width = 1008;
-    sword_height = 874;
     file = "textures/sword/sword";
     i = 0;
-    g->sword = malloc(sizeof(t_img) * 31 + 1);
+    g->sword = malloc(sizeof(t_img) * 32);
     while (i < 30)
     {
-        //printf("file: %s\n", add_file_extension(file, i));
+        int width = 1008;
+        int height = 874;
         g->sword[i].img = mlx_xpm_file_to_image(g->mlx_p,
-        add_file_extension(file, i), &sword_width, &sword_height);
+            add_file_extension(file, i), &width, &height);
+        g->sword[i].addr = mlx_get_data_addr(g->sword[i].img, &g->sword[i].bpp, 
+            &g->sword[i].line_len, &g->sword[i].endian);
+        g->sword[i].width = width;
+        g->sword[i].height = height;
         i++;
     }
-    
 }
 
 int    draw_idle(t_game *game)
 {
-    //static int i = 0;
-    int y = (int)game->player_s->pos_y;
-    int x = (int)game->player_s->pos_x;
-    //if (++i < 4)
-   // {
-   //     usleep(1000000 / game->fps * 5);
-    mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->sword[0].img, x, y + 90);
-   // }
-   // else
-   //     i = 0;
+    int y = game->mlx_s->screen_height - game->mlx_s->sword[0].height + 300;
+    int x = (game->mlx_s->screen_width - game->mlx_s->sword[0].width) / 2;
+
+    put_img_to_img(game->mlx_s->buffer, &game->mlx_s->sword[0], x, y);
     return (IDLE);
 }
 
 int draw_sword_animation(t_game *game)
 {
     static int i = 0;
-    int y = (int)game->player_s->pos_y;
-    int x = (int)game->player_s->pos_x;
+    int y = game->mlx_s->screen_height - game->mlx_s->sword[0].height + 300;
+    int x = (game->mlx_s->screen_width - game->mlx_s->sword[0].width) / 2;
 
     if (i < 30)
     {
-        mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->sword[i].img, x, y + 90);
+        put_img_to_img(game->mlx_s->buffer, &game->mlx_s->sword[i], x, y);
         i++;
     }
     if (i == 30)
@@ -122,5 +116,8 @@ int update(t_game *game)
     updated_at = timestamp_in_ms();
     printf("timestamp: %ld\t update: %ld, FPS: %d\n", timestamp_in_ms(), updated_at, game->fps);  
     game->sword_state = sword_manager(game, game->sword_state);
+    //draw_minimap(game);
+    put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
+    mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->buffer->img, 0, 0);
     return 0;
 }
