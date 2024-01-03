@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:00:44 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/02 17:42:29 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/03 03:20:00 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,58 @@
 
 #define TILE_SIZE 1024
 
-void	sl_image_init(t_mlx *g)
+
+void get_image_addr(t_img *img)
 {
-	int h;
-	int w;
-	
-	h = 32;
-	w = 32;
-	int w_w = 1280;
-	int w_h = 720;
-	int p_w = 128;
-	int p_h = 128;
-	g->img = malloc(sizeof(t_img) * (5 + 1));
-	if (!g->img)
-	{
-		printf("Error\n[errno: %d] Malloc failed\n", errno);
-		exit(0);
-	}
-	g->img[0].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/wall.xpm", &w, &h);
-	g->img[0].addr = mlx_get_data_addr(g->img[0].img, &g->img[0].bpp, &g->img[0].line_len, &g->img[0].endian);
-	g->img[1].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/path.xpm", &w, &h);
-	g->img[1].addr = mlx_get_data_addr(g->img[1].img, &g->img[1].bpp, &g->img[1].line_len, &g->img[1].endian);
-	g->img[2].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/clear.xpm", &w, &h);
-	g->img[3].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/start.xpm", &w_w, &w_h);
-	g->img[4].img = mlx_xpm_file_to_image(g->mlx_p, "textures/player/portrait.xpm", &p_w, &p_h);
-	g->img[4].addr = mlx_get_data_addr(g->img[4].img, &g->img[4].bpp, &g->img[4].line_len, &g->img[4].endian);
+    img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->line_len, &img->endian);
+}
+
+void set_image_dimensions(t_img *img, int w, int h)
+{
+    img->width = w;
+    img->height = h;
+}
+
+void sl_image_init(t_mlx *g)
+{
+    int h = 32;
+    int w = 32;
+    int w_w = 1280;
+    int w_h = 720;
+    int p_w = 128;
+    int p_h = 128;
+
+    g->img = malloc(sizeof(t_img) * (5 + 1));
+    if (!g->img)
+    {
+        printf("Error\n[errno: %d] Malloc failed\n", errno);
+        exit(0);
+    }
+    g->img[0].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/wall.xpm", &w, &h);
+    g->img[0].addr = mlx_get_data_addr(g->img[0].img, &g->img[0].bpp, &g->img[0].line_len, &g->img[0].endian);
+    g->img[0].width = w;
+    g->img[0].height = h;
+	printf("g->img[0].img = %p\n", g->img[0].img);
+    g->img[1].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/path.xpm", &w, &h);
+    g->img[1].addr = mlx_get_data_addr(g->img[1].img, &g->img[1].bpp, &g->img[1].line_len, &g->img[1].endian);
+    g->img[1].width = w;
+    g->img[1].height = h;
+	printf("g->img[1].img = %p\n", g->img[1].img);
+    g->img[2].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/clear.xpm", &w, &h);
+    g->img[2].addr = mlx_get_data_addr(g->img[2].img, &g->img[2].bpp, &g->img[2].line_len, &g->img[2].endian);
+    g->img[2].width = w;
+    g->img[2].height = h;
+	printf("g->img[2].img = %p\n", g->img[2].img);
+    g->img[3].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/start.xpm", &w_w, &w_h);
+    g->img[3].addr = mlx_get_data_addr(g->img[3].img, &g->img[3].bpp, &g->img[3].line_len, &g->img[3].endian);
+    g->img[3].width = w_w;
+    g->img[3].height = w_h;
+	printf("g->img[3].img = %p\n", g->img[3].img);
+    g->img[4].img = mlx_xpm_file_to_image(g->mlx_p, "textures/player/portrait.xpm", &p_w, &p_h);
+    g->img[4].addr = mlx_get_data_addr(g->img[4].img, &g->img[4].bpp, &g->img[4].line_len, &g->img[4].endian);
+    g->img[4].width = p_w;
+    g->img[4].height = p_h;
+	printf("g->img[4].img = %p\n", g->img[4].img);
 }
 
 void	img_pix_put(t_img *img, int x, int y, int color)
@@ -49,6 +76,12 @@ void	img_pix_put(t_img *img, int x, int y, int color)
     *(int *)pixel = color;
 }
 
+unsigned int	get_pixel_img(t_img *img, int x, int y) 
+{
+    return (*(unsigned int *)((img->addr
+            + (y * img->line_len) + (x * img->bpp / 8))));
+}
+
 t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh)
 {
     static t_position	od = {32, 32};
@@ -57,10 +90,7 @@ t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh)
     t_position			p = {0, 0};
     t_position			op;
 
-	printf("%p\n", img->img);
-   	ri = malloc(sizeof(t_img));
-    ri->img = mlx_new_image(g->mlx_p, nw, nh);
-    ri->addr = mlx_get_data_addr(ri->img, &ri->bpp, &ri->line_len, &ri->endian);
+    ri = g->buffer;
     while (p.y < nh)
     {
         p.x = 0;
@@ -87,6 +117,34 @@ void draw_resized_img(t_mlx *g, t_img *img, int pos[2], int size[2])
 		flag = 1;
 	}
     mlx_put_image_to_window(g->mlx_p, g->win, resized_img->img, pos[0], pos[1]);
+}
+
+void	put_pixel_img(t_img *img, int x, int y, int color)
+{
+    char	*dst;
+
+	if (color == (int)0xFF000000)
+		return ;
+    if (x >= 0 && y >= 0 && x < img->width && y < img->height) {
+        dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
+        *(unsigned int *) dst = color;
+    }
+}
+
+void	put_img_to_img(t_img *dst, t_img *src, int x, int y) 
+{
+    int i;
+    int j;
+
+    i = 0;
+    while(i < src->width) {
+        j = 0;
+        while (j < src->height) {
+            put_pixel_img(dst, x + i, y + j, get_pixel_img(src, i, j));
+            j++;
+        }
+        i++;
+    }
 }
 
 /*

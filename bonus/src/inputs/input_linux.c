@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/02 17:57:42 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/03 11:55:10 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,6 @@ int     on_key_press(int keycode, t_game *game)
 	if (game->state == GAME)
 	{
 		printf("keycode: %d\n", keycode);
-		if (keycode == XK_Tab)
-		{
-			if (flag == 0)
-			{
-				draw_minimap(game);
-				flag = 1;
-			}
-			else
-			{
-				mlx_clear_window(game->mlx_s->mlx_p, game->mlx_s->win);
-				flag = 0;
-			}
-		}
 		if (keycode == 32)
 			game->sword_state = draw_sword_animation(game);
 		if (keycode == 0x77 || keycode == XK_W) // 'w' key
@@ -65,7 +52,20 @@ int     on_key_press(int keycode, t_game *game)
 		else if (keycode == 0x64 || keycode == XK_D) // 'd' key
 			player->pos_x += 1;
 	}
-	
+	if (keycode == XK_Tab)
+	{
+		printf("Game state\n %d\n", PAUSE);
+		if (flag == 0)
+		{
+			game->state = screen_manager(game, PAUSE);
+			flag = 1;
+		}
+		else if (flag == 1) 
+		{
+			game->state = screen_manager(game, GAME);
+			flag = 0;
+		}
+	}
 	return (0);
 }
 
