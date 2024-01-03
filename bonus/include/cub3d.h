@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/02 18:18:42 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/03 11:45:00 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,15 @@ typedef struct s_image
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		width;
+	int		height;
 } t_img;
 
 typedef struct s_mlx
 {
 	void	*mlx_p;
 	void	*win;
+	t_img	*buffer;
 	t_img	*sword;
 	t_img	*img;
 	int		screen_height;
@@ -124,6 +127,7 @@ enum e_state
 {
 	TITLE,
 	GAME,
+	PAUSE,
 	END
 };
 
@@ -145,6 +149,9 @@ int		game_start(t_game *game);
 t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
 void	draw_resized_img(t_mlx *g, t_img *img, int pos[2], int size[2]);
 void	img_pix_put(t_img *img, int x, int y, int color);
+void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
+void	put_pixel_img(t_img *img, int x, int y, int color);
+unsigned int get_pixel_img(t_img *img, int x, int y);
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
