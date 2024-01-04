@@ -23,9 +23,9 @@
 
 #define PI 3.14159265358979323846
 #define MOVE_SPEED 1
-#define ROTATE_SPEED 0.04
+#define ROTATE_SPEED 0.05
 #define	FOV 90
-#define RENDER_DIST 150 
+#define RENDER_DIST 5 * 32 + 16
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
@@ -57,7 +57,7 @@ typedef struct s_player
 	double	dir_x; //direction
 	double	dir_y;
     double  angle;	// in radians
-	int		is_moving;
+	double	distance;
 }	t_player;
 
 
