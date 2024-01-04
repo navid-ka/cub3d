@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/03 11:55:10 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/04 12:24:07 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int     on_key_press(int keycode, t_game *game)
 		if (flag == 0)
 		{
 			game->state = screen_manager(game, PAUSE);
+			//draw_minimap(game);
 			flag = 1;
 		}
 		else if (flag == 1) 

@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:00:44 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/03 03:20:00 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/04 12:23:29 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void sl_image_init(t_mlx *g)
     int p_w = 128;
     int p_h = 128;
 
+
     g->img = malloc(sizeof(t_img) * (5 + 1));
     if (!g->img)
     {
@@ -45,6 +46,8 @@ void sl_image_init(t_mlx *g)
     g->img[0].addr = mlx_get_data_addr(g->img[0].img, &g->img[0].bpp, &g->img[0].line_len, &g->img[0].endian);
     g->img[0].width = w;
     g->img[0].height = h;
+    g->img[0] = *resize_image(g, &g->img[0], 8, 8);
+    
 	printf("g->img[0].img = %p\n", g->img[0].img);
     g->img[1].img = mlx_xpm_file_to_image(g->mlx_p, "textures/map/path.xpm", &w, &h);
     g->img[1].addr = mlx_get_data_addr(g->img[1].img, &g->img[1].bpp, &g->img[1].line_len, &g->img[1].endian);
@@ -76,6 +79,23 @@ void	img_pix_put(t_img *img, int x, int y, int color)
     *(int *)pixel = color;
 }
 
+t_img *create_new_img(t_mlx *g, int width, int height)
+{
+    t_img *new_img;
+
+    new_img = malloc(sizeof(t_img));
+    if (!new_img)
+    {
+        printf("Error\n[errno: %d] Malloc failed\n", errno);
+        exit(0);
+    }
+    new_img->img = mlx_new_image(g->mlx_p, width, height);
+    new_img->addr = mlx_get_data_addr(new_img->img, &new_img->bpp, &new_img->line_len, &new_img->endian);
+    new_img->width = width;
+    new_img->height = height;
+    return (new_img);
+}
+
 unsigned int	get_pixel_img(t_img *img, int x, int y) 
 {
     return (*(unsigned int *)((img->addr
@@ -90,7 +110,7 @@ t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh)
     t_position			p = {0, 0};
     t_position			op;
 
-    ri = g->buffer;
+    ri = create_new_img(g, nw, nh);
     while (p.y < nh)
     {
         p.x = 0;
