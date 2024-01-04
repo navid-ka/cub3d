@@ -42,6 +42,7 @@ int     on_key_press(int keycode, t_game *game)
 		player->angle += move_rot(player, game->map_s->map, XK_Right);
 	printf("x: %f | y: %f\n \nAngle: %f rads | %dº\n(0 is looking EAST)\n", player->pos_x, player->pos_y, player->angle, (int)(player->angle * 180 / PI));
 	printf("dir_x: %f\ndir_y: %f\n", game->player_s->dir_x, game->player_s->dir_y);
+	raycast(game);
 	return (0);
 }
 

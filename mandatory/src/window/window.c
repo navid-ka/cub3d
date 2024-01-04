@@ -55,7 +55,6 @@ int    game_start(t_game *game)
 {
 	check_input(game);
 	draw_map(game);
-	raycast(game);
 	clear_player(game);
 	draw_player(game);
 	
