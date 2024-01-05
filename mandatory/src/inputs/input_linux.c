@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_linux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/02 23:03:16 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/05 23:39:06 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int     on_key_press(int keycode, t_game *game)
 		player->angle += move_rot(player, game->map_s->map, XK_Right);
 	printf("x: %f | y: %f\n \nAngle: %f rads | %dº\n(0 is looking EAST)\n", player->pos_x, player->pos_y, player->angle, (int)(player->angle * 180 / PI));
 	printf("dir_x: %f\ndir_y: %f\n", game->player_s->dir_x, game->player_s->dir_y);
-	raycast(game);
 	return (0);
 }
 

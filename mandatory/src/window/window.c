@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/02 20:35:46 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/05 23:39:37 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int    game_start(t_game *game)
 	draw_map(game);
 	clear_player(game);
 	draw_player(game);
-	
+	raycast(game);
 	return (0);
 }
 
