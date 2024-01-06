@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/02 20:28:39 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/06 18:09:04 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ void	map_init(t_map *map)
 	map->orientation = 0;
 }
 
+void	camera_init(t_camera *camera)
+{
+	camera->plane_x = 0;
+}
+
 void	player_init(t_player *player)
 {
 	player->pos_x = 0;
@@ -44,6 +49,8 @@ void	player_init(t_player *player)
 	player->dir_x = 0;
 	player->dir_y = 0;
 	player->fov = FOV * (PI / 180);
+	player->angle = 0;
+	player->dg_angle = 0;
 }
 
 
