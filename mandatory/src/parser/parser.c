@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/05 23:40:10 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/06 17:56:41 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	angle_init(t_player *player, t_map *map)
 {
+	player->dg_angle = map->orientation;
 	player->angle = map->orientation * PI / 180;
 	player->dir_x = cos(player->angle);
 	player->dir_y = sin(player->angle);

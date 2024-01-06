@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/05 23:50:07 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/06 18:19:03 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ double    draw_line(t_game *game, double x0, double y0, double angle)
 	for (int i = 0 ; i < RENDER_DIST ; i++)
 	{
 		// check if it hits a wall. Will need the map.
-		mlx_pixel_put(game->mlx_s->mlx_p, game->mlx_s->win, (x_inc), (y_inc), 0x00AAFF00);
-		x_inc -= 1 * cos(angle);
+		x_inc += 1 * cos(angle);
 		y_inc -= 1 * sin(angle);
 		if (check_wall(game, x0, y0))
-			return (sqrt((pow(x_inc - x0, 2)) + pow(y_inc - y0, 2)));
+		{
+			//return (sqrt((pow(x_inc - x0, 2)) + pow(y_inc - y0, 2)));
+			break;
+		}
+		mlx_pixel_put(game->mlx_s->mlx_p, game->mlx_s->win, (x_inc), (y_inc), 0x00AAFF00);
 	}
 	return (RENDER_DIST);
 }
@@ -65,7 +68,7 @@ void    raycast(t_game *game)
 		(distance > 0) 
 		draw_camera()		
 */		
-		orientation += ROTATE_SPEED;
+		orientation += 1;
 	}
 	return ;
 }

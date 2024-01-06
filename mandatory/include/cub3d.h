@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/02 20:51:04 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/06 18:07:38 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@
 
 typedef struct s_camera
 {
-	double	plane_x;
-	double	plane_y;
+	double	plane_x;	// camera plane ortogonal to the direction vector
+	
 }	t_camera;
 
 typedef struct s_player
@@ -57,6 +57,7 @@ typedef struct s_player
 	double	dir_x; //direction
 	double	dir_y;
     double  angle;	// in radians
+	int		dg_angle;
 	double	distance;
 }	t_player;
 
@@ -134,9 +135,10 @@ double	move_x(t_player *p, char **map, int dir);
 double	move_y(t_player *p, char **map, int dir);
 double	move_rot(t_player *p, char **map, int dir);
 
-//Raycast
+//Raycast or angles
 void    raycast(t_game *game);
-
+double	deg_to_rad(int dg_angle);
+int		rad_to_dg(double angle);
 
 // Init structs 
 void    cub_init(t_cub *init, char **argv);

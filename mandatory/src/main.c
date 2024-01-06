@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/02 20:36:36 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/06 18:08:37 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	game_init(t_game *game)
 		exit(1);
 	}
 	player_init(game->player_s);
+	
 }
 
 
