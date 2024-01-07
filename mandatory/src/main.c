@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/06 18:08:37 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/06 20:12:00 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	game_init(t_game *game)
 	game->map_s = malloc(sizeof(t_map));
 	game->mlx_s = malloc(sizeof(t_mlx));
 	game->player_s = malloc(sizeof(t_player));
-	if (!game->cub_s || !game->map_s || !game->mlx_s || !game->player_s)
+	game->camera_s = malloc(sizeof(t_camera));
+	if (!game->cub_s || !game->map_s || !game->mlx_s || !game->player_s
+		|| !game->camera_s)
 	{
 		ft_printf("Error\nMalloc error\n");
 		exit(1);

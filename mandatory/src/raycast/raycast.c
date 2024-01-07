@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/06 18:19:03 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/06 20:53:10 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,20 @@ int	check_wall(t_game *game, double x0, double y0)
 void    raycast(t_game *game)
 {
 	double  orientation;
-	double	distance;
+	double  perp_wall_dist;
+/*
 	double	x0;
 	double	y0;
 	
 	y0 = game->player_s->pos_y * 32 + 16;
 	x0 = game->player_s->pos_x * 32 + 16;
+*/
 	orientation = game->player_s->angle;
 	while (orientation == game->player_s->angle)//< game->player_s->fov + game->player_s->angle)
 	{
-		distance = draw_line(game, x0, y0, orientation) - 16;
-		distance /= 32;
+		game->player_s->distance = dda_rays(game);
+		perp_wall_dist = game->player_s->distance
+		int line_height = (int)(S_HEIGHT / perp_wall_dist);
 
 //		draw the points in the screen using the distance.
 /*

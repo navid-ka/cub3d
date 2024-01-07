@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/06 17:43:29 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/06 20:39:02 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,15 @@ void draw_map(t_game *game)
 
 int check_input(t_game *game)
 {
+	//	1st window
 	mlx_hook(game->mlx_s->win, 2, 0, &on_key_press, game);
 	mlx_hook(game->mlx_s->win, 3, 0, &on_key_release, game);
 	mlx_hook(game->mlx_s->win, 17, 1L<<0, &window_destroy, game);
+	
+	//	raycaster window
+	mlx_hook(game->mlx_s->pov, 2, 0, &on_key_press, game);
+	mlx_hook(game->mlx_s->pov, 3, 0, &on_key_release, game);
+	mlx_hook(game->mlx_s->pov, 17, 1L<<0, &window_destroy, game);
 	
 	return (0);
 }
@@ -68,8 +74,10 @@ void    mlx_window(t_game *game)
 	window = game->mlx_s;
 	window_init(window);
 	window->mlx_p = mlx_init();
+	window->pov = mlx_new_window(window->mlx_p, S_WIDTH, S_HEIGHT, "RAYCAST");
 	window->win = mlx_new_window(window->mlx_p, game->map_s->width * 32, game->map_s->height * 32, "Cub3D");
 	sl_image_init(game->mlx_s);
+	render_3d_map(game);
 	check_input(game);
 	mlx_loop_hook(window->mlx_p, &game_start, game);
 	mlx_loop(window->mlx_p);
