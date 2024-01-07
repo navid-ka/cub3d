@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/06 18:07:38 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/06 20:33:20 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <errno.h>
 
 #define PI 3.14159265358979323846
+#define S_WIDTH 1280
+#define S_HEIGHT 720
 #define MOVE_SPEED 1
 #define ROTATE_SPEED 0.05
 #define	FOV 90
@@ -46,6 +48,18 @@
 typedef struct s_camera
 {
 	double	plane_x;	// camera plane ortogonal to the direction vector
+	double	plane_y;
+	double	ray_dir_x;	// direction vector
+	double	ray_dir_y;
+	double	camera_x;	// x-coordinate in camera space
+	double	camera_y;
+	double	delta_dist_x;	// length of ray from one x or y-side to next x or y-side
+	double	delta_dist_y;
+	double	side_dist_x;	// length of ray from current position to next x or y-side
+	double	side_dist_y;
+	double	perp_wall_dist;	// length of ray from current position to next x or y-side
+	int		step_x;	// what direction to step in x or y-direction (either +1 or -1)
+	int		step_y;
 	
 }	t_camera;
 
@@ -109,6 +123,7 @@ typedef struct s_mlx
 {
 	void	*mlx_p;
 	void	*win;
+	void	*pov;
 	t_img	*img;
 	int		screen_height;
 	int		screen_width;
@@ -124,11 +139,14 @@ typedef struct s_game
 	t_map		*map_s;
 	t_cub		*cub_s;
 	t_player	*player_s;
+	t_camera	*camera_s;
+
 } t_game;
 
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
+void	camera_init(t_camera *camera, t_player *player);
 
 //Movement
 double	move_x(t_player *p, char **map, int dir);
@@ -139,6 +157,8 @@ double	move_rot(t_player *p, char **map, int dir);
 void    raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
+double dda_rays(t_game *game);
+void	render_3d_map(t_game *game);
 
 // Init structs 
 void    cub_init(t_cub *init, char **argv);

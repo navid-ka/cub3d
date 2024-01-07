@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:00:44 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/22 12:16:14 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/06 19:58:07 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void clear_player(t_game *game)
 	int y = (int)game->player_s->pos_y * 32;
 	int x = (int)game->player_s->pos_x * 32;
 	mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->img[2].img, x, y);
-	
 }
 
 void draw_player(t_game *game)
@@ -63,4 +62,5 @@ void draw_player(t_game *game)
     // Draw the player tile on the screen
 //    printf("Player tile: %c\n", game->map_s->map[player_row][player_col]);
     mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->img[0].img, x, y);
+
 }
