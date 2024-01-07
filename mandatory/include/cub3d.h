@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/07 19:46:47 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/07 20:22:35 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <errno.h>
 
 #define PI 3.14159265358979323846
-#define S_WIDTH 1280
-#define S_HEIGHT 720
+#define S_WIDTH 720
+#define S_HEIGHT 480
 #define MOVE_SPEED 1
 #define ROTATE_SPEED 0.05
 #define	FOV 90
