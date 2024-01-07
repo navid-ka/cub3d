@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/06 20:39:02 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/07 20:19:56 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int window_destroy(t_game *game)
 {
 	mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->win);
+	mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->pov);
 	garbage_collector(game);
 	exit(0);
 }
@@ -74,10 +75,9 @@ void    mlx_window(t_game *game)
 	window = game->mlx_s;
 	window_init(window);
 	window->mlx_p = mlx_init();
-	window->pov = mlx_new_window(window->mlx_p, S_WIDTH, S_HEIGHT, "RAYCAST");
 	window->win = mlx_new_window(window->mlx_p, game->map_s->width * 32, game->map_s->height * 32, "Cub3D");
+	window->pov = mlx_new_window(window->mlx_p, S_WIDTH, S_HEIGHT, "RAYCAST");
 	sl_image_init(game->mlx_s);
-	render_3d_map(game);
 	check_input(game);
 	mlx_loop_hook(window->mlx_p, &game_start, game);
 	mlx_loop(window->mlx_p);
