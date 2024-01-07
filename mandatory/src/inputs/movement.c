@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 21:25:00 by plinscho          #+#    #+#             */
-/*   Updated: 2023/12/31 18:36:30 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:08:44 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,25 @@
 #define WALL_SAYS ft_printf("\nYou touch the wall...\nIt's Cold.\n");
 #include <X11/keysym.h>
 
-double	move_rot(t_player *p, char **map, int dir)
+double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
 {
+	double increment;
+	
 	(void)map;
-	if (dir == XK_Left) // moving left
-	{
-		if (p->angle - ROTATE_SPEED < 0)
-			p->angle = 2 * PI;
-		return (ROTATE_SPEED);
-	}
+	if (dir == XK_Right) // moving left
+		increment = -ROTATE_SPEED;
 	else// if (dir == 0x64) // moving right
-	{
-		if (p->angle + ROTATE_SPEED > 2 * PI)
-			p->angle = 0;
-		return (ROTATE_SPEED);
-	}
+		increment = ROTATE_SPEED;
+	p->angle += increment;
+	if (p->angle < 0)
+		p->angle += 2 * PI;
+	else if (p->angle > 2 * PI)
+		p->angle -= 2 * PI;
+	p->dir_x = cos(p->angle);
+	p->dir_y = sin(p->angle);
+	cam->plane_x = p->dir_y * cam->plane_multiplier;
+	cam->plane_y = -p->dir_x * cam->plane_multiplier;
+	return (p->angle);
 }
 
 double	move_y(t_player *p, char **map, int dir)

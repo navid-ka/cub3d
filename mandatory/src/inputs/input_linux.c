@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_linux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/02 23:03:16 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/07 20:20:15 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
 
 int     on_key_press(int keycode, t_game *game)
 {
+	t_camera *camera;
 	t_player *player;
 
 	player = game->player_s;
+	camera = game->camera_s;
 	clear_player(game);
 	if (keycode == XK_Escape)
 		return (window_destroy(game));
@@ -36,13 +38,13 @@ int     on_key_press(int keycode, t_game *game)
 		player->pos_x -= move_x(player, game->map_s->map, XK_A);
 	else if (keycode == 0x64 || keycode == XK_D) // 'd' key
 		player->pos_x += move_x(player, game->map_s->map, XK_D);
-	else if (keycode == 0xff51 || keycode == XK_Left) // 'left arrow' key
-		player->angle -= move_rot(player, game->map_s->map, XK_Left);
-	else if (keycode ==  0xff53 || keycode == XK_Right) // 'right arrow' key
-		player->angle += move_rot(player, game->map_s->map, XK_Right);
-	printf("x: %f | y: %f\n \nAngle: %f rads | %dº\n(0 is looking EAST)\n", player->pos_x, player->pos_y, player->angle, (int)(player->angle * 180 / PI));
+	else if (keycode == XK_Right || keycode == XK_Left) // 'left arrow' key
+		player->angle = move_rot(camera, player, game->map_s->map, keycode);
+	printf("x: %f | y: %f\n \nAngle: %f rads | %dº\n(0 is looking EAST)\n", 
+		player->pos_x, player->pos_y, player->angle, rad_to_dg(player->angle));
 	printf("dir_x: %f\ndir_y: %f\n", game->player_s->dir_x, game->player_s->dir_y);
-	raycast(game);
+	printf("Distance: %f\n", game->player_s->distance);
+	mlx_clear_window(game->mlx_s->mlx_p, game->mlx_s->pov);
 	return (0);
 }
 
