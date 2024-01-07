@@ -6,11 +6,21 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:30 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/06 20:50:09 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:53:42 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
+double	plane_mult(int fov)
+{
+	double	plane_multiplier;
+
+	plane_multiplier = deg_to_rad(fov);
+	plane_multiplier = tan(plane_multiplier / 2);
+	plane_multiplier = 2 / plane_multiplier;
+	return (plane_multiplier);
+}
 
 double	deg_to_rad(int dg_angle)
 {

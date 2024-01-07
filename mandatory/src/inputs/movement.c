@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 21:25:00 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/06 20:24:17 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:08:44 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define WALL_SAYS ft_printf("\nYou touch the wall...\nIt's Cold.\n");
 #include <X11/keysym.h>
 
-double	move_rot(t_player *p, char **map, int dir)
+double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
 {
 	double increment;
 	
@@ -30,6 +30,8 @@ double	move_rot(t_player *p, char **map, int dir)
 		p->angle -= 2 * PI;
 	p->dir_x = cos(p->angle);
 	p->dir_y = sin(p->angle);
+	cam->plane_x = p->dir_y * cam->plane_multiplier;
+	cam->plane_y = -p->dir_x * cam->plane_multiplier;
 	return (p->angle);
 }
 
