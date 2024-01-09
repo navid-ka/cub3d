@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 17:08:51 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/04 11:43:38 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/09 04:21:56 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ int	pause_menu(t_game *game)
 }
 int	screen_manager(t_game *g, enum e_state state)
 {
-	static const t_state_manager	screen_state_lookup[4] = {
+	static const t_state_manager	screen_state_lookup[5] = {
 	[TITLE] = {title_menu},
 	[GAME] = {game_start},
+	[COMBAT] = {combat},
 	[PAUSE] = {pause_menu},
 	[END] = {end_menu}
 	};

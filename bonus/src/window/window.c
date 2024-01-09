@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/03 03:47:19 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/09 04:40:55 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void clear_image(t_img *img)
 
 int game_start(t_game *game)
 {
+	unsigned int randi = f_randi(game->steps);
     if (game->state == TITLE && game->state != GAME)
 	{
         game->state = screen_manager(game, TITLE);
@@ -72,14 +73,18 @@ int game_start(t_game *game)
 	}
     if (game->state == GAME)
     {
-		//mlx_clear_window(game->mlx_s->mlx_p, game->mlx_s->win);
-		//draw_minimap(game);
-		//put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
 		clear_image(game->mlx_s->buffer);
         update(game);
-		//mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->buffer->img, 0, 0);
+		printf("randi: %d\n", randi % 3);
+		if (randi % 3 == 0 && game->steps > 100)
+		{
+			game->state = screen_manager(game, COMBAT);
+		}
     }
-	
+	if (game->state == COMBAT)
+	{
+		
+	}
     return (GAME);
 }
 
