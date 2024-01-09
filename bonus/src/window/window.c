@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/09 04:40:55 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/09 20:56:00 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,12 @@ int game_start(t_game *game)
         update(game);
 		printf("randi: %d\n", randi % 3);
 		if (randi % 3 == 0 && game->steps > 100)
-		{
 			game->state = screen_manager(game, COMBAT);
-		}
     }
 	if (game->state == COMBAT)
 	{
-		
+		clear_image(game->mlx_s->buffer);
+		update(game);
 	}
     return (GAME);
 }
@@ -113,6 +112,7 @@ void    mlx_window(t_game *game)
 	game->sword_state = 0;
 	sl_image_init(window);
 	load_sword_img(window);
+	load_enemy_img(window);
 	check_input(game);
 	mlx_loop_hook(window->mlx_p, &game_start, game);
 	mlx_loop(window->mlx_p);

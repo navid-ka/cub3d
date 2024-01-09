@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/09 04:27:26 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/09 21:20:05 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@
 
 uint64_t created_at = 0;
 
-static uint64_t	gettimeofday_ms(void) {
+static uint64_t	gettimeofday_ms(void) 
+{
 	static struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));
 }
 
-uint64_t	timestamp_in_ms(void) {
+uint64_t	timestamp_in_ms(void) 
+{
 	if (created_at == 0)
 		created_at = gettimeofday_ms();
 	return (gettimeofday_ms() - created_at);
@@ -115,9 +117,11 @@ int update(t_game *game)
         return 0;
     updated_at = timestamp_in_ms();
     //printf("timestamp: %ld\t update: %ld, FPS: %d\n", timestamp_in_ms(), updated_at, game->fps);  
-    game->sword_state = sword_manager(game, game->sword_state);
     draw_minimap(game);
     put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
+    if (game->state == COMBAT)
+        put_img_to_img(game->mlx_s->buffer, &game->mlx_s->enemy[0], (game->mlx_s->screen_width - game->mlx_s->enemy[0].width) / 2, (game->mlx_s->screen_height - game->mlx_s->enemy[0].height) / 2) ;
+    game->sword_state = sword_manager(game, game->sword_state);
     mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->buffer->img, 0, 0);
     return 0;
 }
