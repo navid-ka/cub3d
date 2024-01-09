@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/09 04:21:40 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/09 20:55:38 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_mlx
 	void	*win;
 	t_img	*buffer;
 	t_img	*sword;
+	t_img	*enemy;
 	t_img	*img;
 	int		screen_height;
 	int		screen_width;
@@ -154,7 +155,10 @@ void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
 void	put_pixel_img(t_img *img, int x, int y, int color);
 unsigned int get_pixel_img(t_img *img, int x, int y);
 unsigned int f_randi(uint32_t idx);
+uint64_t	timestamp_in_ms(void);
 int		combat(t_game *g);
+
+void load_enemy_img(t_mlx *g);
 
 // Parser
 void    fd_parser(t_game *game, char **argv);

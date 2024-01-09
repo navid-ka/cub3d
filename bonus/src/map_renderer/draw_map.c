@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:00:44 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/04 12:23:29 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/09 20:37:35 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,14 @@ unsigned int	get_pixel_img(t_img *img, int x, int y)
 
 t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh)
 {
-    static t_position	od = {32, 32};
-    t_img				*ri;
-    int					c;
-    t_position			p = {0, 0};
-    t_position			op;
+    t_position	od;
+    t_img		*ri;
+    int			c;
+    t_position	p = {0, 0};
+    t_position	op;
 
+    od.x = img->height;
+    od.y = img->width;
     ri = create_new_img(g, nw, nh);
     while (p.y < nh)
     {

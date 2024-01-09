@@ -20,7 +20,8 @@ SRC = src/main.c \
 		src/screen_manager/screen_manager.c \
 		src/animations/sword.c \
 		src/minimap/draw_minimap.c \
-		src/combat/combat.c
+		src/combat/combat.c \
+		src/combat/enemies_loader.c
 		
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))

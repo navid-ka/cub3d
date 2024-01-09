@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   combat.c                                           :+:      :+:    :+:   */
+/*   enemies_loader.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/09 20:52:24 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/09 20:59:29 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-unsigned int f_randi(uint32_t idx)
+void load_enemy_img(t_mlx *g)
 {
-	idx = (idx << 13) ^ idx;
-	return ((idx * (idx * idx * 15731 + 789221) + 1376312589) & 0x7fffffff);
+    int h = 64;
+    int w = 64;
+
+    g->enemy = malloc(sizeof(t_img) * (2 + 1));
+    if (!g->enemy)
+    {
+        printf("Error\n[errno: %d] Malloc failed\n", errno);
+        exit(0);
+    }
+    g->enemy[0].img = mlx_xpm_file_to_image(g->mlx_p, "textures/enemies/enemy0.xpm", &w, &h);
+    g->enemy[0].addr = mlx_get_data_addr(g->enemy[0].img, &g->enemy[0].bpp, &g->enemy[0].line_len, &g->enemy[0].endian);
+    g->enemy[0].width = w;
+    g->enemy[0].height = h;
+    g->enemy[0] = *resize_image(g, &g->enemy[0], 256, 256);
 }
 
-int combat(t_game *g)
-{
-    (void)g;
-    printf("entered combat\n");
-    return (COMBAT);
-}
