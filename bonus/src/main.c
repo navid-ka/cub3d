@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/10 18:04:12 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/09 04:23:53 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	game_init(t_game *game)
 	game->map_s = malloc(sizeof(t_map));
 	game->mlx_s = malloc(sizeof(t_mlx));
 	game->player_s = malloc(sizeof(t_player));
-
 	if (!game->cub_s || !game->map_s || !game->mlx_s || !game->player_s)
 	{
 		ft_printf("Error\nMalloc error\n");
 		exit(1);
 	}
+	game->steps = 0;
 }
 
 int main(int argc, char **argv)
