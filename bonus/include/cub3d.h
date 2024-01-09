@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/04 12:20:32 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/09 04:21:40 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct s_game
 	t_player	*player_s;
 	int 		state;
 	int			sword_state;
+	int			steps;
 	int 		fps;
 } t_game;
 
@@ -127,6 +128,7 @@ enum e_state
 {
 	TITLE,
 	GAME,
+	COMBAT,
 	PAUSE,
 	END
 };
@@ -143,7 +145,6 @@ typedef struct state_manager
 } t_state_manager;
 
 
-
 int		screen_manager(t_game *g, enum e_state state);
 int		game_start(t_game *game);
 t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
@@ -152,6 +153,8 @@ void	img_pix_put(t_img *img, int x, int y, int color);
 void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
 void	put_pixel_img(t_img *img, int x, int y, int color);
 unsigned int get_pixel_img(t_img *img, int x, int y);
+unsigned int f_randi(uint32_t idx);
+int		combat(t_game *g);
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
