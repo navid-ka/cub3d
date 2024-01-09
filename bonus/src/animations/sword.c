@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/04 12:24:17 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/09 04:27:26 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int update(t_game *game)
     if (timestamp_in_ms() - updated_at < (uint64_t)(1000 / game->fps))
         return 0;
     updated_at = timestamp_in_ms();
-    printf("timestamp: %ld\t update: %ld, FPS: %d\n", timestamp_in_ms(), updated_at, game->fps);  
+    //printf("timestamp: %ld\t update: %ld, FPS: %d\n", timestamp_in_ms(), updated_at, game->fps);  
     game->sword_state = sword_manager(game, game->sword_state);
     draw_minimap(game);
     put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
