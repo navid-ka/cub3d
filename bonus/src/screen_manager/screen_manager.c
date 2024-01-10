@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 17:08:51 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/09 04:21:56 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/11 00:06:39 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	end_menu(t_game *game)
 {
-	(void)game;
+	game->state = TITLE;
 	return (TITLE);
 }
 
