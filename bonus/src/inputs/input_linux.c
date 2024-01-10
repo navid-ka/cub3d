@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/09 20:44:14 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/11 00:05:36 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int on_mouse_click(int button, int x, int y, t_game *game)
 	(void)x;
 	(void)y;
     if (button == 1 && game->state == COMBAT)
+	{
         game->sword_state = draw_sword_animation(game);
+		in_combat(game);
+	}
     return (0);
 }
 
@@ -62,7 +65,8 @@ int     on_key_press(int keycode, t_game *game)
 		if (flag == 0)
 		{
 			game->state = screen_manager(game, PAUSE);
-			//draw_minimap(game);
+			mlx_string_put(game->mlx_s->mlx_p, game->mlx_s->win, (game->mlx_s->screen_width - sizeof "PAUSE") / 2, 
+				(game->mlx_s->screen_height - sizeof "PAUSE") / 2, 0x00FFFFFF, "PAUSE");
 			flag = 1;
 		}
 		else if (flag == 1) 
