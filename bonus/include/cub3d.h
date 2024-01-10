@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/09 20:55:38 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/11 00:05:24 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,15 @@ typedef struct s_player
 	double	dir_y;
     double  fov;
 	int		is_moving;
+	int 	hp;
 }t_player;
+
+typedef struct s_enemy
+{
+	int hp;
+	int lvl;
+}t_enemy;
+
 
 typedef struct s_position
 {
@@ -119,6 +127,7 @@ typedef struct s_game
 	t_map		*map_s;
 	t_cub		*cub_s;
 	t_player	*player_s;
+	t_enemy		*enemy;
 	int 		state;
 	int			sword_state;
 	int			steps;
@@ -157,6 +166,7 @@ unsigned int get_pixel_img(t_img *img, int x, int y);
 unsigned int f_randi(uint32_t idx);
 uint64_t	timestamp_in_ms(void);
 int		combat(t_game *g);
+int in_combat(t_game *g);
 
 void load_enemy_img(t_mlx *g);
 
