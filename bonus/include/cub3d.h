@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/11 00:05:24 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/11 15:29:39 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@
 # include <stdlib.h>
 # include <math.h>
 # include <mlx.h>
+# include <stdbool.h>
 # include <stdint.h>
 # include <errno.h>
 
-#define PI 3.14159265358979323846
+# define PI 3.14159265358979323846
+# define SECONDS 1000
+# define HP_PLAYER 20
+# define HP_ENEMY_BASE 20
+# define TIMETOGETHIT 10000
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
@@ -48,12 +53,17 @@ typedef struct s_player
     double  fov;
 	int		is_moving;
 	int 	hp;
+	int		dmg;
+	int		exp;
+		
 }t_player;
 
 typedef struct s_enemy
 {
-	int hp;
-	int lvl;
+	double hp;
+	double lvl;
+	double armor;
+	double dmg;
 }t_enemy;
 
 
@@ -131,6 +141,9 @@ typedef struct s_game
 	int 		state;
 	int			sword_state;
 	int			steps;
+	uint64_t	created_at;
+	uint64_t	updated_at;
+	uint64_t 	combat_started_at;
 	int 		fps;
 } t_game;
 
@@ -164,9 +177,11 @@ void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
 void	put_pixel_img(t_img *img, int x, int y, int color);
 unsigned int get_pixel_img(t_img *img, int x, int y);
 unsigned int f_randi(uint32_t idx);
-uint64_t	timestamp_in_ms(void);
+uint64_t	timestamp_in_ms(t_game *game);
 int		combat(t_game *g);
 int in_combat(t_game *g);
+void handle_battle_click(t_game *g);
+void combat_manager(t_game *g);
 
 void load_enemy_img(t_mlx *g);
 
