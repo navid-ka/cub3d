@@ -6,7 +6,6 @@ UNAME  = $(shell uname)
 HEADERS = include/cub3d.h include/raycast.h
 SRC = src/main.c \
 		src/garbage_collector/garbage.c \
-		src/map_renderer/draw_map.c \
 		src/parser/parser.c \
 		src/parser/structs_init.c \
 		src/parser/fd_checker.c \
@@ -21,7 +20,12 @@ SRC = src/main.c \
 		src/animations/sword.c \
 		src/minimap/draw_minimap.c \
 		src/combat/combat.c \
-		src/combat/enemies_loader.c
+		src/combat/enemies_loader.c \
+		src/animations/time.c \
+		src/window/update_window.c \
+		src/img_loader/img_load.c \
+		src/img_loader/img_utils.c \
+		src/img_loader/img_utils2.c
 		
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
@@ -41,7 +45,6 @@ LMLX = -Iinclude/libft/include -Linclude/libft/bin -lft \
 	-I$(MLXDIR) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit
 else
 SRC += src/inputs/input_linux.c
-SRC += src/map_renderer/player_linux.c
 MLXDIR = include/mlx_linux/
 OLD_MAKE = make
 MLX = $(MLXDIR)libmlx.a
