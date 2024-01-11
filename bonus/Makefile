@@ -25,7 +25,8 @@ SRC = src/main.c \
 		src/window/update_window.c \
 		src/img_loader/img_load.c \
 		src/img_loader/img_utils.c \
-		src/img_loader/img_utils2.c
+		src/img_loader/img_utils2.c \
+		src/img_loader/fonts.c \
 		
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
