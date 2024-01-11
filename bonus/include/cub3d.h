@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/11 21:14:13 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/11 23:17:40 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ typedef struct s_mlx
 	t_img	*sword;
 	t_img	*enemy;
 	t_img	*img;
+	t_img	*fonts;
 	int		screen_height;
 	int		screen_width;
 	
@@ -176,6 +177,8 @@ int in_combat(t_game *g);
 void handle_battle_click(t_game *g);
 void combat_manager(t_game *g);
 void load_enemy_img(t_mlx *g);
+void load_fonts(t_mlx *g);
+void draw_str_to_font(t_mlx *g, char *str, int x, int y);
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
