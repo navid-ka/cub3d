@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/11 15:00:48 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/11 21:24:47 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ unsigned int f_rand(void)
 {
     return rand() % 100;    
 }
-
 
 void level_enemy_up(t_game *g) 
 {
@@ -98,7 +97,6 @@ int combat(t_game *g)
     return (COMBAT);
 }
 
-/// 
 void combat_manager(t_game *g) 
 {
     
