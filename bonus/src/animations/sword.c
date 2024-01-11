@@ -6,29 +6,13 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/11 15:29:05 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/11 20:48:56 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 #include <sys/time.h>
 #include <stdint.h>
-
-static uint64_t	gettimeofday_ms(void) 
-{
-	static struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
-uint64_t	timestamp_in_ms(t_game *game) 
-{
-	if (game->created_at == 0)
-		game->created_at = gettimeofday_ms();
-    //printf("timestamp: %lu\n", gettimeofday_ms());
-	return (gettimeofday_ms() - game->created_at);
-}
 
 
 char *add_file_extension(char *file, int num)
@@ -106,24 +90,4 @@ int	sword_manager(t_game *g, enum e_sword state)
 
 	g->sword_state = state;
 	return (sword_state_lookup[state].f(g));
-}
-
-
-
-int update(t_game *game) 
-{
-    if (timestamp_in_ms(game) - game->updated_at < (uint64_t)(1000 / game->fps))
-        return 0;
-    game->updated_at = timestamp_in_ms(game);
-    
-    draw_minimap(game);
-    put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
-    if (game->state == COMBAT)
-    {
-        put_img_to_img(game->mlx_s->buffer, &game->mlx_s->enemy[1], (game->mlx_s->screen_width - game->mlx_s->enemy[1].width) / 2, (game->mlx_s->screen_height - game->mlx_s->enemy[1].height) / 2);
-        combat_manager(game);
-    }
-    game->sword_state = sword_manager(game, game->sword_state);
-    mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->buffer->img, 0, 0);
-    return 0;
 }

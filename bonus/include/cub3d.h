@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/11 15:29:39 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/11 21:14:13 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,22 +167,14 @@ typedef struct state_manager
     int (*f)(t_game *);
 } t_state_manager;
 
-
 int		screen_manager(t_game *g, enum e_state state);
 int		game_start(t_game *game);
-t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
-void	draw_resized_img(t_mlx *g, t_img *img, int pos[2], int size[2]);
-void	img_pix_put(t_img *img, int x, int y, int color);
-void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
-void	put_pixel_img(t_img *img, int x, int y, int color);
-unsigned int get_pixel_img(t_img *img, int x, int y);
 unsigned int f_randi(uint32_t idx);
 uint64_t	timestamp_in_ms(t_game *game);
 int		combat(t_game *g);
 int in_combat(t_game *g);
 void handle_battle_click(t_game *g);
 void combat_manager(t_game *g);
-
 void load_enemy_img(t_mlx *g);
 
 // Parser
@@ -237,7 +229,17 @@ int		sword_manager(t_game *g, enum e_sword state);
 
 // minimap 
 void	draw_minimap(t_game *g);
-void draw_square(t_mlx *g, int x, int y, int width, int height);
+//void draw_square(t_mlx *g, int x, int y, int width, int height);
+
+// Img utils
+t_img	*create_new_img(t_mlx *g, int width, int height);
+void	put_pixel_img(t_img *img, int x, int y, int color);
+void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
+unsigned int	get_pixel_img(t_img *img, int x, int y);
+t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
+void	img_pix_put(t_img *img, int x, int y, int color);
+t_img	*load_img(t_mlx *g, char *path, int w, int h);
+
 
 //Garbage collectors
 int		window_destroy(t_game *game);
