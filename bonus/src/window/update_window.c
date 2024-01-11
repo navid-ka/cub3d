@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:48:19 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/11 20:49:06 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/11 23:35:33 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int update(t_game *game)
         combat_manager(game);
     }
     game->sword_state = sword_manager(game, game->sword_state);
+    draw_str_to_font(game->mlx_s, ft_itoa(game->player_s->hp), 20, 150);
+    //put_img_to_img(game->mlx_s->buffer, &game->mlx_s->fonts[0], 20, 70);
     mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->buffer->img, 0, 0);
     return 0;
 }
