@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:11:38 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/11 23:33:23 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/12 10:19:36 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,19 @@ void load_fonts(t_mlx *g)
 
 void draw_str_to_font(t_mlx *g, char *str, int x, int y)
 {
-    const char *is_printable = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    const char *is_printable = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM\
+    NOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
     int i = 0;
-    int char_width = 25;
+    int padding = 8;
 
     while (str[i] != '\0')
     {
+        if (ft_strchr(is_printable, ' ') != NULL)
+            x += padding;
         if (ft_strchr(is_printable, str[i]) != NULL)
         {
             put_img_to_img(g->buffer, &g->fonts[(int)str[i]], x, y);
-            x += char_width;
+            x += padding;
         }
         i++;
     }
