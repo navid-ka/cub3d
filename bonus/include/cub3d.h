@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/11 23:17:40 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/12 11:20:13 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define SECONDS 1000
 # define HP_PLAYER 20
 # define HP_ENEMY_BASE 20
+# define HP_BOSS_BASE 40
 # define TIMETOGETHIT 10000
 # define ESC	53
 # define ARROW_LEFT 123
@@ -60,10 +61,15 @@ typedef struct s_player
 
 typedef struct s_enemy
 {
-	double hp;
-	double lvl;
-	double armor;
-	double dmg;
+	double	hp;
+	double	lvl;
+	double	armor;
+	double	dmg;
+	enum  e_type
+	{
+		NORMAL,
+		BOSS
+	} type;
 }t_enemy;
 
 
@@ -142,6 +148,7 @@ typedef struct s_game
 	int 		state;
 	int			sword_state;
 	int			steps;
+	uint32_t	random;
 	uint64_t	created_at;
 	uint64_t	updated_at;
 	uint64_t 	combat_started_at;
@@ -171,11 +178,13 @@ typedef struct state_manager
 int		screen_manager(t_game *g, enum e_state state);
 int		game_start(t_game *game);
 unsigned int f_randi(uint32_t idx);
+unsigned int f_rand(void) ;
 uint64_t	timestamp_in_ms(t_game *game);
 int		combat(t_game *g);
-int in_combat(t_game *g);
 void handle_battle_click(t_game *g);
 void combat_manager(t_game *g);
+int enemy_type_stats(t_game *g, int type);
+int	enemy_type_sprites(t_game *g, int type);
 void load_enemy_img(t_mlx *g);
 void load_fonts(t_mlx *g);
 void draw_str_to_font(t_mlx *g, char *str, int x, int y);

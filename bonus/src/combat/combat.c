@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/11 21:24:47 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/12 11:20:35 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,13 @@ void check_combat_status(t_game *g)
 
 int combat(t_game *g)
 {
+
+    g->random = f_rand() % 2;
     g->combat_started_at = timestamp_in_ms(g);
     g->player_s->dmg = 1;
-    g->enemy->hp = ceil(HP_ENEMY_BASE + (g->enemy->lvl * 1.15));
+    //g->enemy->hp = ceil(HP_ENEMY_BASE + (g->enemy->lvl * 1.15));
+    //enemy_type(g, (int)f_rand() % 2);
+    enemy_type_stats(g, g->random);
     g->steps = 0;
     printf("Enemy hp: %f Enemy lvl: %f\n", g->enemy->hp, g->enemy->lvl);
     printf("Entered combat\n");
@@ -99,10 +103,8 @@ int combat(t_game *g)
 
 void combat_manager(t_game *g) 
 {
-    
-    mlx_string_put(g->mlx_s->mlx_p, g->mlx_s->win, 
-        50,
-        (g->mlx_s->screen_width) / 2, 
-        0x00FFFFFF, ft_itoa(g->enemy->hp));
+    draw_str_to_font(g->mlx_s, ft_itoa(g->enemy->hp), 
+        (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2, 100);
+    enemy_type_sprites(g, g->random);
     check_combat_status(g);
 }
