@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/07 20:22:35 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/17 19:32:41 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_line
 	int		draw_end;
 	int		line_height;
 	int		color;
+	int		color_fader;
 }	t_line;
 
 typedef struct s_camera
@@ -77,7 +78,6 @@ typedef struct s_camera
 	int		step_y;
 	int		hit;	// was there a wall hit?
 	int		side;	// was a NS or a EW wall hit?
-	
 }	t_camera;
 
 typedef struct s_player

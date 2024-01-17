@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/07 20:15:25 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/17 19:43:53 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void    draw_line(t_game *game, t_line *line, int color)
 	pixel_x = line->x_start * 32;
 	pixel_y = line->y_start * 32;
 	*/
+	color *= (line->color_fader * 10);
 	while (line->draw_start < line->draw_end)
 	{
 		mlx_pixel_put(game->mlx_s->mlx_p, game->mlx_s->pov, line->x_start, line->draw_start, color);
@@ -39,7 +40,7 @@ void	init_ray(t_player *p, t_camera *c, int i)
 {
 	
 	// the ray direction is the player direction + the camera plane
-	c->camera_x = 2 * i / (double)S_WIDTH - 1;	// x-coordinate in camera space
+	c->camera_x = 1.35 * i / (double)S_WIDTH - 1;	// x-coordinate in camera space
 	c->ray_dir_x = p->dir_x + c->plane_x * c->camera_x;
 	c->ray_dir_y = p->dir_y + c->plane_y * c->camera_x;
 	
@@ -80,11 +81,12 @@ void	init_step(t_player *p, t_camera *c)
 	}
 }
 
-void	init_dda(t_player *p, t_camera *c, char **map)
+void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 {
 	int hit;
 	
 	hit = 0;
+	line->color_fader = 0;
 	while (hit == 0)
 	{
 		if (c->side_dist_x < c->side_dist_y)	// if the next x-side is closer than the next y-side
@@ -101,6 +103,7 @@ void	init_dda(t_player *p, t_camera *c, char **map)
 		}
 		if (map[c->map_y][c->map_x] == '1')
 			hit = 1;
+		line->color_fader += 1;
 	}
 	// Calculations avoiding "fish eye" effect NOTE: I don't understand this part
 	if (c->side == 0)	// if the NS side was hit
@@ -115,7 +118,7 @@ void	init_line(t_line *line, t_camera *c, int i)
 	line->line_height = (int)(S_HEIGHT / c->perp_wall_dist);
 	
 	// Calculate the lowest and highest pixel to fill in current stripe
-	line->draw_start = -line->line_height / 2 + S_HEIGHT / 2;
+	line->draw_start = -line->line_height / 2 + S_HEIGHT / 2 - 20;
 	if (line->draw_start < 0)
 		line->draw_start = 0;
 	line->draw_end = line->line_height / 2 + S_HEIGHT / 2;
@@ -140,9 +143,9 @@ void    raycast(t_game *game)
 		// 1. Get player position and get the structs needef for the raycasting
 		init_ray(game->player_s, game->camera_s, i);	// Gets the position from player and sets the direction vector
 		init_step(game->player_s, game->camera_s);	// Sets the step and the side distance
-		init_dda(game->player_s, game->camera_s, game->map_s->map);	// Performs the DDA algorithm		
+		init_dda(&line, game->player_s, game->camera_s, game->map_s->map);	// Performs the DDA algorithm		
 		// 2. Get the height of the wall
-		init_line(&line, game->camera_s, i);		
+		init_line(&line, game->camera_s, i);
 		draw_line(game, &line, line.color);
 		i++;
 	}
