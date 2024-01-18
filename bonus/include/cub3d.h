@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/12 11:20:13 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/18 17:29:12 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define PI 3.14159265358979323846
 # define SECONDS 1000
 # define HP_PLAYER 20
-# define HP_ENEMY_BASE 20
-# define HP_BOSS_BASE 40
+# define HP_ENEMY_BASE 1
+# define HP_BOSS_BASE 1
 # define TIMETOGETHIT 10000
 # define ESC	53
 # define ARROW_LEFT 123
@@ -54,8 +54,9 @@ typedef struct s_player
     double  fov;
 	int		is_moving;
 	int 	hp;
-	int		dmg;
+	double	dmg;
 	int		exp;
+	int		lvl;
 		
 }t_player;
 
@@ -188,6 +189,7 @@ int	enemy_type_sprites(t_game *g, int type);
 void load_enemy_img(t_mlx *g);
 void load_fonts(t_mlx *g);
 void draw_str_to_font(t_mlx *g, char *str, int x, int y);
+void game_save(t_game *game);
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
