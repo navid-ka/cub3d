@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/18 17:29:12 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/18 20:24:49 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,10 +222,6 @@ void    map_parser(t_game *game, t_cub *cub, t_map *map);
 
 // Mlx
 void    mlx_window(t_game *game);
-
-// Draw player
-void	draw_player(t_game *game);
-void	clear_player(t_game *game);
 
 //Inputs
 int		on_mouse_click(int button, int x, int y, t_game *game);
