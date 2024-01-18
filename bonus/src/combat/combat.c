@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/12 11:20:35 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/18 17:53:07 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ void level_enemy_up(t_game *g)
     printf("Enemy lvl: %f\n", g->enemy->lvl);
 }
 
+void level_player_up(t_game *g)
+{
+    g->player_s->exp += ((g->enemy->lvl / 2) * 10);
+    //ft_printf("exp: %d\n", g->player_s->exp);
+    if (g->player_s->exp > 100)
+    {
+        g->player_s->lvl++;
+        g->player_s->exp = 0;
+        g->player_s->dmg += 3 * 0.75;
+    }
+}
+
 void hit_enemy(t_game *g) 
 {
     g->enemy->hp -= (g->player_s->dmg - g->enemy->armor);
@@ -47,6 +59,8 @@ int check_hp_players(t_game *g)
 {
     if(g->enemy->hp <= 0) {
         level_enemy_up(g);
+        level_player_up(g);
+        game_save(g);
         g->state = screen_manager(g, GAME);
         return (GAME);
     }
@@ -91,7 +105,7 @@ int combat(t_game *g)
 
     g->random = f_rand() % 2;
     g->combat_started_at = timestamp_in_ms(g);
-    g->player_s->dmg = 1;
+    g->player_s->dmg = g->player_s->dmg;
     //g->enemy->hp = ceil(HP_ENEMY_BASE + (g->enemy->lvl * 1.15));
     //enemy_type(g, (int)f_rand() % 2);
     enemy_type_stats(g, g->random);
