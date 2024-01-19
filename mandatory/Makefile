@@ -6,7 +6,9 @@ UNAME  = $(shell uname)
 HEADERS = include/cub3d.h include/raycast.h include/colors.h
 SRC = src/main.c \
 		src/garbage_collector/garbage.c \
-		src/map_renderer/draw_map.c \
+		src/img_loader/img_load.c \
+		src/img_loader/img_utils.c \
+		src/img_loader/img_utils2.c \
 		src/parser/parser.c \
 		src/parser/structs_init.c \
 		src/parser/fd_checker.c \
@@ -37,7 +39,6 @@ LMLX = -Iinclude/libft/include -Linclude/libft/bin -lft \
 else
 SRC += src/inputs/input_linux.c
 SRC += src/inputs/movement.c
-SRC += src/map_renderer/player_linux.c
 MLXDIR = include/mlx_linux/
 OLD_MAKE = make
 MLX = $(MLXDIR)libmlx.a
