@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/17 19:32:41 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:24:36 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include <errno.h>
 
 #define PI 3.14159265358979323846
-#define S_WIDTH 720
-#define S_HEIGHT 480
+#define S_WIDTH 1280
+#define S_HEIGHT 720
 #define MOVE_SPEED 1
-#define ROTATE_SPEED 0.05
+#define ROTATE_SPEED 0.1
 #define	FOV 90
 #define RENDER_DIST 5 * 32 + 16
 # define ESC	53
@@ -88,6 +88,7 @@ typedef struct s_player
 	double	dir_x; //direction
 	double	dir_y;
     double  angle;	// in radians
+	double	speed;
 	int		dg_angle;
 	double	distance;
 }	t_player;
@@ -127,20 +128,29 @@ typedef struct s_cub
 	int		err;
 }	t_cub;
 
+typedef struct s_position
+{
+    int x;
+    int y;
+}              t_position;
+
 typedef struct s_image
 {
 	void	*img;
 	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
+	int		bpp;
+	int		line_len;
 	int		endian;
-}	t_img;
+	int		width;
+	int		height;
+} t_img;
 
 typedef struct s_mlx
 {
 	void	*mlx_p;	// mlx pointer
 	void	*win;	// 2d map window
 	void	*pov;	// raycaster window
+	t_img	*buffer;
 	t_img	*img;
 	int		screen_height;
 	int		screen_width;
@@ -174,7 +184,7 @@ double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
 void    raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
-void    draw_line(t_game *game, t_line *line, int color);
+void    draw_line(t_game *game, t_line *line, int color, t_img *img);
 double	dda_rays(t_game *game);
 void	render_3d_map(t_game *game);
 
@@ -208,9 +218,14 @@ void    map_parser(t_game *game, t_cub *cub, t_map *map);
 // Mlx
 void    mlx_window(t_game *game);
 
-// Draw player
-void	draw_player(t_game *game);
-void	clear_player(t_game *game);
+// Img utils
+t_img	*create_new_img(t_mlx *g, int width, int height);
+void	put_pixel_img(t_img *img, int x, int y, int color);
+void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
+unsigned int	get_pixel_img(t_img *img, int x, int y);
+t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
+void	img_pix_put(t_img *img, int x, int y, int color);
+t_img	*load_img(t_mlx *g, char *path, int w, int h);
 
 //Inputs
 int     on_key_press(int keycode, t_game *game);

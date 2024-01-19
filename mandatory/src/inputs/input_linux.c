@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_linux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/07 20:20:15 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:48:55 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,40 +20,73 @@
 
 //https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h for keycodes
 
-int     on_key_press(int keycode, t_game *game)
+void move_player(t_game *game, double dx, double dy)
 {
-	t_camera *camera;
-	t_player *player;
+    t_player *player = game->player_s;
+    double new_pos_x = player->pos_x + dx;
+    double new_pos_y = player->pos_y + dy;
 
-	player = game->player_s;
-	camera = game->camera_s;
-	clear_player(game);
-	if (keycode == XK_Escape)
-		return (window_destroy(game));
-	if (keycode == 0x77 || keycode == XK_W) // 'w' key
-		player->pos_y -= move_y(player, game->map_s->map, XK_W);
-	else if (keycode == 0x73 || keycode == XK_S) // 's' key
-		player->pos_y += move_y(player, game->map_s->map, XK_S);
-	else if (keycode == 0x61 || keycode == XK_A) // 'a' key
-		player->pos_x -= move_x(player, game->map_s->map, XK_A);
-	else if (keycode == 0x64 || keycode == XK_D) // 'd' key
-		player->pos_x += move_x(player, game->map_s->map, XK_D);
-	else if (keycode == XK_Right || keycode == XK_Left) // 'left arrow' key
-		player->angle = move_rot(camera, player, game->map_s->map, keycode);
-	printf("x: %f | y: %f\n \nAngle: %f rads | %dº\n(0 is looking EAST)\n", 
-		player->pos_x, player->pos_y, player->angle, rad_to_dg(player->angle));
-	printf("dir_x: %f\ndir_y: %f\n", game->player_s->dir_x, game->player_s->dir_y);
-	printf("Distance: %f\n", game->player_s->distance);
-	mlx_clear_window(game->mlx_s->mlx_p, game->mlx_s->pov);
-	return (0);
+    // Introduce un pequeño margen alrededor de los bloques
+    double margin = 0.3;
+
+    if (game->map_s->map[(int)(new_pos_y + dy - margin)][(int)(new_pos_x + dx - margin)] != '1' &&
+        game->map_s->map[(int)(new_pos_y + dy + margin)][(int)(new_pos_x + dx + margin)] != '1')
+    {
+        player->pos_x = new_pos_x;
+        player->pos_y = new_pos_y;
+    }
 }
 
+int on_key_press(int keycode, t_game *game)
+{
+    t_camera *camera = game->camera_s;
+    t_player *player = game->player_s;
+    player->speed = 0.5;
+
+    if (keycode == XK_Escape)
+        return (window_destroy(game));
+
+    double dx = 0, dy = 0;
+    if (keycode == 0x77 || keycode == XK_W) // 'w' key
+    {
+        dx = cos(player->angle) * player->speed;
+        dy = sin(player->angle) * player->speed;
+    }
+    else if (keycode == 0x73 || keycode == XK_S) // 's' key
+    {
+        dx = -cos(player->angle) * player->speed;
+        dy = -sin(player->angle) * player->speed;
+    }
+    else if (keycode == 0x61 || keycode == XK_A) // 'a' key
+    {
+        dx = -sin(player->angle) * player->speed;
+        dy = cos(player->angle) * player->speed;
+    }
+    else if (keycode == 0x64 || keycode == XK_D) // 'd' key
+    {
+        dx = sin(player->angle) * player->speed;
+        dy = -cos(player->angle) * player->speed;
+    }
+
+    if (dx != 0 || dy != 0)
+        move_player(game, dx, dy);
+    else if (keycode == XK_Right || keycode == XK_Left) // 'left arrow' key
+        player->angle = move_rot(camera, player, game->map_s->map, keycode);
+
+    printf("x: %f | y: %f\n \nAngle: %f rads | %dº\n(0 is looking EAST)\n", 
+        player->pos_x, player->pos_y, player->angle, rad_to_dg(player->angle));
+    printf("dir_x: %f\ndir_y: %f\n", game->player_s->dir_x, game->player_s->dir_y);
+    printf("Distance: %f\n", game->player_s->distance);
+
+    return (0);
+}
+/*
 int     on_key_release(int keycode, t_game *game)
 {
 	t_player *player;
 
 	player = game->player_s;
-	mlx_clear_window(game->mlx_s->mlx_p, game->mlx_s->win);
+	//mlx_clear_window(game->mlx_s->mlx_p, game->mlx_s->win);
 	if (keycode == 0x77 || keycode == XK_W) // 'w' key
 		player->pos_y -= move_y(player, game->map_s->map, XK_W);
 	else if (keycode == 0x73 || keycode == XK_S) // 's' key
@@ -63,4 +96,4 @@ int     on_key_release(int keycode, t_game *game)
 	else if (keycode == 0x64 || keycode == XK_D) // 'd' key
 		player->pos_x += move_x(player, game->map_s->map, XK_D);
 	return (0);
-}
+}*/
