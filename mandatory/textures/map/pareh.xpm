@@ -2,8 +2,8 @@
 static char *pareh[] = {
 /* columns rows colors chars-per-pixel */
 "32 32 2 1 ",
-"  c #DE00FF",
-". c #FFFF4B",
+"  c #FF00FF",
+". c #DE894B",
 /* pixels */
 "................................",
 "................................",

@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:30 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/07 17:53:42 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/19 20:19:40 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 double	plane_mult(int fov)
 {
 	double	plane_multiplier;
-
 	plane_multiplier = deg_to_rad(fov);
 	plane_multiplier = tan(plane_multiplier / 2);
 	plane_multiplier = 2 / plane_multiplier;
