@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/19 16:09:11 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/19 22:44:47 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,19 @@
 # include <mlx.h>
 # include <errno.h>
 
+
+#define NORTH 100
+#define SOUTH 200
+#define EAST 300
+#define WEST 400
+
 #define PI 3.14159265358979323846
 #define S_WIDTH 1280
 #define S_HEIGHT 720
-#define MOVE_SPEED 1
+#define MOVE_SPEED 0.025
 #define ROTATE_SPEED 0.1
-#define	FOV 90
-#define RENDER_DIST 5 * 32 + 16
+#define	FOV 80
+#define RENDER_DIST 10 //* 32 + 16
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
@@ -78,6 +84,7 @@ typedef struct s_camera
 	int		step_y;
 	int		hit;	// was there a wall hit?
 	int		side;	// was a NS or a EW wall hit?
+	int		hit_direction;
 }	t_camera;
 
 typedef struct s_player
@@ -184,7 +191,7 @@ double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
 void    raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
-void    draw_line(t_game *game, t_line *line, int i, int color, t_img *img);
+void 	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img);
 double	dda_rays(t_game *game);
 void	render_3d_map(t_game *game);
 
@@ -194,7 +201,7 @@ void	map_init(t_map *map);
 void	player_init(t_player *player);
 void    window_init(t_mlx *window);
 int     key_press(int keycode, t_game *game);
-void	sl_image_init(t_mlx *g);
+void	sl_image_init(t_game *g);
 
 // FD utils 
 int		open_path(t_cub *cub);
