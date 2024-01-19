@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/19 17:03:19 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/19 22:57:07 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,23 @@ int	get_pixel_color(t_img *img, int x, int y)
 void test_get_pixel_color(t_img *img, int x, int y)
 {
     int color;
-
     color = get_pixel_color(img, x, y);
     printf("Color at (%d, %d): %d\n", x, y, color);
 }
 
-void draw_line(t_game *game, t_line *line, int i, int color, t_img *img)
+void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 {
+	(void)game;
     (void)i;
-
-	t_img *source_img = &game->mlx_s->img[0];
-
+	int		color;
+	
     int text_x = (line->x_start * source_img->width) / img->width;
     double step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
     double text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
 
     while (line->draw_start < line->draw_end)
     {
-        int text_y = (int)text_pos & (source_img->height - 1);
+        int text_y = (int)text_pos & (source_img->height - 1);		// what the fuck
         text_pos += step;
         color = get_pixel_img(source_img, text_x, text_y);
         img_pix_put(img, line->x_start, line->draw_start, color);
@@ -62,7 +61,7 @@ void	init_ray(t_player *p, t_camera *c, int i)
 {
 	
 	// the ray direction is the player direction + the camera plane
-	c->camera_x = 1.35 * i / (double)S_WIDTH - 1;	// x-coordinate in camera space
+	c->camera_x = 1.30 * i / (double)S_WIDTH - 1;	// x-coordinate in camera space
 	c->ray_dir_x = p->dir_x + c->plane_x * c->camera_x;
 	c->ray_dir_y = p->dir_y + c->plane_y * c->camera_x;
 	
@@ -71,7 +70,7 @@ void	init_ray(t_player *p, t_camera *c, int i)
 	
 	// distance the ray has to travel to go from 1 x-side to the next x-side
 	c->delta_dist_x = fabs(1 / c->ray_dir_x);
-	c->delta_dist_y = fabs(1 / c->ray_dir_y);	
+	c->delta_dist_y = fabs(1 / c->ray_dir_y);
 }
 
 void	init_step(t_player *p, t_camera *c)
@@ -103,6 +102,25 @@ void	init_step(t_player *p, t_camera *c)
 	}
 }
 
+static void	dda_aux(t_camera *c)
+{
+	if (c->side == 0)
+	{
+		if (c->step_x > 0)
+			c->hit_direction = SOUTH;
+		else
+			c->hit_direction = NORTH;
+	}
+	else
+	{
+		if (c->step_y > 0)
+			c->hit_direction = EAST;
+		else
+			c->hit_direction = WEST;
+	}
+}
+
+
 void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 {
 	int hit;
@@ -124,8 +142,11 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 			c->side = 1;						// set the side to 1 (EW)
 		}
 		if (map[c->map_y][c->map_x] == '1')
+		{
 			hit = 1;
-		line->color_fader += 1;
+			dda_aux(c);
+		}
+		line->color_fader += 0;
 	}
 	// Calculations avoiding "fish eye" effect NOTE: I don't understand this part
 	if (c->side == 0)	// if the NS side was hit
@@ -134,13 +155,19 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 		c->perp_wall_dist = (c->map_y - p->pos_y + (1 - c->step_y) / 2) / c->ray_dir_y;
 }
 
+/*
+	if (c->side == 0)	// if the NS side was hit
+		c->perp_wall_dist = (c->map_x - p->pos_x + (1 - c->step_x) / 2) / c->ray_dir_x;	// calculate the distance to the point of impact
+	else
+		c->perp_wall_dist = (c->map_y - p->pos_y + (1 - c->step_y) / 2) / c->ray_dir_y;
+*/
 void	init_line(t_line *line, t_camera *c, int i)
 {
 	// Calculate the height of the line
-	line->line_height = (int)(S_HEIGHT / c->perp_wall_dist);
+	line->line_height = (int)(S_HEIGHT / c->perp_wall_dist) * 2;
 	
 	// Calculate the lowest and highest pixel to fill in current stripe
-	line->draw_start = -line->line_height / 2 + S_HEIGHT / 2 - 20;
+	line->draw_start = -line->line_height / 2 + S_HEIGHT / 2;
 	if (line->draw_start < 0)
 		line->draw_start = 0;
 	line->draw_end = line->line_height / 2 + S_HEIGHT / 2;
@@ -151,7 +178,19 @@ void	init_line(t_line *line, t_camera *c, int i)
 	line->x_start = i;
 	line->x_end = i;
 	// color depends on the distance to the wall
-	line->color = 0xFFFF00;
+	line->color = 0xFF0F00;
+}
+
+void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
+{
+	if (cub->hit_direction == NORTH)
+		draw_line(g, line, w, image, &g->mlx_s->img[0]);
+	else if (cub->hit_direction == SOUTH)
+		draw_line(g, line, w, image, &g->mlx_s->img[2]);
+	else if (cub->hit_direction == WEST)
+		draw_line(g, line, w, image, &g->mlx_s->img[3]);
+	else if (cub->hit_direction == EAST)
+		draw_line(g, line, w, image, &g->mlx_s->img[4]);
 }
 
 void    raycast(t_game *game)
@@ -170,7 +209,7 @@ void    raycast(t_game *game)
 		init_dda(&line, game->player_s, game->camera_s, game->map_s->map);	// Performs the DDA algorithm		
 		// 2. Get the height of the wall
 		init_line(&line, game->camera_s, i);
-		draw_line(game, &line, i, line.color, img);
+		draw(game, game->camera_s, i, img, &line);
 		i++;
 	}
 	put_img_to_img(game->mlx_s->buffer, img, 0, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/19 12:40:16 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/19 21:20:07 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int check_input(t_game *game)
 
 int    game_start(t_game *game)
 {
-	check_input(game);
 	draw_map(game);
 	raycast(game);
 	//draw_player(game);
@@ -92,7 +91,7 @@ void    mlx_window(t_game *game)
 	window->buffer->width = fact*16;
 	window->buffer->height = fact*9;
 	mlx_clear_window(window->mlx_p, window->pov);
-	sl_image_init(game->mlx_s);
+	sl_image_init(game);
 	check_input(game);
 	mlx_loop_hook(window->mlx_p, &game_start, game);
 	mlx_loop(window->mlx_p);

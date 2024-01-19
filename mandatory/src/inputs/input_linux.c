@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_linux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/19 12:48:55 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/19 20:36:06 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void move_player(t_game *game, double dx, double dy)
     double new_pos_y = player->pos_y + dy;
 
     // Introduce un pequeño margen alrededor de los bloques
-    double margin = 0.3;
+    double margin = 0.125;
 
     if (game->map_s->map[(int)(new_pos_y + dy - margin)][(int)(new_pos_x + dx - margin)] != '1' &&
         game->map_s->map[(int)(new_pos_y + dy + margin)][(int)(new_pos_x + dx + margin)] != '1')
@@ -49,8 +49,8 @@ int on_key_press(int keycode, t_game *game)
     double dx = 0, dy = 0;
     if (keycode == 0x77 || keycode == XK_W) // 'w' key
     {
-        dx = cos(player->angle) * player->speed;
-        dy = sin(player->angle) * player->speed;
+        dx += (cos(player->angle) - 0.001) * player->speed;
+        dy += 0;//sin(player->angle) * player->speed;
     }
     else if (keycode == 0x73 || keycode == XK_S) // 's' key
     {
