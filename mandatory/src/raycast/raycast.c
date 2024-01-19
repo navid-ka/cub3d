@@ -6,47 +6,55 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/19 11:39:57 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/19 17:03:19 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void    draw_line(t_game *game, t_line *line, int color, t_img *img)
+int	char_to_int(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
 {
-	/*
-	double	delta_x;
-	double	delta_y;
-	double 	pixel_x;
-	double 	pixel_y;
-	int 	pixels;
+    return (*(int *)(unsigned char [4]){b, g, r, t});
+}
 
-	delta_x = line->x_end - line->x_start;
-	delta_y = line->y_end - line->y_start;
-	pixels = sqrt((pow(delta_x, 2)) + pow(delta_y, 2));
-	pixel_x = line->x_start * 32;
-	pixel_y = line->y_start * 32;
-	*/
-	//color *= (line->color_fader * 10);
-	//img_pix_put(game->mlx_s->buffer->img, 300, 300, color);
-	(void)(game);
-	//double delta_x = line->x_end - line->x_start;
+int	get_pixel_color(t_img *img, int x, int y)
+{
+    char	*addr;
+    int		color;
+
+    // Comprueba si las coordenadas están dentro de los límites de la imagen
+    if (x < 0 || x >= img->width || y < 0 || y >= img->height)
+        return (0);
+    addr = img->addr + (y * img->line_len + x * (img->bpp / 8));
+    color = char_to_int(addr[3], addr[2], addr[1], addr[0]);
+    return (color);
+}
+void test_get_pixel_color(t_img *img, int x, int y)
+{
+    int color;
+
+    color = get_pixel_color(img, x, y);
+    printf("Color at (%d, %d): %d\n", x, y, color);
+}
+
+void draw_line(t_game *game, t_line *line, int i, int color, t_img *img)
+{
+    (void)i;
+
+	t_img *source_img = &game->mlx_s->img[0];
+
+    int text_x = (line->x_start * source_img->width) / img->width;
+    double step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
+    double text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
+
     while (line->draw_start < line->draw_end)
     {
-
-        //color = ((int *)img->addr)[op.y * od.x + op.x];
-		//color = line->color;
-		color = 0xFFFFFF;
-		//mlx_pixel_put(game->mlx_s->mlx_p, game->mlx_s->pov, line->x_start, line->draw_start, color);
+        int text_y = (int)text_pos & (source_img->height - 1);
+        text_pos += step;
+        color = get_pixel_img(source_img, text_x, text_y);
         img_pix_put(img, line->x_start, line->draw_start, color);
         line->draw_start++;
     }
-  
-	/*while (line->draw_start < line->draw_end)
-	{
-		//img_pix_put(game->mlx_s->buffer->img, (int)line->x_start, (int)line->draw_start, color);
-		line->draw_start++;
-	}*/
 }
 
 // This function sets the camera position and direction
@@ -162,7 +170,7 @@ void    raycast(t_game *game)
 		init_dda(&line, game->player_s, game->camera_s, game->map_s->map);	// Performs the DDA algorithm		
 		// 2. Get the height of the wall
 		init_line(&line, game->camera_s, i);
-		draw_line(game, &line, line.color, img);
+		draw_line(game, &line, i, line.color, img);
 		i++;
 	}
 	put_img_to_img(game->mlx_s->buffer, img, 0, 0);

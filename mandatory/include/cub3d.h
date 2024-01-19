@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/19 12:24:36 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/19 16:09:11 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
 void    raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
-void    draw_line(t_game *game, t_line *line, int color, t_img *img);
+void    draw_line(t_game *game, t_line *line, int i, int color, t_img *img);
 double	dda_rays(t_game *game);
 void	render_3d_map(t_game *game);
 
