@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/17 19:43:53 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/19 11:39:57 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void    draw_line(t_game *game, t_line *line, int color)
+void    draw_line(t_game *game, t_line *line, int color, t_img *img)
 {
 	/*
 	double	delta_x;
@@ -27,12 +27,26 @@ void    draw_line(t_game *game, t_line *line, int color)
 	pixel_x = line->x_start * 32;
 	pixel_y = line->y_start * 32;
 	*/
-	color *= (line->color_fader * 10);
-	while (line->draw_start < line->draw_end)
+	//color *= (line->color_fader * 10);
+	//img_pix_put(game->mlx_s->buffer->img, 300, 300, color);
+	(void)(game);
+	//double delta_x = line->x_end - line->x_start;
+    while (line->draw_start < line->draw_end)
+    {
+
+        //color = ((int *)img->addr)[op.y * od.x + op.x];
+		//color = line->color;
+		color = 0xFFFFFF;
+		//mlx_pixel_put(game->mlx_s->mlx_p, game->mlx_s->pov, line->x_start, line->draw_start, color);
+        img_pix_put(img, line->x_start, line->draw_start, color);
+        line->draw_start++;
+    }
+  
+	/*while (line->draw_start < line->draw_end)
 	{
-		mlx_pixel_put(game->mlx_s->mlx_p, game->mlx_s->pov, line->x_start, line->draw_start, color);
+		//img_pix_put(game->mlx_s->buffer->img, (int)line->x_start, (int)line->draw_start, color);
 		line->draw_start++;
-	}
+	}*/
 }
 
 // This function sets the camera position and direction
@@ -136,9 +150,11 @@ void    raycast(t_game *game)
 {
 	t_line		line;
 	int			i;
+	t_img		*img;
 	
 	i = 0;
-	while (i < S_WIDTH)
+	img = create_new_img(game->mlx_s, 1280, 720);
+	while (i < 1280)
 	{
 		// 1. Get player position and get the structs needef for the raycasting
 		init_ray(game->player_s, game->camera_s, i);	// Gets the position from player and sets the direction vector
@@ -146,9 +162,12 @@ void    raycast(t_game *game)
 		init_dda(&line, game->player_s, game->camera_s, game->map_s->map);	// Performs the DDA algorithm		
 		// 2. Get the height of the wall
 		init_line(&line, game->camera_s, i);
-		draw_line(game, &line, line.color);
+		draw_line(game, &line, line.color, img);
 		i++;
 	}
+	put_img_to_img(game->mlx_s->buffer, img, 0, 0);
+	mlx_destroy_image(game->mlx_s->mlx_p, img->img);
+	
 }
 
 /*
