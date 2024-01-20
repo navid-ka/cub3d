@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/19 22:57:07 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/20 13:20:57 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	init_ray(t_player *p, t_camera *c, int i)
 {
 	
 	// the ray direction is the player direction + the camera plane
-	c->camera_x = 1.30 * i / (double)S_WIDTH - 1;	// x-coordinate in camera space
+	c->camera_x = 2.0 * i / (double)S_WIDTH - 1;	// x-coordinate in camera space
 	c->ray_dir_x = p->dir_x + c->plane_x * c->camera_x;
 	c->ray_dir_y = p->dir_y + c->plane_y * c->camera_x;
 	
@@ -69,8 +69,15 @@ void	init_ray(t_player *p, t_camera *c, int i)
 	c->map_y = (int)p->pos_y;
 	
 	// distance the ray has to travel to go from 1 x-side to the next x-side
-	c->delta_dist_x = fabs(1 / c->ray_dir_x);
-	c->delta_dist_y = fabs(1 / c->ray_dir_y);
+	if (c->ray_dir_x == 0)
+		c->delta_dist_x = 1e30;
+	else
+		c->delta_dist_x = fabs(1 / c->ray_dir_x);
+
+	if (c->ray_dir_y == 0)
+		c->delta_dist_y = 1e30;
+	else
+		c->delta_dist_y = fabs(1 / c->ray_dir_y);
 }
 
 void	init_step(t_player *p, t_camera *c)
