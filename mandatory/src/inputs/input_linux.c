@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_linux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/19 20:36:06 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/20 22:56:12 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 //https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h for keycodes
 
-void move_player(t_game *game, double dx, double dy)
+int move_player(t_game *game, double dx, double dy)
 {
     t_player *player = game->player_s;
     double new_pos_x = player->pos_x + dx;
@@ -29,12 +29,21 @@ void move_player(t_game *game, double dx, double dy)
     // Introduce un pequeño margen alrededor de los bloques
     double margin = 0.125;
 
+    // Asegúrate de que las nuevas posiciones estén dentro de los límites del array
+    if (new_pos_x + dx - margin < 0 || new_pos_x + dx + margin >= game->map_s->width ||
+        new_pos_y + dy - margin < 0 || new_pos_y + dy + margin >= game->map_s->height)
+    {
+        return 0;
+    }
+
     if (game->map_s->map[(int)(new_pos_y + dy - margin)][(int)(new_pos_x + dx - margin)] != '1' &&
         game->map_s->map[(int)(new_pos_y + dy + margin)][(int)(new_pos_x + dx + margin)] != '1')
     {
         player->pos_x = new_pos_x;
         player->pos_y = new_pos_y;
+        return 1;
     }
+    return 0;
 }
 
 int on_key_press(int keycode, t_game *game)
@@ -49,28 +58,28 @@ int on_key_press(int keycode, t_game *game)
     double dx = 0, dy = 0;
     if (keycode == 0x77 || keycode == XK_W) // 'w' key
     {
-        dx += (cos(player->angle) - 0.001) * player->speed;
-        dy += 0;//sin(player->angle) * player->speed;
+        dx += player->dir_x * player->speed;
+        dy += player->dir_y *  player->speed;
     }
-    else if (keycode == 0x73 || keycode == XK_S) // 's' key
+    if (keycode == 0x73 || keycode == XK_S) // 's' key
     {
-        dx = -cos(player->angle) * player->speed;
-        dy = -sin(player->angle) * player->speed;
+        dx -= player->dir_x * player->speed;
+        dy -= player->dir_y * player->speed;
     }
-    else if (keycode == 0x61 || keycode == XK_A) // 'a' key
+    if (keycode == 0x61 || keycode == XK_A) // 'a' key
     {
-        dx = -sin(player->angle) * player->speed;
-        dy = cos(player->angle) * player->speed;
+        dx -= player->dir_y * player->speed;
+        dy += player->dir_x * player->speed;
     }
-    else if (keycode == 0x64 || keycode == XK_D) // 'd' key
+    if (keycode == 0x64 || keycode == XK_D) // 'd' key
     {
-        dx = sin(player->angle) * player->speed;
-        dy = -cos(player->angle) * player->speed;
+        dx += player->dir_y * player->speed;
+        dy -= player->dir_x * player->speed;
     }
 
-    if (dx != 0 || dy != 0)
+    if (player->pos_x != 0 || player->pos_y != 0)
         move_player(game, dx, dy);
-    else if (keycode == XK_Right || keycode == XK_Left) // 'left arrow' key
+    if (keycode == XK_Right || keycode == XK_Left) // 'left arrow' key
         player->angle = move_rot(camera, player, game->map_s->map, keycode);
 
     printf("x: %f | y: %f\n \nAngle: %f rads | %dº\n(0 is looking EAST)\n", 
