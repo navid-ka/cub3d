@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/20 13:20:57 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/21 23:29:06 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,28 @@ void test_get_pixel_color(t_img *img, int x, int y)
     printf("Color at (%d, %d): %d\n", x, y, color);
 }
 
+int	colors(t_color *c)
+{
+	return (c->r << 16 | c->g << 8 | c->b);
+}
+
 void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 {
-	(void)game;
-    (void)i;
-	int		color;
-	
-    int text_x = (line->x_start * source_img->width) / img->width;
+	i = 0;
     double step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
     double text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
-
-    while (line->draw_start < line->draw_end)
+    int text_x = (line->x_start * source_img->width) / img->width;
+    int text_y = (int)text_pos & (source_img->height - 1);		// what the fuck
+	while (i < (S_HEIGHT / 2 - line->line_height / 2))
+		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
+    while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
     {
-        int text_y = (int)text_pos & (source_img->height - 1);		// what the fuck
+        img_pix_put(img, line->x_start, i, get_pixel_img(source_img, text_x, text_y));
         text_pos += step;
-        color = get_pixel_img(source_img, text_x, text_y);
-        img_pix_put(img, line->x_start, line->draw_start, color);
-        line->draw_start++;
+        i++;
     }
+	while (i < S_HEIGHT)
+		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->floor));
 }
 
 // This function sets the camera position and direction
