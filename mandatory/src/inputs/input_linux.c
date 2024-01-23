@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/20 22:56:12 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 00:18:01 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,24 @@ int move_player(t_game *game, double dx, double dy)
     double new_pos_y = player->pos_y + dy;
 
     // Introduce un pequeño margen alrededor de los bloques
-    double margin = 0.125;
+    double margin = 0.03;
 
-    // Asegúrate de que las nuevas posiciones estén dentro de los límites del array
-    if (new_pos_x + dx - margin < 0 || new_pos_x + dx + margin >= game->map_s->width ||
-        new_pos_y + dy - margin < 0 || new_pos_y + dy + margin >= game->map_s->height)
-    {
-        return 0;
-    }
-
-    if (game->map_s->map[(int)(new_pos_y + dy - margin)][(int)(new_pos_x + dx - margin)] != '1' &&
-        game->map_s->map[(int)(new_pos_y + dy + margin)][(int)(new_pos_x + dx + margin)] != '1')
+    // Comprueba el movimiento en la dirección x
+    if (new_pos_x + dx - margin >= 0 && new_pos_x + dx + margin < game->map_s->width &&
+        game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '1' &&
+        game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '1')
     {
         player->pos_x = new_pos_x;
-        player->pos_y = new_pos_y;
-        return 1;
     }
+
+    // Comprueba el movimiento en la dirección y
+    if (new_pos_y + dy - margin >= 0 && new_pos_y + dy + margin < game->map_s->height &&
+        game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '1' &&
+        game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '1')
+    {
+        player->pos_y = new_pos_y;
+    }
+
     return 0;
 }
 
