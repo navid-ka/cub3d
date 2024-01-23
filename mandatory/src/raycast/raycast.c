@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/21 23:29:06 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/23 21:48:51 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 // This function sets the camera position and direction
 void	init_ray(t_player *p, t_camera *c, int i)
 {
+	double	fov_scale;
 	
 	// the ray direction is the player direction + the camera plane
-	c->camera_x = 2.0 * i / (double)S_WIDTH - 1;	// x-coordinate in camera space
+	fov_scale = p->fov/PI;
+	c->camera_x = 2 * fov_scale * (i/(double)S_WIDTH) - fov_scale;	// x-coordinate in camera space
 	c->ray_dir_x = p->dir_x + c->plane_x * c->camera_x;
 	c->ray_dir_y = p->dir_y + c->plane_y * c->camera_x;
 	
@@ -74,12 +76,12 @@ void	init_ray(t_player *p, t_camera *c, int i)
 	
 	// distance the ray has to travel to go from 1 x-side to the next x-side
 	if (c->ray_dir_x == 0)
-		c->delta_dist_x = 1e30;
+		c->delta_dist_x = 1e6;
 	else
 		c->delta_dist_x = fabs(1 / c->ray_dir_x);
 
 	if (c->ray_dir_y == 0)
-		c->delta_dist_y = 1e30;
+		c->delta_dist_y = 1e6;
 	else
 		c->delta_dist_y = fabs(1 / c->ray_dir_y);
 }
@@ -212,7 +214,7 @@ void    raycast(t_game *game)
 	
 	i = 0;
 	img = create_new_img(game->mlx_s, 1280, 720);
-	while (i < 1280)
+	while (i < S_WIDTH)
 	{
 		// 1. Get player position and get the structs needef for the raycasting
 		init_ray(game->player_s, game->camera_s, i);	// Gets the position from player and sets the direction vector

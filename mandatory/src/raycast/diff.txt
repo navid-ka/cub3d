@@ -1,0 +1,236 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    diff.txt                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/01/22 16:45:31 by plinscho          #+#    #+#              #
+#    Updated: 2024/01/23 21:05:55 by plinscho         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#include "../../include/cub3d.h"
+
+/*
+
+	DRAW FUNCTIONS, MEAN TO BE APART FROM THE RAYCAST IN FINAL VERSION.
+
+*/
+int	char_to_int(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
+{
+    return (*(int *)(unsigned char [4]){b, g, r, t});
+}
+
+int	get_pixel_color(t_img *img, int x, int y)
+{
+    char	*addr;
+    int		color;
+
+    // Comprueba si las coordenadas están dentro de los límites de la imagen
+    if (x < 0 || x >= img->width || y < 0 || y >= img->height)
+        return (0);
+    addr = img->addr + (y * img->line_len + x * (img->bpp / 8));
+    color = char_to_int(addr[3], addr[2], addr[1], addr[0]);
+    return (color);
+}
+void test_get_pixel_color(t_img *img, int x, int y)
+{
+    int color;
+    color = get_pixel_color(img, x, y);
+    printf("Color at (%d, %d): %d\n", x, y, color);
+}
+
+int	colors(t_color *c)
+{
+	return (c->r << 16 | c->g << 8 | c->b);
+}
+
+void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
+{
+	i = 0;
+    double step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
+    double text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
+    int text_x = (line->x_start * source_img->width) / img->width;
+    int text_y = (int)text_pos & (source_img->height - 1);		// what the fuck
+	while (i < (S_HEIGHT / 2 - line->line_height / 2))
+		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
+    while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
+    {
+        img_pix_put(img, line->x_start, i, get_pixel_img(source_img, text_x, text_y));
+        text_pos += step;
+        i++;
+    }
+	while (i < S_HEIGHT)
+		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->floor));
+}
+
+void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
+{
+	g->mlx_s->img = (t_img *)malloc(sizeof(t_img));
+	if (cub->hit_direction == NORTH)
+		draw_line(g, line, w, image, &g->mlx_s->img[0]);
+	else if (cub->hit_direction == SOUTH)
+		draw_line(g, line, w, image, &g->mlx_s->img[2]);
+	else if (cub->hit_direction == WEST)
+		draw_line(g, line, w, image, &g->mlx_s->img[3]);
+	else if (cub->hit_direction == EAST)
+		draw_line(g, line, w, image, &g->mlx_s->img[4]);
+}
+
+
+/*
+##
+*/
+
+
+void	init_line(t_line *line, t_camera *c, int x)
+{
+	// Calculate the height of the line, and the position in frame;
+	line->line_height = (int)(S_HEIGHT / c->perp_wall_dist);
+	line->x_start = x;
+	line->x_end = x;
+
+	// Calculate the lowest and highest pixel to fill in current stripe
+	line->draw_start = -line->line_height / 2 + S_HEIGHT / 2;
+	if (line->draw_start < 0)
+		line->draw_start = 0;
+	line->draw_end = line->line_height / 2 + S_HEIGHT / 2;
+	if (line->draw_end >= S_HEIGHT)
+		line->draw_end = S_HEIGHT - 1;
+
+	// Calculate the color of the line
+
+	// color depends on the distance to the wall
+	line->color = 0xFF0F00;
+}
+
+void	get_hit_side(t_camera *cam)
+{
+	if (cam->side == 0) // we are looking EW because x axis is first
+	{
+		if (cam->step_x > 0)
+			cam->hit_direction = WEST;
+		else
+			cam->hit_direction = EAST;
+	}
+	else	// Looking NS because y axis is touched
+	{
+		if (cam->step_y > 0)
+			cam->hit_direction = SOUTH;
+		else
+			cam->hit_direction = NORTH;
+	}
+}
+
+void	dda_loop(t_camera *cam, t_map *m, t_player *p)
+{
+	double	distance;
+	cam->hit = 0;
+	while(cam->hit == 0)
+	{
+		if (cam->side_dist_x < cam->side_dist_y)
+		{
+			cam->side_dist_x += cam->delta_dist_x;
+			cam->map_x += cam->step_x;
+			cam->side = 0;
+		}
+		else
+		{
+			cam->side_dist_y += cam->delta_dist_y;
+			cam->map_y += cam->step_y;
+			cam->side = 1;
+		}
+		if (m->map[cam->map_y][cam->map_x] == '1')
+		{
+			cam->hit = 1;
+			get_hit_side(cam);
+		}
+	}
+	distance = sqrt(pow(cam->map_x - p->pos_x, 2) + pow(cam->map_y - p->pos_y, 2));
+	cam->perp_wall_dist = distance * cos(cam->angle_col - p->angle); // avoid fish-eye effect.
+	
+}
+
+void	dda(t_camera *cam, t_map *m, t_player *p)
+{
+	double	next_x;
+	double	next_y;
+	// many units do i need to travel to get the next x axis? Asuming each cell is 1x1.
+	// if looking east, cos(180º) = 1, so ray_dir_x = 1. I dont need
+	//	to travel the y axis at all. This means that delta_dist_x = (1/1) and
+	//	delta_dist_y = sin(180º) = 0
+	cam->delta_dist_x = fabs(1/cam->ray_dir_x);
+	cam->delta_dist_y = fabs(1/cam->ray_dir_y);
+	
+	// is the direction of the ray positive or negative?
+	// we need to continue with it, so the step will be the same sign as the dir.
+	if (cam->ray_dir_x > 0)
+	{
+		next_x = (cam->map_x + 1 - p->pos_x);
+		cam->step_x = 1;
+	}
+	else
+	{
+		next_x = (cam->map_x - p->pos_x);
+		cam->step_x = -1;
+	}
+	if (cam->ray_dir_y > 0)
+	{
+		next_y = (cam->map_y + 1 - p->pos_y);
+		cam->step_y = 1;
+	}
+	else
+	{
+		next_y = (cam->map_y - p->pos_y)	;
+		cam->step_y = -1;
+	}
+	//	calculate 1st offset until x and y axis.
+	cam->side_dist_x = next_x * cam->delta_dist_x;
+	cam->side_dist_y = next_y * cam->delta_dist_y;
+	dda_loop(cam, m, p);
+}
+
+void	init_rays(t_camera *cam, t_player *p, double ray_angle)
+{
+	cam->ray_dir_y = sin(ray_angle);
+	cam->ray_dir_x = cos(ray_angle);
+	
+	// if ray_dir_x == 0, that means cosine of angle is 0
+	//	thus, we will never reach a x axis. Thats why the distance is "infinity" (or very large)
+	if (cam->ray_dir_x == 0)
+		cam->delta_dist_x = 1e10;
+	else if (cam->ray_dir_y == 0)
+		cam->delta_dist_y = 1e10;
+	//	truncate the decimals to get the closest position to cell
+	cam->map_x = (int)(p->pos_x);
+	cam->map_y = (int)(p->pos_y);
+}
+
+void	raycaster_2(t_game *game)
+{
+	double		fov_start;
+	double		fov_end;
+	t_img		*img;
+	t_camera	*cam;
+	t_line		line;
+	int			x_frame;
+	
+	img = create_new_img(game->mlx_s, S_WIDTH, S_HEIGHT);
+	fov_start = game->player_s->angle - game->camera_s->rad_fov/2;
+	fov_end = game->player_s->angle + game->camera_s->rad_fov/2;
+	cam = game->camera_s;
+	x_frame = 0;
+	while (fov_start < fov_end)
+	{
+		init_rays(cam, game->player_s, fov_start);
+		dda(cam, game->map_s, game->player_s);
+		//void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
+		init_line(&line, game->camera_s, x_frame);
+		draw(game, cam, x_frame, img, &line);
+		fov_start += deg_to_rad(1) / S_WIDTH;
+		x_frame++;
+	}
+	put_img_to_img(game->mlx_s->buffer, img, 0, 0);
+	mlx_destroy_image(game->mlx_s->mlx_p, img->img);
+}
