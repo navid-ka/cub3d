@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/23 21:50:45 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/24 00:18:23 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,6 @@ typedef struct s_mlx
 	int		screen_width;
 }	t_mlx;
 
-
-
 // New struct for game.
 typedef struct s_game
 {
@@ -200,7 +198,6 @@ void    cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
 void	player_init(t_player *player);
 void    window_init(t_mlx *window);
-int     key_press(int keycode, t_game *game);
 void	sl_image_init(t_game *g);
 
 // FD utils 
@@ -237,6 +234,7 @@ t_img	*load_img(t_mlx *g, char *path, int w, int h);
 //Inputs
 int     on_key_press(int keycode, t_game *game);
 int     on_key_release(int keycode, t_game *game);
+int		key_press(t_game *game);
 
 
 //Garbage collectors
