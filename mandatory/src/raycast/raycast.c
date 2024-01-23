@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/23 21:48:51 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/23 23:46:50 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
     double text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
     int text_x = (line->x_start * source_img->width) / img->width;
     int text_y = (int)text_pos & (source_img->height - 1);		// what the fuck
+	line->line_height = (int)(S_HEIGHT / game->camera_s->perp_wall_dist) - 1; // esta linea coge la perspectiva de la pared
 	while (i < (S_HEIGHT / 2 - line->line_height / 2))
 		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
     while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
