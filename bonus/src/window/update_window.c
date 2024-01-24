@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:48:19 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/12 11:12:48 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 13:01:18 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int update(t_game *game)
         return 0;
     game->updated_at = timestamp_in_ms(game);
     
+    raycast(game);
     draw_minimap(game);
     put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
     if (game->state == COMBAT)

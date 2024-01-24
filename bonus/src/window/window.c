@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/11 23:17:19 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 13:02:23 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int game_start(t_game *game)
 		clear_image(game->mlx_s->buffer);
         update(game);
 		//printf("randi: %d\n", randi % 3);
-		if (randi % 3 == 0 && game->steps > 20)
+		if (randi % 3 == 0 && game->steps > 200)
 			game->state = screen_manager(game, COMBAT);
     }
 	if (game->state == COMBAT)
@@ -95,9 +95,9 @@ void    mlx_window(t_game *game)
 	game->mlx_s->screen_width = 1280;
 	game->mlx_s->screen_height = 720;
 	game->fps = 30;
-	ft_memset(&window, 0, sizeof(t_mlx));
+	//ft_memset(&window, 0, sizeof(t_mlx));
 	window = game->mlx_s;
-	window_init(window);
+	//window_init(window);
 	window->mlx_p = mlx_init();
 	window->win = mlx_new_window(window->mlx_p, fact*16, fact*9, "Cub3D");
 	window->buffer = malloc(sizeof(t_img));
@@ -111,6 +111,7 @@ void    mlx_window(t_game *game)
 	game->state = TITLE;
 	game->sword_state = 0;
 	sl_image_init(window);
+	walls_image_init(game);
 	load_sword_img(window);
 	load_enemy_img(window);
 	load_fonts(window);
