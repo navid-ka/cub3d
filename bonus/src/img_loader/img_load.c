@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:51:06 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/24 13:09:45 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 17:21:03 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void sl_image_init(t_mlx *g)
 
 void walls_image_init(t_game *g)
 {
-    g->mlx_s->wall = malloc(sizeof(t_img) * (4 + 1));
+    g->mlx_s->wall = malloc(sizeof(t_img) * (7 + 1));
     if (!g->mlx_s->wall)
     {
         printf("Error\n[errno: %d] Malloc failed\n", errno);
@@ -49,5 +49,11 @@ void walls_image_init(t_game *g)
     printf("g->mlx_s->wall[2].img = %p\n", g->mlx_s->wall[2].img);
     g->mlx_s->wall[3] = *load_img(g->mlx_s, g->cub_s->ea, 32, 32);
     printf("g->mlx_s->wall[3].img = %p\n", g->mlx_s->wall[3].img);
+    g->mlx_s->wall[4] = *load_img(g->mlx_s, "textures/walls.xpm", 32, 32);
+    printf("g->mlx_s->wall[4].img = %p\n", g->mlx_s->wall[4].img);
+    g->mlx_s->wall[5] = *load_img(g->mlx_s, "textures/brick_wolf.xpm", 64, 64);
+    printf("g->mlx_s->wall[5].img = %p\n", g->mlx_s->wall[5].img);
+    g->mlx_s->wall[6] = *load_img(g->mlx_s, "textures/brick.xpm", 64, 64);
+    printf("g->mlx_s->wall[5].img = %p\n", g->mlx_s->wall[6].img);
 }
 
