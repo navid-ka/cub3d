@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/24 12:49:41 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 23:28:09 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef struct s_camera
 	int		hit;	// was there a wall hit?
 	int		side;	// was a NS or a EW wall hit?
 	int		hit_direction;
+	double		wall_x;
 }	t_camera;
 
 typedef struct s_position
@@ -186,6 +187,8 @@ typedef struct s_mlx
 	t_img	*img;
 	t_img	*wall;
 	t_img	*fonts;
+	double  mouse_x;
+	double  mouse_y;
 	int		screen_height;
 	int		screen_width;
 	
@@ -285,6 +288,7 @@ double	move_x(t_player *p, char **map, int dir);
 double	move_y(t_player *p, char **map, int dir);
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
 int		on_mouse_click(int button, int x, int y, t_game *game);
+void	look_with_mouse(t_game *game);
 int     on_key_press(int keycode, t_game *game);
 int     on_key_release(int keycode, t_game *game);
 
