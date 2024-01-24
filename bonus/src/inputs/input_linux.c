@@ -6,13 +6,34 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/24 14:37:43 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 23:44:44 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 #include <X11/keysym.h>
 //https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h for keycodes
+
+void look_with_mouse(t_game *game)
+{
+    int x;
+    int y;
+    double angle;
+
+    mlx_mouse_get_pos(game->mlx_s->mlx_p, game->mlx_s->win, &x, &y);
+	mlx_mouse_hide(game->mlx_s->mlx_p, game->mlx_s->win);
+    // Move the mouse back to the center of the screen
+    mlx_mouse_move(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->screen_width / 2, game->mlx_s->screen_height / 2);
+
+    // Calculate the angle based on the mouse movement from the center of the screen
+    angle = -2 * PI * (x - game->mlx_s->screen_width / 2) / S_WIDTH;
+
+    game->player_s->angle += angle;
+    game->player_s->dir_x = cos(game->player_s->angle);
+    game->player_s->dir_y = sin(game->player_s->angle);
+    game->camera_s->plane_x = game->player_s->dir_y * game->camera_s->plane_multiplier;
+    game->camera_s->plane_y = -game->player_s->dir_x * game->camera_s->plane_multiplier;
+}
 
 int on_mouse_click(int button, int x, int y, t_game *game)
 {
@@ -123,8 +144,12 @@ int     on_key_press(int keycode, t_game *game)
 
 		if (player->pos_x != 0 || player->pos_y != 0)
 			move_player(game, dx, dy);
+
+		//player->angle = look_with_mouse(game);
+
 		if (keycode == XK_Right || keycode == XK_Left) // 'left arrow' key
         	player->angle = move_rot(camera, player, game->map_s->map, keycode);
+
 		if (game->steps % 300 == 0)
 			game->steps = 0;
 		printf("steps: %d\n", game->steps);
