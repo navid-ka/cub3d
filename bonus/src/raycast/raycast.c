@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/24 13:11:00 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 17:24:43 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,9 @@ int	get_pixel_color(t_img *img, int x, int y)
     if (x < 0 || x >= img->width || y < 0 || y >= img->height)
         return (0);
     addr = img->addr + (y * img->line_len + x * (img->bpp / 8));
-    color = char_to_int(addr[3], addr[2], addr[1], addr[0]);
+	if (y <= 64)
+    	color = char_to_int(addr[3], addr[2], addr[1], addr[0]);
     return (color);
-}
-void test_get_pixel_color(t_img *img, int x, int y)
-{
-    int color;
-    color = get_pixel_color(img, x, y);
-    printf("Color at (%d, %d): %d\n", x, y, color);
 }
 
 int	colors(t_color *c)
@@ -47,15 +42,16 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
     double step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
     double text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
     int text_x = (line->x_start * source_img->width) / img->width;
-    int text_y = (int)text_pos & (source_img->height - 1);		// what the fuck
-	line->line_height = (int)(S_HEIGHT / game->camera_s->perp_wall_dist) - 1; // esta linea coge la perspectiva de la pared
+	line->line_height = (int)(S_HEIGHT / game->camera_s->perp_wall_dist) * 2; // esta linea coge la perspectiva de la pared
 	while (i < (S_HEIGHT / 2 - line->line_height / 2))
 		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
     while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
     {
-        img_pix_put(img, line->x_start, i, get_pixel_img(source_img, text_x, text_y));
-        text_pos += step;
-        i++;
+		int text_y = (int)text_pos & (source_img->height - 1);
+		text_pos += step;
+		if (text_y <= 64)
+			img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y));
+		i++;
     }
 	while (i < S_HEIGHT)
 		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->floor));
@@ -198,13 +194,13 @@ void	init_line(t_line *line, t_camera *c, int i)
 void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 {
 	if (cub->hit_direction == NORTH)
-		draw_line(g, line, w, image, &g->mlx_s->wall[0]);
+		draw_line(g, line, w, image, &g->mlx_s->wall[5]);
 	else if (cub->hit_direction == SOUTH)
-		draw_line(g, line, w, image, &g->mlx_s->wall[1]);
+		draw_line(g, line, w, image, &g->mlx_s->wall[6]);
 	else if (cub->hit_direction == WEST)
-		draw_line(g, line, w, image, &g->mlx_s->wall[2]);
+		draw_line(g, line, w, image, &g->mlx_s->wall[5]);
 	else if (cub->hit_direction == EAST)
-		draw_line(g, line, w, image, &g->mlx_s->wall[3]);
+		draw_line(g, line, w, image, &g->mlx_s->wall[6]);
 }
 
 void    raycast(t_game *game)
@@ -228,7 +224,6 @@ void    raycast(t_game *game)
 	}
 	put_img_to_img(game->mlx_s->buffer, img, 0, 0);
 	mlx_destroy_image(game->mlx_s->mlx_p, img->img);
-	
 }
 
 /*
