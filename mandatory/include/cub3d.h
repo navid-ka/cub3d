@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/24 00:18:23 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 12:10:12 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,6 @@ t_img	*load_img(t_mlx *g, char *path, int w, int h);
 //Inputs
 int     on_key_press(int keycode, t_game *game);
 int     on_key_release(int keycode, t_game *game);
-int		key_press(t_game *game);
 
 
 //Garbage collectors
