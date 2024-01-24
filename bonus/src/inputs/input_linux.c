@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/24 13:02:02 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 14:37:43 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int     on_key_press(int keycode, t_game *game)
 			move_player(game, dx, dy);
 		if (keycode == XK_Right || keycode == XK_Left) // 'left arrow' key
         	player->angle = move_rot(camera, player, game->map_s->map, keycode);
-		if (game->steps % 150 == 0)
+		if (game->steps % 300 == 0)
 			game->steps = 0;
 		printf("steps: %d\n", game->steps);
 	}
