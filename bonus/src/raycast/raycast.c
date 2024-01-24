@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/24 17:24:43 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 22:13:19 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_pixel_color(t_img *img, int x, int y)
     if (x < 0 || x >= img->width || y < 0 || y >= img->height)
         return (0);
     addr = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	if (y <= 64)
+	if (y <= 32)
     	color = char_to_int(addr[3], addr[2], addr[1], addr[0]);
     return (color);
 }
@@ -38,18 +38,21 @@ int	colors(t_color *c)
 
 void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 {
+	int text_x;
+	double step;
+	double text_pos;
+
+    step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
+    text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
+	text_x = (int)(game->camera_s->wall_x * (double)(source_img->width));
 	i = 0;
-    double step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
-    double text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
-    int text_x = (line->x_start * source_img->width) / img->width;
-	line->line_height = (int)(S_HEIGHT / game->camera_s->perp_wall_dist) * 2; // esta linea coge la perspectiva de la pared
 	while (i < (S_HEIGHT / 2 - line->line_height / 2))
 		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
     while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
     {
 		int text_y = (int)text_pos & (source_img->height - 1);
 		text_pos += step;
-		if (text_y <= 64)
+		if (text_y <= 32)
 			img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y));
 		i++;
     }
@@ -83,13 +86,12 @@ void	init_ray(t_player *p, t_camera *c, int i)
 		c->delta_dist_y = fabs(1 / c->ray_dir_y);
 }
 
+// what direction to step in x or y-direction (either +1 or -1)
+// Basically, if angle is bigger than 180, the ray is pointing left, so we need to step in the negative x-direction
+// If the angle is smaller than 180, the ray is pointing right, so we need to step in the positive x-direction
+// Same logic for the y-direction
 void	init_step(t_player *p, t_camera *c)
 {
-	// what direction to step in x or y-direction (either +1 or -1)
-	// Basically, if angle is bigger than 180, the ray is pointing left, so we need to step in the negative x-direction
-	// If the angle is smaller than 180, the ray is pointing right, so we need to step in the positive x-direction
-	// Same logic for the y-direction
-	
 	if (c->ray_dir_x < 0)	// if the ray is pointing left
 	{
 		c->step_x = -1;	// step in the negative x-direction
@@ -133,36 +135,43 @@ static void	dda_aux(t_camera *c)
 
 void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 {
-	int hit;
-	
-	hit = 0;
-	line->color_fader = 0;
-	while (hit == 0)
-	{
-		if (c->side_dist_x < c->side_dist_y)	// if the next x-side is closer than the next y-side
-		{
-			c->side_dist_x += c->delta_dist_x;	
-			c->map_x += c->step_x;				// move to the next x-side
-			c->side = 0;						// set the side to 0 (NS)
-		}
-		else
-		{
-			c->side_dist_y += c->delta_dist_y;
-			c->map_y += c->step_y;
-			c->side = 1;						// set the side to 1 (EW)
-		}
-		if (map[c->map_y][c->map_x] == '1')
-		{
-			hit = 1;
-			dda_aux(c);
-		}
-		line->color_fader += 0;
-	}
-	// Calculations avoiding "fish eye" effect NOTE: I don't understand this part
-	if (c->side == 0)	// if the NS side was hit
-		c->perp_wall_dist = (c->map_x - p->pos_x + (1 - c->step_x) / 2) / c->ray_dir_x;	// calculate the distance to the point of impact
-	else
-		c->perp_wall_dist = (c->map_y - p->pos_y + (1 - c->step_y) / 2) / c->ray_dir_y;
+    int hit;
+    
+    hit = 0;
+    line->color_fader = 0;
+    while (hit == 0)
+    {
+        if (c->side_dist_x < c->side_dist_y)	// if the next x-side is closer than the next y-side
+        {
+            c->side_dist_x += c->delta_dist_x;	
+            c->map_x += c->step_x;				// move to the next x-side
+            c->side = 0;						// set the side to 0 (NS)
+        }
+        else
+        {
+            c->side_dist_y += c->delta_dist_y;
+            c->map_y += c->step_y;
+            c->side = 1;						// set the side to 1 (EW)
+        }
+        if (map[c->map_y][c->map_x] == '1')
+        {
+            hit = 1;
+            dda_aux(c);
+        }
+        line->color_fader += 0;
+    }
+    // Calculations avoiding "fish eye" effect NOTE: I don't understand this part
+    if (c->side == 0)	// if the NS side was hit
+        c->perp_wall_dist = (c->map_x - p->pos_x + (1 - c->step_x) / 2) / c->ray_dir_x;	// calculate the distance to the point of impact
+    else
+        c->perp_wall_dist = (c->map_y - p->pos_y + (1 - c->step_y) / 2) / c->ray_dir_y;
+
+    // Calculate wall_x
+    if (c->side == 0)
+        c->wall_x = p->pos_y + c->perp_wall_dist * c->ray_dir_y;
+    else
+        c->wall_x = p->pos_x + c->perp_wall_dist * c->ray_dir_x;
+    c->wall_x -= floor((c->wall_x));
 }
 
 /*
@@ -194,13 +203,13 @@ void	init_line(t_line *line, t_camera *c, int i)
 void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 {
 	if (cub->hit_direction == NORTH)
-		draw_line(g, line, w, image, &g->mlx_s->wall[5]);
+		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
 	else if (cub->hit_direction == SOUTH)
-		draw_line(g, line, w, image, &g->mlx_s->wall[6]);
+		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
 	else if (cub->hit_direction == WEST)
-		draw_line(g, line, w, image, &g->mlx_s->wall[5]);
+		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
 	else if (cub->hit_direction == EAST)
-		draw_line(g, line, w, image, &g->mlx_s->wall[6]);
+		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
 }
 
 void    raycast(t_game *game)
