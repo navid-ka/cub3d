@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/18 18:40:27 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 12:51:36 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	game_init(t_game *game)
 	game->mlx_s = malloc(sizeof(t_mlx));
 	game->player_s = malloc(sizeof(t_player));
 	game->enemy = malloc(sizeof(t_enemy));
+	game->camera_s = malloc(sizeof(t_camera));
 	if (!game->cub_s || !game->map_s || !game->mlx_s || !game->player_s)
 	{
 		ft_printf("Error\nMalloc error\n");
@@ -114,6 +115,7 @@ void	game_init(t_game *game)
 	game->combat_started_at = 0;
 	game->enemy->lvl = 1;
 	game->enemy->dmg = 0.5;
+	player_init(game->player_s);
 	game->player_s->lvl = 1;
 	game->player_s->exp = 0;
 	game->player_s->dmg = 2;
@@ -131,6 +133,7 @@ int main(int argc, char **argv)
 
 	game_init(&game);
 	fd_parser(&game, argv + 1);	
+	printf("after parsing\n");
 	mlx_window(&game);
 	garbage_collector(&game);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/18 20:24:49 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/24 12:49:41 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@
 # include <stdint.h>
 # include <errno.h>
 
+#define NORTH 100
+#define SOUTH 200
+#define EAST 300
+#define WEST 400
+
+
+#define PI 3.14159265358979323846
+#define S_WIDTH 1280
+#define S_HEIGHT 720
+#define MOVE_SPEED 0.025
+#define ROTATE_SPEED 0.050
+#define	FOV 90
+#define RENDER_DIST 10 //* 32 + 16
 # define PI 3.14159265358979323846
 # define SECONDS 1000
 # define HP_PLAYER 20
@@ -47,12 +60,15 @@
 
 typedef struct s_player
 {
+	double	fov;	// field of view is 90 degrees
     double  pos_x; //position
     double  pos_y;
 	double	dir_x; //direction
 	double	dir_y;
-    double  fov;
-	int		is_moving;
+    double  angle;	// in radians
+	double	speed;
+	int		dg_angle;
+	double	distance;
 	int 	hp;
 	double	dmg;
 	int		exp;
@@ -73,6 +89,41 @@ typedef struct s_enemy
 	} type;
 }t_enemy;
 
+typedef struct s_line
+{
+	double	y_start;
+	double	y_end;
+	double	x_start;
+	double	x_end;
+	int		draw_start;
+	int		draw_end;
+	int		line_height;
+	int		color;
+	int		color_fader;
+}	t_line;
+
+typedef struct s_camera
+{
+	double	plane_multiplier;	// used to calculate the camera plane
+	double	plane_x;	// camera plane ortogonal to the direction vector
+	double	plane_y;
+	double	camera_x;	// x-coordinate in camera space
+	double	camera_y;
+	int		map_x;	// which box of the map we're in
+	int		map_y;
+	double	ray_dir_x;	// direction vector
+	double	ray_dir_y;
+	double	side_dist_x;	// length of ray from current position to next x or y-side
+	double	side_dist_y;
+	double	delta_dist_x;	// length of ray from one x or y-side to next x or y-side
+	double	delta_dist_y;
+	double	perp_wall_dist;	// length of ray from current position to next x or y-side
+	int		step_x;	// what direction to step in x or y-direction (either +1 or -1)
+	int		step_y;
+	int		hit;	// was there a wall hit?
+	int		side;	// was a NS or a EW wall hit?
+	int		hit_direction;
+}	t_camera;
 
 typedef struct s_position
 {
@@ -133,6 +184,7 @@ typedef struct s_mlx
 	t_img	*sword;
 	t_img	*enemy;
 	t_img	*img;
+	t_img	*wall;
 	t_img	*fonts;
 	int		screen_height;
 	int		screen_width;
@@ -145,6 +197,7 @@ typedef struct s_game
 	t_map		*map_s;
 	t_cub		*cub_s;
 	t_player	*player_s;
+	t_camera	*camera_s;
 	t_enemy		*enemy;
 	int 		state;
 	int			sword_state;
@@ -197,9 +250,11 @@ void    fd_parser(t_game *game, char **argv);
 // Init structs 
 void    cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
+void	player_init(t_player *player);
 void    window_init(t_mlx *window);
 int     key_press(int keycode, t_game *game);
 void	sl_image_init(t_mlx *g);
+void	walls_image_init(t_game *g);
 
 // FD utils 
 int		open_path(t_cub *cub);
@@ -222,11 +277,24 @@ void    map_parser(t_game *game, t_cub *cub, t_map *map);
 
 // Mlx
 void    mlx_window(t_game *game);
+void	camera_init(t_camera *camera, t_player *player);
+double	plane_mult(int fov);
 
 //Inputs
+double	move_x(t_player *p, char **map, int dir);
+double	move_y(t_player *p, char **map, int dir);
+double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
 int		on_mouse_click(int button, int x, int y, t_game *game);
 int     on_key_press(int keycode, t_game *game);
 int     on_key_release(int keycode, t_game *game);
+
+//Raycast or angles
+void    raycast(t_game *game);
+double	deg_to_rad(int dg_angle);
+int		rad_to_dg(double angle);
+void 	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img);
+double	dda_rays(t_game *game);
+void	render_3d_map(t_game *game);
 
 // Anim 
 int	update(t_game *game);
