@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/24 12:51:36 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/26 17:54:37 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void game_save(t_game *game)
     close(fd);
     free(lvl);
     free(exp);
+	free(enemy);
     printf("Save successful.\n");
 }
 
@@ -114,7 +115,9 @@ void	game_init(t_game *game)
 	game->updated_at = 0;
 	game->combat_started_at = 0;
 	game->enemy->lvl = 1;
+	game->enemy->hp = HP_ENEMY_BASE;
 	game->enemy->dmg = 0.5;
+	game->enemy->armor = 0;
 	player_init(game->player_s);
 	game->player_s->lvl = 1;
 	game->player_s->exp = 0;
@@ -133,7 +136,6 @@ int main(int argc, char **argv)
 
 	game_init(&game);
 	fd_parser(&game, argv + 1);	
-	printf("after parsing\n");
 	mlx_window(&game);
 	garbage_collector(&game);
 	return (0);

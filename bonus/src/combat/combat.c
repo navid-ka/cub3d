@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   combat.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/18 17:53:07 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/26 18:16:04 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void check_combat_status(t_game *g)
 
 int combat(t_game *g)
 {
-
     g->random = f_rand() % 2;
     g->combat_started_at = timestamp_in_ms(g);
     g->player_s->dmg = g->player_s->dmg;
