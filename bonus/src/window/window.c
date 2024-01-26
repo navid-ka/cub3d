@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/24 23:32:48 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/26 18:05:56 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,15 @@ void    mlx_window(t_game *game)
 	t_mlx   *window;
 	static int	    fact = 80;
 
-	game->mlx_s->screen_width = 1280;
-	game->mlx_s->screen_height = 720;
+	game->mlx_s->screen_width = fact * 16;
+	game->mlx_s->screen_height = fact * 9;
 	game->fps = 30;
 	//ft_memset(&window, 0, sizeof(t_mlx));
 	window = game->mlx_s;
 	//window_init(window);
 	window->mlx_p = mlx_init();
 	window->win = mlx_new_window(window->mlx_p, fact*16, fact*9, "Cub3D");
-	window->buffer = malloc(sizeof(t_img));
-	if (!window->buffer)
-		exit(1);
-	window->buffer->img = mlx_new_image(window->mlx_p, fact*16, fact*9);
-	window->buffer->addr = mlx_get_data_addr(window->buffer->img, &window->buffer->bpp, &window->buffer->line_len, &window->buffer->endian);
-	window->buffer->width = fact*16;
-	window->buffer->height = fact*9;
+	window->buffer = create_new_img(window, fact*16, fact*9);
 	mlx_clear_window(window->mlx_p, window->win);
 	game->state = TITLE;
 	game->sword_state = 0;
@@ -119,4 +113,6 @@ void    mlx_window(t_game *game)
 	check_input(game);
 	mlx_loop_hook(window->mlx_p, &game_start, game);
 	mlx_loop(window->mlx_p);
+	mlx_destroy_image(window->mlx_p, window->buffer->img);
+	free(window->buffer);
 }
