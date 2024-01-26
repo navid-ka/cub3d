@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/24 23:28:09 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/26 10:09:40 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 # define HP_BOSS_BASE 1
 # define TIMETOGETHIT 10000
 # define ESC	53
+# define RETURN 36
+# define TAB 48
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
 # define ARROW_UP 126
