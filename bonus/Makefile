@@ -38,7 +38,6 @@ LIBFT = include/libft/bin/libft.a
 
 ifeq ($(UNAME), Darwin)
 SRC += src/inputs/input.c
-SRC += src/map_renderer/player.c
 MLXDIR = include/mlx/
 OLD_MAKE = /usr/bin/make3.81 #make
 MLX = $(MLXDIR)libmlx.a

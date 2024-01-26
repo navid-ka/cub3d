@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/24 22:13:19 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/26 09:54:03 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	get_pixel_color(t_img *img, int x, int y)
     int		color;
 
     // Comprueba si las coordenadas están dentro de los límites de la imagen
+	color = 0;
     if (x < 0 || x >= img->width || y < 0 || y >= img->height)
         return (0);
     addr = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	if (y <= 32)
-    	color = char_to_int(addr[3], addr[2], addr[1], addr[0]);
+    color = char_to_int(addr[3], addr[2], addr[1], addr[0]);
     return (color);
 }
 

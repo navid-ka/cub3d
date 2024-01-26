@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sword.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/11 20:48:56 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/26 10:17:25 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char *add_file_extension(char *file, int num)
     char *new_file;
     char *num_str;
 
-    new_file = malloc(ft_strlen(file) + 10);
+    new_file = malloc(ft_strlen(file) + 1);
     num_str = ft_itoa(num);
     ft_memcpy(new_file, file, ft_strlen(file) + 1);
     ft_strlcat(new_file, num_str, ft_strlen(file) + ft_strlen(num_str) + 1);
