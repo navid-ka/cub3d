@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:11:38 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/12 10:19:36 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/27 22:24:30 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void load_fonts(t_mlx *g)
 {
+    t_img *tmp;
     int i = 33;
     char filename[50];
     
-    g->fonts = malloc(sizeof(t_img) * (94 + 1));
+    g->fonts = malloc(sizeof(t_img) * (133 + 1));
     if (!g->fonts)
     {
         printf("Error\n[errno: %d] Malloc failed\n", errno);
@@ -26,7 +27,10 @@ void load_fonts(t_mlx *g)
     while (i <= 126)
     {
         sprintf(filename, "textures/font/%d.xpm", i);
-        g->fonts[i] = *load_img(g, filename, 25, 25);
+        tmp = load_img(g, filename, 25, 25);
+        g->fonts[i] = *tmp;
+        free(tmp);
+        tmp = NULL;
         i++;
     }
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:48:19 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/26 17:48:48 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/01/27 22:20:27 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int update(t_game *game) 
 {
-    
+    char *str;
+
+    str = NULL;
     if (timestamp_in_ms(game) - game->updated_at < (uint64_t)(1000 / game->fps))
         return 0;
     game->updated_at = timestamp_in_ms(game);
@@ -28,7 +30,9 @@ int update(t_game *game)
         combat_manager(game);
     }
     game->sword_state = sword_manager(game, game->sword_state);
-    draw_str_to_font(game->mlx_s, ft_itoa(game->player_s->hp), 20, 150);
+    str = ft_itoa(game->player_s->hp);
+    draw_str_to_font(game->mlx_s, str, 20, 150);
+    free(str);
     //put_img_to_img(game->mlx_s->buffer, &game->mlx_s->fonts[0], 20, 70);
     mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->buffer->img, 0, 0);
     return 0;
