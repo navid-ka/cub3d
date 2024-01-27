@@ -1,5 +1,5 @@
 NAME = cub3D
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 SRCDIR = src
 OBJDIR = obj
 UNAME  = $(shell uname)

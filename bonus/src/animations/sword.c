@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sword.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/26 10:17:25 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:18:18 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ char *add_file_extension(char *file, int num)
 {
     char *new_file;
     char *num_str;
+    int total_length;
 
-    new_file = malloc(ft_strlen(file) + 1);
     num_str = ft_itoa(num);
+    total_length = ft_strlen(file) + ft_strlen(num_str) + 5; // 5 para ".xpm" y el carácter nulo de terminación
+    new_file = malloc(total_length + 1); // +1 para el carácter nulo de terminación
     ft_memcpy(new_file, file, ft_strlen(file) + 1);
-    ft_strlcat(new_file, num_str, ft_strlen(file) + ft_strlen(num_str) + 1);
-    ft_strlcat(new_file, ".xpm", ft_strlen(file) + ft_strlen(num_str) + 5);
+    ft_strlcat(new_file, num_str, total_length + 1);
+    ft_strlcat(new_file, ".xpm", total_length + 1);
     free(num_str);
     return new_file;
 }
@@ -33,6 +35,7 @@ void load_sword_img(t_mlx *g)
 {
     int i;
     char *file;
+    char *file_with_extension;
 
     file = "textures/sword/sword";
     i = 0;
@@ -41,12 +44,14 @@ void load_sword_img(t_mlx *g)
     {
         int width = 1008;
         int height = 874;
+        file_with_extension = add_file_extension(file, i);
         g->sword[i].img = mlx_xpm_file_to_image(g->mlx_p,
-            add_file_extension(file, i), &width, &height);
+            file_with_extension, &width, &height);
         g->sword[i].addr = mlx_get_data_addr(g->sword[i].img, &g->sword[i].bpp, 
             &g->sword[i].line_len, &g->sword[i].endian);
         g->sword[i].width = width;
         g->sword[i].height = height;
+        free(file_with_extension);
         i++;
     }
 }

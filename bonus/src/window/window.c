@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/26 18:05:56 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/01/27 22:22:04 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int window_destroy(t_game *game)
 {
-	mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->win);
-	garbage_collector(game);
-	exit(0);
+	(void)game;
+    //mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->win);
+    //garbage_collector(game);
+    exit(1);
 }
 
 void draw_map(t_game *game)
@@ -93,12 +94,12 @@ void    mlx_window(t_game *game)
 	t_mlx   *window;
 	static int	    fact = 80;
 
+	//ft_memset(&window, 0, sizeof(t_mlx));
+	//window_init(window);
 	game->mlx_s->screen_width = fact * 16;
 	game->mlx_s->screen_height = fact * 9;
 	game->fps = 30;
-	//ft_memset(&window, 0, sizeof(t_mlx));
 	window = game->mlx_s;
-	//window_init(window);
 	window->mlx_p = mlx_init();
 	window->win = mlx_new_window(window->mlx_p, fact*16, fact*9, "Cub3D");
 	window->buffer = create_new_img(window, fact*16, fact*9);
@@ -113,6 +114,4 @@ void    mlx_window(t_game *game)
 	check_input(game);
 	mlx_loop_hook(window->mlx_p, &game_start, game);
 	mlx_loop(window->mlx_p);
-	mlx_destroy_image(window->mlx_p, window->buffer->img);
-	free(window->buffer);
 }
