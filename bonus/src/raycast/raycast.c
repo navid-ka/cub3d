@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/26 09:54:03 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:32:37 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,7 @@ void    raycast(t_game *game)
 	}
 	put_img_to_img(game->mlx_s->buffer, img, 0, 0);
 	mlx_destroy_image(game->mlx_s->mlx_p, img->img);
+	free(img);
 }
 
 /*

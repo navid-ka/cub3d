@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/26 17:54:37 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/01/27 22:27:08 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,16 +115,15 @@ void	game_init(t_game *game)
 	game->updated_at = 0;
 	game->combat_started_at = 0;
 	game->enemy->lvl = 1;
-	game->enemy->hp = HP_ENEMY_BASE;
+	game->enemy->hp = 0;
 	game->enemy->dmg = 0.5;
 	game->enemy->armor = 0;
-	player_init(game->player_s);
 	game->player_s->lvl = 1;
 	game->player_s->exp = 0;
 	game->player_s->dmg = 2;
-	load_save_file(game);
-	printf("level after loading: %d\n", game->player_s->lvl);
 	game->player_s->hp = HP_PLAYER;
+	player_init(game->player_s);
+	load_save_file(game);
 }
 
 int main(int argc, char **argv)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   combat.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/26 18:16:04 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/01/27 22:31:25 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int combat(t_game *g)
 {
     g->random = f_rand() % 2;
     g->combat_started_at = timestamp_in_ms(g);
-    g->player_s->dmg = g->player_s->dmg;
+    //g->player_s->dmg = g->player_s->dmg;
     //g->enemy->hp = ceil(HP_ENEMY_BASE + (g->enemy->lvl * 1.15));
     //enemy_type(g, (int)f_rand() % 2);
     enemy_type_stats(g, g->random);
@@ -116,8 +116,13 @@ int combat(t_game *g)
 
 void combat_manager(t_game *g) 
 {
-    draw_str_to_font(g->mlx_s, ft_itoa(g->enemy->hp), 
+    char *str;
+
+    str = NULL;
+    str = ft_itoa(g->enemy->hp);
+    draw_str_to_font(g->mlx_s, str, 
         (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2, 100);
+    free(str);
     enemy_type_sprites(g, g->random);
     check_combat_status(g);
 }

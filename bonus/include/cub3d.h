@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/26 10:09:40 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/01/27 22:25:43 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # define PI 3.14159265358979323846
 # define SECONDS 1000
 # define HP_PLAYER 20
-# define HP_ENEMY_BASE 1
-# define HP_BOSS_BASE 1
+# define HP_ENEMY_BASE 10
+# define HP_BOSS_BASE 10
 # define TIMETOGETHIT 10000
 # define ESC	53
 # define RETURN 36
@@ -328,6 +328,7 @@ t_img	*load_img(t_mlx *g, char *path, int w, int h);
 //Garbage collectors
 int		window_destroy(t_game *game);
 void	free_tab(char **args);
+void free_img(t_mlx *g, t_img *img);
 void	fd_error(t_cub *cub, int err);
 void	garbage_collector(t_game *game);
 
