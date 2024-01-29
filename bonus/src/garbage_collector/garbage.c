@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/27 22:19:10 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 12:14:26 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	free_tab(char **args)
 		args = NULL;
 	}
 }
+
 void free_img(t_mlx *g, t_img *img)
 {
     if (img)
@@ -37,11 +38,11 @@ void free_img(t_mlx *g, t_img *img)
         if (img->img)
         {
             mlx_destroy_image(g->mlx_p, img->img); // Liberar la imagen cargada
+            img->img = NULL;
         }
-        free(img); // Liberar la estructura t_img
     }
 }
-
+/*
 void free_fonts(t_mlx *g) 
 {
     int i = 33;
@@ -115,6 +116,39 @@ void free_images(t_mlx *g)
         g->wall = NULL;
     }
 }
+*/
+
+void free_images(t_mlx *g)
+{
+    int i;
+
+    for (i = 0; i < 5; i++)
+    {
+        free_img(g, &(g->img[i]));
+    }
+    for (i = 0; i < 5; i++)
+    {
+        printf("free img %p\n", g->wall[i].img);
+        free_img(g, &(g->wall[i]));
+        printf("free img %p\n", g->wall[i].img);
+    }
+    for (i = 0; i < 30; i++)
+    {
+        free_img(g, &(g->sword[i]));
+    }
+    for (i = 0; i < 2; i++)
+    {
+        printf("free img %p\n", g->enemy[i].img);
+        free_img(g, &(g->enemy[i]));
+        printf("free img %p\n", g->enemy[i].img);
+    }
+    for (i = 0; i <= 93; i++)
+    {
+        free_img(g, &(g->fonts[i]));
+    }
+
+}
+
 
 void	free_null(char **ptr)
 {
@@ -167,17 +201,15 @@ void	garbage_collector(t_game *game)
 {
     free_textures(game->cub_s);
     free_tab(game->cub_s->map);
-    free_tab(game->map_s->map);	
-    //free_fonts(game->mlx_s);
+    free_tab(game->map_s->map);
     free_images(game->mlx_s);
-    free_sword(game->mlx_s);
     mlx_destroy_image(game->mlx_s->mlx_p, game->mlx_s->buffer->img);
 	free(game->mlx_s->buffer);
-    //free(game->enemy);
-    //free(game->camera_s);
-    //free(game->map_s);
-    //free(game->cub_s);
-    //free(game->mlx_s);
-    //free(game->player_s);
+    free(game->enemy);
+    free(game->camera_s);
+    free(game->map_s);
+    free(game->cub_s);
+    free(game->mlx_s);
+    free(game->player_s);
     printf("garbage collector\n");
 }

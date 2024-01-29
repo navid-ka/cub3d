@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/27 22:27:08 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 10:50:49 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void game_save(t_game *game)
 
 void	game_init(t_game *game)
 {
-	
 	game->cub_s = malloc(sizeof(t_cub));
 	game->map_s = malloc(sizeof(t_map));
 	game->mlx_s = malloc(sizeof(t_mlx));
