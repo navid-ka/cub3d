@@ -6,28 +6,23 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:51:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/27 22:09:47 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 10:40:04 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-t_img *create_new_img(t_mlx *g, int width, int height)
+t_img create_new_img(t_mlx *g, int width, int height)
 {
-    t_img *new_img;
+    t_img new_img;
 
-    new_img = malloc(sizeof(t_img));
-    if (!new_img)
-    {
-        printf("Error\n[errno: %d] Malloc failed\n", errno);
-        exit(0);
-    }
-    new_img->img = mlx_new_image(g->mlx_p, width, height);
-    new_img->addr = mlx_get_data_addr(new_img->img, &new_img->bpp, &new_img->line_len, &new_img->endian);
-    new_img->width = width;
-    new_img->height = height;
+    new_img.img = mlx_new_image(g->mlx_p, width, height);
+    new_img.addr = mlx_get_data_addr(new_img.img, &new_img.bpp, &new_img.line_len, &new_img.endian);
+    new_img.width = width;
+    new_img.height = height;
     return (new_img);
 }
+
 
 unsigned int	get_pixel_img(t_img *img, int x, int y) 
 {
@@ -35,16 +30,16 @@ unsigned int	get_pixel_img(t_img *img, int x, int y)
             + (y * img->line_len) + (x * img->bpp / 8))));
 }
 
-t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh)
+t_img resize_image(t_mlx *g, t_img img, int nw, int nh)
 {
     t_position	od;
-    t_img		*ri;
+    t_img		ri;
     int			c;
     t_position	p = {0, 0};
     t_position	op;
 
-    od.x = img->height;
-    od.y = img->width;
+    od.x = img.height;
+    od.y = img.width;
     ri = create_new_img(g, nw, nh);
     while (p.y < nh)
     {
@@ -53,8 +48,8 @@ t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh)
         {
             op.x = p.x * od.x / nw;
             op.y = p.y * od.y / nh;
-            c = ((int *)img->addr)[op.y * od.x + op.x];
-            img_pix_put(ri, p.x, p.y, c);
+            c = ((int *)img.addr)[op.y * od.x + op.x];
+            img_pix_put(&ri, p.x, p.y, c);
             p.x++;
         }
         p.y++;

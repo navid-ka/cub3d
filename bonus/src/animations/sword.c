@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/27 17:18:18 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 11:44:40 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void load_sword_img(t_mlx *g)
 
     file = "textures/sword/sword";
     i = 0;
-    g->sword = malloc(sizeof(t_img) * 32);
     while (i < 30)
     {
         int width = 1008;

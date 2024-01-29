@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/27 22:22:04 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 11:22:31 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int window_destroy(t_game *game)
 {
-	(void)game;
-    //mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->win);
-    //garbage_collector(game);
-    exit(1);
+    mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->win);
+    garbage_collector(game);
+    exit(0);
 }
 
 void draw_map(t_game *game)
@@ -102,7 +101,7 @@ void    mlx_window(t_game *game)
 	window = game->mlx_s;
 	window->mlx_p = mlx_init();
 	window->win = mlx_new_window(window->mlx_p, fact*16, fact*9, "Cub3D");
-	window->buffer = create_new_img(window, fact*16, fact*9);
+	window->buffer = create_buffer(window, fact*16, fact*9);
 	mlx_clear_window(window->mlx_p, window->win);
 	game->state = TITLE;
 	game->sword_state = 0;

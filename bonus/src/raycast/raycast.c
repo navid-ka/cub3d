@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/27 17:32:37 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 10:47:42 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,28 +212,27 @@ void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
 }
 
-void    raycast(t_game *game)
+void raycast(t_game *game)
 {
-	t_line		line;
-	int			i;
-	t_img		*img;
-	
-	i = 0;
-	img = create_new_img(game->mlx_s, 1280, 720);
-	while (i < S_WIDTH)
-	{
-		// 1. Get player position and get the structs needef for the raycasting
-		init_ray(game->player_s, game->camera_s, i);	// Gets the position from player and sets the direction vector
-		init_step(game->player_s, game->camera_s);	// Sets the step and the side distance
-		init_dda(&line, game->player_s, game->camera_s, game->map_s->map);	// Performs the DDA algorithm		
-		// 2. Get the height of the wall
-		init_line(&line, game->camera_s, i);
-		draw(game, game->camera_s, i, img, &line);
-		i++;
-	}
-	put_img_to_img(game->mlx_s->buffer, img, 0, 0);
-	mlx_destroy_image(game->mlx_s->mlx_p, img->img);
-	free(img);
+    t_line line;
+    int i;
+    t_img img;
+
+    i = 0;
+    img = create_new_img(game->mlx_s, 1280, 720);
+    while (i < S_WIDTH)
+    {
+        // 1. Get player position and get the structs needed for the raycasting
+        init_ray(game->player_s, game->camera_s, i); // Gets the position from player and sets the direction vector
+        init_step(game->player_s, game->camera_s); // Sets the step and the side distance
+        init_dda(&line, game->player_s, game->camera_s, game->map_s->map); // Performs the DDA algorithm
+        // 2. Get the height of the wall
+        init_line(&line, game->camera_s, i);
+        draw(game, game->camera_s, i, &img, &line); // Pasamos la dirección de img
+        i++;
+    }
+    put_img_to_img(game->mlx_s->buffer, &img, 0, 0); // Pasamos la dirección de img
+    mlx_destroy_image(game->mlx_s->mlx_p, img.img); // Accedemos directamente a img.img
 }
 
 /*
