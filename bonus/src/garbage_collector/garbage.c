@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/29 12:14:26 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 16:30:45 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,10 @@ void free_images(t_mlx *g)
     for (i = 0; i <= 93; i++)
     {
         free_img(g, &(g->fonts[i]));
+    }
+    for (i = 0; i < 2; i++)
+    {
+        free_img(g, &(g->enemy_hit[i]));
     }
 
 }
