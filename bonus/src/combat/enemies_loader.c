@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/27 22:10:07 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 12:06:48 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,18 @@
 
 void load_enemy_img(t_mlx *g)
 {
-    t_img *temp_img;
-    t_img *resized_img;
-    g->enemy = malloc(sizeof(t_img) * (2 + 1));
-    if (!g->enemy)
-    {
-        printf("Error\n[errno: %d] Malloc failed\n", errno);
-        exit(0);
-    }
-    temp_img = load_img(g, "textures/enemies/enemy0.xpm", 64, 64);
-    resized_img = resize_image(g, temp_img, 256, 256);
-    g->enemy[0] = *resized_img;
-    free_img(g, temp_img); // Liberar la imagen original después de la redimensión
-    free(resized_img); // Liberar la imagen redimensionada después de copiarla
+    t_img original0, original1;
 
-    temp_img = load_img(g, "textures/enemies/enemy1.xpm", 32, 32);
-    resized_img = resize_image(g, temp_img, 512, 512);
-    g->enemy[1] = *resized_img;
-    free_img(g, temp_img); // Liberar la imagen original después de la redimensión
-    free(resized_img); // Liberar la imagen redimensionada después de copiarla
+    original0 = load_img(g, "textures/enemies/enemy0.xpm", 64, 64);
+    original1 = load_img(g, "textures/enemies/enemy1.xpm", 32, 32);
+
+    g->enemy[0] = resize_image(g, original0, 256, 256);
+    g->enemy[1] = resize_image(g, original1, 512, 512);
+
+    free_img(g, &original0);
+    free_img(g, &original1);
 }
+
 int enemy_type_stats(t_game *g, int type)
 {
     if (type == 0)

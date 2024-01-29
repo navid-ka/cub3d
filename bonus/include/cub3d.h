@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/27 22:25:43 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 11:38:27 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,16 +184,15 @@ typedef struct s_mlx
 	void	*mlx_p;
 	void	*win;
 	t_img	*buffer;
-	t_img	*sword;
-	t_img	*enemy;
-	t_img	*img;
-	t_img	*wall;
-	t_img	*fonts;
+	t_img	sword[30];
+	t_img	enemy[2];
+	t_img	img[5];
+	t_img	wall[5];
+	t_img	fonts[94];
 	double  mouse_x;
 	double  mouse_y;
 	int		screen_height;
 	int		screen_width;
-	
 } t_mlx;
 
 typedef struct s_game
@@ -248,6 +247,7 @@ void load_enemy_img(t_mlx *g);
 void load_fonts(t_mlx *g);
 void draw_str_to_font(t_mlx *g, char *str, int x, int y);
 void game_save(t_game *game);
+t_img *create_buffer(t_mlx *g, int w, int h);
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
@@ -316,19 +316,19 @@ void	draw_minimap(t_game *g);
 //void draw_square(t_mlx *g, int x, int y, int width, int height);
 
 // Img utils
-t_img	*create_new_img(t_mlx *g, int width, int height);
+t_img	create_new_img(t_mlx *g, int width, int height);
 void	put_pixel_img(t_img *img, int x, int y, int color);
 void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
 unsigned int	get_pixel_img(t_img *img, int x, int y);
-t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
+t_img resize_image(t_mlx *g, t_img img, int nw, int nh);
 void	img_pix_put(t_img *img, int x, int y, int color);
-t_img	*load_img(t_mlx *g, char *path, int w, int h);
+t_img	load_img(t_mlx *g, char *path, int w, int h);
 
 
 //Garbage collectors
 int		window_destroy(t_game *game);
 void	free_tab(char **args);
-void free_img(t_mlx *g, t_img *img);
+void 	free_img(t_mlx *g, t_img *img);
 void	fd_error(t_cub *cub, int err);
 void	garbage_collector(t_game *game);
 
