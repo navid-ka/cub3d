@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/27 22:31:25 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 15:53:08 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ unsigned int f_randi(uint32_t idx)
 unsigned int f_rand(void) 
 {
     return rand() % 100;    
+}
+
+void paint_enemy_sprite_white(t_game *g)
+{
+    put_img_to_img(g->mlx_s->buffer, &g->mlx_s->enemy_hit[g->random], 
+        (g->mlx_s->screen_width - g->mlx_s->enemy_hit[g->random].width) / 2, 
+        (g->mlx_s->screen_height - g->mlx_s->enemy_hit[g->random].height) / 2);
+    mlx_put_image_to_window(g->mlx_s->mlx_p, g->mlx_s->win, g->mlx_s->buffer->img, 0, 0);
 }
 
 void level_enemy_up(t_game *g) 
@@ -46,6 +54,7 @@ void level_player_up(t_game *g)
 void hit_enemy(t_game *g) 
 {
     g->enemy->hp -= (g->player_s->dmg - g->enemy->armor);
+    paint_enemy_sprite_white(g);
     printf("Enemy hp: %f\n", g->enemy->hp);
 }
 
@@ -104,9 +113,6 @@ int combat(t_game *g)
 {
     g->random = f_rand() % 2;
     g->combat_started_at = timestamp_in_ms(g);
-    //g->player_s->dmg = g->player_s->dmg;
-    //g->enemy->hp = ceil(HP_ENEMY_BASE + (g->enemy->lvl * 1.15));
-    //enemy_type(g, (int)f_rand() % 2);
     enemy_type_stats(g, g->random);
     g->steps = 0;
     printf("Enemy hp: %f Enemy lvl: %f\n", g->enemy->hp, g->enemy->lvl);
