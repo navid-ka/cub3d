@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/29 10:47:42 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 23:08:18 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,13 @@ int	colors(t_color *c)
 	return (c->r << 16 | c->g << 8 | c->b);
 }
 
-void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
-{
-	int text_x;
-	double step;
-	double text_pos;
-
-    step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
-    text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
-	text_x = (int)(game->camera_s->wall_x * (double)(source_img->width));
-	i = 0;
-	while (i < (S_HEIGHT / 2 - line->line_height / 2))
-		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
-    while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
-    {
-		int text_y = (int)text_pos & (source_img->height - 1);
-		text_pos += step;
-		if (text_y <= 32)
-			img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y));
-		i++;
-    }
-	while (i < S_HEIGHT)
-		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->floor));
-}
-
 // This function sets the camera position and direction
 void	init_ray(t_player *p, t_camera *c, int i)
 {
 	double	fov_scale;
 	
 	// the ray direction is the player direction + the camera plane
+	
 	fov_scale = p->fov/PI;
 	c->camera_x = 2 * fov_scale * (i/(double)S_WIDTH) - fov_scale;	// x-coordinate in camera space
 	c->ray_dir_x = p->dir_x + c->plane_x * c->camera_x;
@@ -76,14 +53,14 @@ void	init_ray(t_player *p, t_camera *c, int i)
 	
 	// distance the ray has to travel to go from 1 x-side to the next x-side
 	if (c->ray_dir_x == 0)
-		c->delta_dist_x = 1e6;
+		c->delta_dist_x = 1e30;
 	else
-		c->delta_dist_x = fabs(1 / c->ray_dir_x);
+		c->delta_dist_x = fabsl(1 / c->ray_dir_x);
 
 	if (c->ray_dir_y == 0)
-		c->delta_dist_y = 1e6;
+		c->delta_dist_y = 1e30;
 	else
-		c->delta_dist_y = fabs(1 / c->ray_dir_y);
+		c->delta_dist_y = fabsl(1 / c->ray_dir_y);
 }
 
 // what direction to step in x or y-direction (either +1 or -1)
@@ -153,9 +130,10 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
             c->map_y += c->step_y;
             c->side = 1;						// set the side to 1 (EW)
         }
-        if (map[c->map_y][c->map_x] == '1')
+        if (map[c->map_y][c->map_x] == '1' || map[c->map_y][c->map_x] == '2')
         {
             hit = 1;
+			c->type = map[c->map_y][c->map_x];
             dda_aux(c);
         }
         line->color_fader += 0;
@@ -200,16 +178,36 @@ void	init_line(t_line *line, t_camera *c, int i)
 	line->color = 0xFF0F00;
 }
 
+void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
+{
+	int text_x;
+	double step;
+	double text_pos;
+
+    step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
+    text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
+	text_x = (int)(game->camera_s->wall_x * (double)(source_img->width));
+	step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
+	i = 0;
+	while (i < (S_HEIGHT / 2 - line->line_height / 2))
+		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
+    while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
+    {
+		int text_y = (int)text_pos & (source_img->height - 1);
+		text_pos += step;
+		img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y));
+		i++;
+    }
+	while (i < S_HEIGHT)
+		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->floor));
+}
+
 void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 {
-	if (cub->hit_direction == NORTH)
+	if (cub->type == '1')
 		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
-	else if (cub->hit_direction == SOUTH)
-		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
-	else if (cub->hit_direction == WEST)
-		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
-	else if (cub->hit_direction == EAST)
-		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
+	if (cub->type == '2')
+		draw_line(g, line, w, image, &g->mlx_s->img[2]);
 }
 
 void raycast(t_game *game)
