@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/29 11:22:31 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 15:40:34 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void    mlx_window(t_game *game)
 	walls_image_init(game);
 	load_sword_img(window);
 	load_enemy_img(window);
+	load_enemy_hit(window);
 	load_fonts(window);
 	check_input(game);
 	mlx_loop_hook(window->mlx_p, &game_start, game);
