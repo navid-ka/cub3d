@@ -1,5 +1,5 @@
 /* XPM */
-static char * colorstone_xpm[] = {
+static char * brick[] = {
 "64 64 26 1",
 " 	c #7C7C7C",
 ".	c #483818",

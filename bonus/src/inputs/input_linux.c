@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/24 23:44:44 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 22:45:14 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int move_player(t_game *game, double dx, double dy)
     double new_pos_y = player->pos_y + dy;
 
     // Introduce un pequeño margen alrededor de los bloques
-    double margin = 0.03;
+    double margin = 0.15;
 
     // Comprueba el movimiento en la dirección x
     if (new_pos_x + dx - margin >= 0 && new_pos_x + dx + margin < game->map_s->width &&

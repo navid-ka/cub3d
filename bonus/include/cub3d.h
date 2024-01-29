@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/29 15:40:49 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 23:20:06 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 #define S_HEIGHT 720
 #define MOVE_SPEED 0.025
 #define ROTATE_SPEED 0.050
-#define	FOV 90
+#define	FOV 160
 #define RENDER_DIST 10 //* 32 + 16
 # define PI 3.14159265358979323846
 # define SECONDS 1000
@@ -126,6 +126,7 @@ typedef struct s_camera
 	int		side;	// was a NS or a EW wall hit?
 	int		hit_direction;
 	double		wall_x;
+	char	type;
 }	t_camera;
 
 typedef struct s_position
