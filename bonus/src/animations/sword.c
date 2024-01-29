@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/29 11:44:40 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/29 15:03:57 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void load_sword_img(t_mlx *g)
     char *file;
     char *file_with_extension;
 
-    file = "textures/sword/sword";
+    file = "textures/sword/sword-";
     i = 0;
     while (i < 30)
     {
