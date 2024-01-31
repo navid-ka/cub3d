@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/31 14:19:00 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:18:00 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,6 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 		//text_x = source_img->width - text_x - 1;
     step = 1.0 * source_img->height / line->line_height;
     text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * step;
-	step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
 	i = 0;
 	while (i < (S_HEIGHT / 2 - line->line_height / 2))
 		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
@@ -199,7 +198,8 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
     {
 		int text_y = (int)text_pos & (source_img->height - 1);
 		text_pos += step;
-		img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y));
+		if (text_y <= 62)
+			img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y));
 		i++;
     }
 	while (i < S_HEIGHT)
