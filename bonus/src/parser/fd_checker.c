@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/10 18:10:08 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:07:52 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	is_map(char *line)
     i = 0;
     while (line[i])
     {
-        if (line[i] == '1' || line[i] == '0' || line[i] == ' ')
+        if (line[i] == '0' || line[i] == '1' || line[i] == '2' 
+			|| line[i] == '3' || line[i] == '4' || line[i] == 'D' 
+			|| line[i] == ' ')
             return (1);
         else if (line[i] != ' ')
             return (0);
