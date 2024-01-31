@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/29 22:45:14 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/31 22:04:58 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,18 @@ int move_player(t_game *game, double dx, double dy)
     double new_pos_y = player->pos_y + dy;
 
     // Introduce un pequeño margen alrededor de los bloques
-    double margin = 0.15;
+    double margin = 0.07;
 
     // Comprueba el movimiento en la dirección x
     if (new_pos_x + dx - margin >= 0 && new_pos_x + dx + margin < game->map_s->width &&
         game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '1' &&
-        game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '1')
+        game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '1' &&
+		 game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '2'&&
+		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '2' && 
+		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '3' &&
+		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '3' &&
+		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '4' &&
+		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '4')	
     {
         player->pos_x = new_pos_x;
     }
@@ -67,7 +73,13 @@ int move_player(t_game *game, double dx, double dy)
     // Comprueba el movimiento en la dirección y
     if (new_pos_y + dy - margin >= 0 && new_pos_y + dy + margin < game->map_s->height &&
         game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '1' &&
-        game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '1')
+        game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '1' &&
+		game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '2' &&
+		game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '2' &&
+		game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '3' &&
+		game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '3' &&
+		game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '4' &&
+		game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '4')
     {
         player->pos_y = new_pos_y;
     }
