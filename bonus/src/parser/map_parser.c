@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/29 17:25:42 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:36:05 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int around_pl(t_cub *cub, int i, int index)
 }
 int	check_possiblty(char c)
 {
-	if (c != ' ' && c != '1' && c != '2' && c != '0' && c != 'S'
+	if (c != ' ' && c != '1' && c != '2' && c != '3'
+		&& c != '4' && c != 'D' && c != '0' && c != 'S'
 		&& c != 'N' && c != 'E' && c != 'W')
 		return (1);
 	return (0);
@@ -157,7 +158,7 @@ int map_has_valid_char(t_cub *cub)
 	int     j;
 	int     i;
 
-	valid_chars = "012NSEW ";
+	valid_chars = "01234DNSEW ";
 	i = 0;
 	cub->count = 0;
 	while (cub->map[i])
