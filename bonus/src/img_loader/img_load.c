@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:51:06 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/29 23:14:35 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/31 12:57:36 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,9 @@ void sl_image_init(t_mlx *g)
 
 void walls_image_init(t_game *g)
 {
-       t_img original;
-
-
-    g->mlx_s->wall[0] = load_img(g->mlx_s, g->cub_s->no, 32, 32);
-    g->mlx_s->wall[1] = load_img(g->mlx_s, g->cub_s->so, 32, 32);
-    g->mlx_s->wall[2] = load_img(g->mlx_s, g->cub_s->we, 32, 32);
-    g->mlx_s->wall[3] = load_img(g->mlx_s, g->cub_s->ea, 32, 32);
-    g->mlx_s->wall[4] = load_img(g->mlx_s, "textures/walls.xpm", 64, 64);
-    original = g->mlx_s->wall[4];
-    g->mlx_s->wall[4] = resize_image(g->mlx_s, original, 128, 128);
-    free_img(g->mlx_s, &original);
-
+    g->mlx_s->wall[0] = load_img(g->mlx_s, "textures/walls/wall0.xpm", 64, 64);
+    g->mlx_s->wall[1] = load_img(g->mlx_s, "textures/walls/wall1.xpm", 64, 64);
+    g->mlx_s->wall[2] = load_img(g->mlx_s, "textures/walls/wall2.xpm", 64, 64);
+    g->mlx_s->wall[3] = load_img(g->mlx_s, "textures/walls/wall3.xpm", 64, 64);
+    g->mlx_s->wall[4] = load_img(g->mlx_s, "textures/walls/door0.xpm", 64, 64);
 }
