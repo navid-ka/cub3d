@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/31 15:18:00 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:44:03 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,10 +185,10 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 	double text_pos;
 
 	text_x = (int)(game->camera_s->wall_x * (double)(source_img->width));
-	//if(game->camera_s->side == 0 && game->camera_s->ray_dir_x > 0) 
-		//text_x = source_img->width - text_x - 1;
-    //if(game->camera_s->side == 1 && game->camera_s->ray_dir_y < 0) 
-		//text_x = source_img->width - text_x - 1;
+	if(game->camera_s->side == 0 && game->camera_s->ray_dir_x > 0) 
+		text_x = source_img->width - text_x - 1;
+    if(game->camera_s->side == 1 && game->camera_s->ray_dir_y < 0) 
+		text_x = source_img->width - text_x - 1;
     step = 1.0 * source_img->height / line->line_height;
     text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * step;
 	i = 0;
@@ -211,6 +211,12 @@ void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 	if (cub->type == '1')
 		draw_line(g, line, w, image, &g->mlx_s->wall[0]);
 	if (cub->type == '2')
+		draw_line(g, line, w, image, &g->mlx_s->wall[1]);
+	if (cub->type == '3')
+		draw_line(g, line, w, image, &g->mlx_s->wall[2]);
+	if (cub->type == '4')
+		draw_line(g, line, w, image, &g->mlx_s->wall[3]);
+	if (cub->type == 'D')
 		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
 }
 
