@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/31 15:44:03 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/31 18:28:39 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,9 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
             c->map_y += c->step_y;
             c->side = 1;						// set the side to 1 (EW)
         }
-        if (map[c->map_y][c->map_x] == '1' || map[c->map_y][c->map_x] == '2')
+        if (map[c->map_y][c->map_x] == '1' || map[c->map_y][c->map_x] == '2' 
+			|| map[c->map_y][c->map_x] == '3' || map[c->map_y][c->map_x] == '4'
+			|| map[c->map_y][c->map_x] == 'D')
         {
             hit = 1;
 			c->type = map[c->map_y][c->map_x];
@@ -161,7 +163,7 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 void	init_line(t_line *line, t_camera *c, int i)
 {
 	// Calculate the height of the line
-	line->line_height = (int)(S_HEIGHT / c->perp_wall_dist);
+	line->line_height = (int)(S_HEIGHT / c->perp_wall_dist) * 2;
 	
 	// Calculate the lowest and highest pixel to fill in current stripe
 	line->draw_start = -line->line_height / 2 + S_HEIGHT / 2;
@@ -185,10 +187,10 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 	double text_pos;
 
 	text_x = (int)(game->camera_s->wall_x * (double)(source_img->width));
-	if(game->camera_s->side == 0 && game->camera_s->ray_dir_x > 0) 
+	/*if(game->camera_s->side == 0 && game->camera_s->ray_dir_x > 0) 
 		text_x = source_img->width - text_x - 1;
     if(game->camera_s->side == 1 && game->camera_s->ray_dir_y < 0) 
-		text_x = source_img->width - text_x - 1;
+		text_x = source_img->width - text_x - 1;*/
     step = 1.0 * source_img->height / line->line_height;
     text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * step;
 	i = 0;
@@ -208,15 +210,16 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 
 void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 {
+	printf("cub->type: %c\n", cub->type);
 	if (cub->type == '1')
 		draw_line(g, line, w, image, &g->mlx_s->wall[0]);
-	if (cub->type == '2')
+	else if (cub->type == '2')
 		draw_line(g, line, w, image, &g->mlx_s->wall[1]);
-	if (cub->type == '3')
+	else if (cub->type == '3')
 		draw_line(g, line, w, image, &g->mlx_s->wall[2]);
-	if (cub->type == '4')
+	else if (cub->type == '4')
 		draw_line(g, line, w, image, &g->mlx_s->wall[3]);
-	if (cub->type == 'D')
+	else if (cub->type == 'D')
 		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
 }
 
