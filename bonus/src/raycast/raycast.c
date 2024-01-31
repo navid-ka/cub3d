@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/31 18:28:39 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/31 22:01:44 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	char_to_int(unsigned char t, unsigned char r, unsigned char g, unsigned char
     return (*(int *)(unsigned char [4]){b, g, r, t});
 }
 
-int	get_pixel_color(t_img *img, int x, int y)
+int	get_pixel_color(t_img *img, int x, int y, double brightness)
 {
     char	*addr;
     int		color;
@@ -27,7 +27,7 @@ int	get_pixel_color(t_img *img, int x, int y)
     if (x < 0 || x >= img->width || y < 0 || y >= img->height)
         return (0);
     addr = img->addr + (y * img->line_len + x * (img->bpp / 8));
-    color = char_to_int(addr[3], addr[2], addr[1], addr[0]);
+    color = char_to_int(addr[3] * brightness, addr[2] * brightness, addr[1] * brightness, addr[0] * brightness);
     return (color);
 }
 
@@ -187,12 +187,21 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 	double text_pos;
 
 	text_x = (int)(game->camera_s->wall_x * (double)(source_img->width));
-	/*if(game->camera_s->side == 0 && game->camera_s->ray_dir_x > 0) 
+	if(game->camera_s->side == 0 && game->camera_s->ray_dir_x > 0) 
 		text_x = source_img->width - text_x - 1;
     if(game->camera_s->side == 1 && game->camera_s->ray_dir_y < 0) 
-		text_x = source_img->width - text_x - 1;*/
+		text_x = source_img->width - text_x - 1;
     step = 1.0 * source_img->height / line->line_height;
     text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * step;
+	double brightness = 1.0 - (game->camera_s->perp_wall_dist / (double)5);
+	if (brightness < 0)
+		brightness = 0;
+	double shade;
+	if (game->camera_s->hit)
+		shade = 0.8 * brightness;
+	else
+		shade = 1 * brightness;
+	//double fog_color = 0x000000;
 	i = 0;
 	while (i < (S_HEIGHT / 2 - line->line_height / 2))
 		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
@@ -201,7 +210,7 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 		int text_y = (int)text_pos & (source_img->height - 1);
 		text_pos += step;
 		if (text_y <= 62)
-			img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y));
+			img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y, shade));
 		i++;
     }
 	while (i < S_HEIGHT)
