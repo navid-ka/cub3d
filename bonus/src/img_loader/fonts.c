@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:11:38 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/29 10:56:12 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 00:41:04 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,26 @@ void load_fonts(t_mlx *g)
 
 void draw_str_to_font(t_mlx *g, char *str, int x, int y)
 {
-    const char *is_printable = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM\
-    NOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    const char *is_printable = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM\
+    NOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
     int i = 0;
-    int padding = 8;
+    int padding = 12;
 
     while (str[i] != '\0')
     {
-        if (ft_strchr(is_printable, ' ') != NULL)
-            x += padding;
-        if (ft_strchr(is_printable, str[i]) != NULL)
+        if (str[i] == ' ')
         {
-            put_img_to_img(g->buffer, &g->fonts[(int)str[i] - 33], x, y);
             x += padding;
+        }
+        else
+        {
+            char *char_pos = ft_strchr(is_printable, str[i]);
+            if (char_pos != NULL)
+            {
+                int font_index = (int)str[i] - 33;
+                put_img_to_img(g->buffer, &g->fonts[font_index], x, y);
+                x += padding;
+            }
         }
         i++;
     }
