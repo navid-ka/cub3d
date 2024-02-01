@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/31 22:01:44 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/01/31 23:44:34 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,14 +193,14 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 		text_x = source_img->width - text_x - 1;
     step = 1.0 * source_img->height / line->line_height;
     text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * step;
-	double brightness = 1.0 - (game->camera_s->perp_wall_dist / (double)5);
+	double brightness = 1.0 - (game->camera_s->perp_wall_dist * 0.17);
 	if (brightness < 0)
 		brightness = 0;
-	double shade;
-	if (game->camera_s->hit)
-		shade = 0.8 * brightness;
-	else
-		shade = 1 * brightness;
+	//double shade;
+	if (game->camera_s->side == 1)
+		brightness *= 0.9;
+	//else
+		//shade = 1 * brightness;
 	//double fog_color = 0x000000;
 	i = 0;
 	while (i < (S_HEIGHT / 2 - line->line_height / 2))
@@ -210,7 +210,7 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 		int text_y = (int)text_pos & (source_img->height - 1);
 		text_pos += step;
 		if (text_y <= 62)
-			img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y, shade));
+			img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y, brightness));
 		i++;
     }
 	while (i < S_HEIGHT)
@@ -219,7 +219,6 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 
 void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 {
-	printf("cub->type: %c\n", cub->type);
 	if (cub->type == '1')
 		draw_line(g, line, w, image, &g->mlx_s->wall[0]);
 	else if (cub->type == '2')

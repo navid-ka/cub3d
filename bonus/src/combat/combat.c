@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/29 15:53:08 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 01:15:06 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,22 @@ void hit_enemy(t_game *g)
     g->enemy->hp -= (g->player_s->dmg - g->enemy->armor);
     paint_enemy_sprite_white(g);
     printf("Enemy hp: %f\n", g->enemy->hp);
+    g->text_draw_frame = g->frame_count + 120; // Guarda el frame actual cuando se golpea al enemigo
 }
 
 void handle_battle_click(t_game *g) 
 {
     if(g->sword_state == 1)
+    {
         hit_enemy(g);
+        if (g->text_draw_frame > g->frame_count)
+        {
+            draw_str_to_font(g->mlx_s, "Hit", 
+                (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 - 150, 250);
+            draw_str_to_font(g->mlx_s, ft_itoa((int)(g->player_s->dmg - g->enemy->armor)), 
+                (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 - 150, 300);
+        }
+    }
 }
 
 int check_hp_players(t_game *g) 
@@ -102,7 +112,11 @@ void check_combat_status(t_game *g)
         g->player_s->hp = HP_PLAYER;
         g->state = screen_manager(g, END);
     }
-
+    //leak
+    draw_str_to_font(g->mlx_s, "Getting hit in", 
+    (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 + 150, 250);
+    draw_str_to_font(g->mlx_s, ft_itoa((TIMETOGETHIT - (g->updated_at - g->combat_started_at) - 1) / 1000), 
+            (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 + 150, 300);
     if(g->updated_at - g->combat_started_at > TIMETOGETHIT && status_end != END) {
         recieve_damage_afk(g);
         g->combat_started_at = g->updated_at;
@@ -128,7 +142,7 @@ void combat_manager(t_game *g)
     str = ft_itoa(g->enemy->hp);
     draw_str_to_font(g->mlx_s, str, 
         (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2, 100);
-    free(str);
+    free_null(&str);
     enemy_type_sprites(g, g->random);
     check_combat_status(g);
 }
