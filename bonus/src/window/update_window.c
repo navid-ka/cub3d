@@ -21,7 +21,7 @@ int update(t_game *game)
         return 0;
     game->updated_at = timestamp_in_ms(game);
     game->frame_count++;
-    printf("frame: %ld\n", game->frame_count);
+    printf("frame: %llu\n", game->frame_count);
     raycast(game);
     draw_minimap(game);
     put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);

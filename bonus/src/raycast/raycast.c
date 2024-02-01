@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/31 23:44:34 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 14:13:31 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,15 +193,14 @@ void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 		text_x = source_img->width - text_x - 1;
     step = 1.0 * source_img->height / line->line_height;
     text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * step;
-	double brightness = 1.0 - (game->camera_s->perp_wall_dist * 0.17);
+	double brightness = 1.0 - (game->camera_s->perp_wall_dist / 10);
 	if (brightness < 0)
 		brightness = 0;
 	//double shade;
 	if (game->camera_s->side == 1)
-		brightness *= 0.9;
+		brightness *= 0.8;
 	//else
 		//shade = 1 * brightness;
-	//double fog_color = 0x000000;
 	i = 0;
 	while (i < (S_HEIGHT / 2 - line->line_height / 2))
 		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
