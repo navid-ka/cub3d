@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/26 17:32:23 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/01/31 23:45:12 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int     on_key_press(int keycode, t_game *game)
 	static int flag = 0;
 	t_camera *camera = game->camera_s;
     t_player *player = game->player_s;
-    player->speed = 0.5;
+    player->speed = 0.01;
 
 	player = game->player_s;
 	//clear_player(game);

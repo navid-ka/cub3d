@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:48:19 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/27 22:20:27 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 01:12:02 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int update(t_game *game)
     if (timestamp_in_ms(game) - game->updated_at < (uint64_t)(1000 / game->fps))
         return 0;
     game->updated_at = timestamp_in_ms(game);
-    
+    game->frame_count++;
+    printf("frame: %ld\n", game->frame_count);
     raycast(game);
     draw_minimap(game);
     put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);

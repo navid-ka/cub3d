@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/29 10:50:49 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 01:15:27 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	game_init(t_game *game)
 		ft_printf("Error\nMalloc error\n");
 		exit(1);
 	}
+	game->frame_count = 0;
+	game->text_draw_frame = 0;
 	game->steps = 0;
 	game->created_at = 0;
 	game->updated_at = 0;

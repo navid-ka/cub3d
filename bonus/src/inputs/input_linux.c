@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/31 22:04:58 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 00:03:41 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ void look_with_mouse(t_game *game)
     int x;
     int y;
     double angle;
+    double sensitivity = 0.5; // Adjust this value to your liking
 
     mlx_mouse_get_pos(game->mlx_s->mlx_p, game->mlx_s->win, &x, &y);
-	mlx_mouse_hide(game->mlx_s->mlx_p, game->mlx_s->win);
+    mlx_mouse_hide(game->mlx_s->mlx_p, game->mlx_s->win);
     // Move the mouse back to the center of the screen
     mlx_mouse_move(game->mlx_s->mlx_p, game->mlx_s->win, game->mlx_s->screen_width / 2, game->mlx_s->screen_height / 2);
 
     // Calculate the angle based on the mouse movement from the center of the screen
-    angle = -2 * PI * (x - game->mlx_s->screen_width / 2) / S_WIDTH;
+    angle = -2 * PI * (x - game->mlx_s->screen_width / 2) / S_WIDTH * sensitivity;
 
     game->player_s->angle += angle;
     game->player_s->dir_x = cos(game->player_s->angle);
@@ -113,7 +114,7 @@ int     on_key_press(int keycode, t_game *game)
 	static int flag = 0;
 	t_camera *camera = game->camera_s;
     t_player *player = game->player_s;
-    player->speed = 0.5;
+    player->speed = 0.1;
 
 	player = game->player_s;
 	//clear_player(game);
