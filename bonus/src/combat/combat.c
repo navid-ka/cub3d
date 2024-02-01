@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   combat.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/01 01:15:06 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 13:53:39 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void combat_manager(t_game *g)
     str = NULL;
     str = ft_itoa(g->enemy->hp);
     draw_str_to_font(g->mlx_s, str, 
-        (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2, 100);
+        (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width))) / 2, 200);
     free_null(&str);
     enemy_type_sprites(g, g->random);
     check_combat_status(g);
