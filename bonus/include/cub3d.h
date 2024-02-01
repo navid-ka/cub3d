@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/31 18:28:07 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 01:03:29 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <errno.h>
+#include <time.h>
 
 #define NORTH 100
 #define SOUTH 200
@@ -212,6 +213,8 @@ typedef struct s_game
 	uint64_t	created_at;
 	uint64_t	updated_at;
 	uint64_t 	combat_started_at;
+	uint64_t 	frame_count;
+	uint64_t 	text_draw_frame;
 	int 		fps;
 } t_game;
 
@@ -240,6 +243,7 @@ int		game_start(t_game *game);
 unsigned int f_randi(uint32_t idx);
 unsigned int f_rand(void) ;
 uint64_t	timestamp_in_ms(t_game *game);
+uint64_t	gettimeofday_ms(void);
 int		combat(t_game *g);
 void handle_battle_click(t_game *g);
 void combat_manager(t_game *g);
@@ -331,6 +335,7 @@ t_img	load_img(t_mlx *g, char *path, int w, int h);
 //Garbage collectors
 int		window_destroy(t_game *game);
 void	free_tab(char **args);
+void	free_null(char **ptr);
 void 	free_img(t_mlx *g, t_img *img);
 void	fd_error(t_cub *cub, int err);
 void	garbage_collector(t_game *game);

@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:46:57 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/11 20:47:18 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 00:59:11 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/time.h>
 #include <stdint.h>
 
-static uint64_t	gettimeofday_ms(void) 
+uint64_t	gettimeofday_ms(void) 
 {
 	static struct timeval	tv;
 
