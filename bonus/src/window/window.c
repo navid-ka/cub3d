@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/01 01:16:47 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 15:44:38 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void clear_image(t_img *img)
 int game_start(t_game *game)
 {
 	unsigned int randi = f_randi(game->steps);
+
     if (game->state == TITLE && game->state != GAME)
 	{
         game->state = screen_manager(game, TITLE);
