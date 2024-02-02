@@ -6,7 +6,7 @@
 /*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/02 13:31:06 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/02/02 15:59:39 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void paint_mid_wall(t_game *g)
             if (j >= 0 && j < S_HEIGHT)
             {
                 int sprite_y = (j - (S_HEIGHT / 2 - g->mlx_s->wall[0].height / 2)) * g->mlx_s->wall[0].height / g->mlx_s->wall[0].height; 
-                img_pix_put(&img, i, j, get_pixel_img(&g->mlx_s->wall[0], i % g->mlx_s->wall[0].width, sprite_y));
+                img_pix_put(&img, i, j, get_pixel_img(&g->mlx_s->wall[3], i % g->mlx_s->wall[0].width, sprite_y));
             }
             j++;
         }
