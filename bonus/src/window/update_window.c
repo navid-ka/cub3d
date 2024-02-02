@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:48:19 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/01 01:12:02 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/02 11:23:39 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,17 @@ int update(t_game *game)
         return 0;
     game->updated_at = timestamp_in_ms(game);
     game->frame_count++;
-    printf("frame: %llu\n", game->frame_count);
-    raycast(game);
-    draw_minimap(game);
+    //printf("frame: %llu\n", game->frame_count);
+    if (game->state == GAME)
+    {
+        raycast(game);
+        draw_minimap(game);
+    }
     put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
     if (game->state == COMBAT)
     {
-        //enemy_type(game, game->random);
+        paint_mid_wall(game);
+        put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
         combat_manager(game);
     }
     game->sword_state = sword_manager(game, game->sword_state);
