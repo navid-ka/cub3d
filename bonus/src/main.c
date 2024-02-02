@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/01 01:15:27 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/01 17:08:36 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	game_init(t_game *game)
 	game->steps = 0;
 	game->created_at = 0;
 	game->updated_at = 0;
+	game->total_dmg = 0;
 	game->combat_started_at = 0;
 	game->enemy->lvl = 1;
 	game->enemy->hp = 0;
@@ -135,7 +136,7 @@ int main(int argc, char **argv)
 		return (printf(ARGC));
 
 	game_init(&game);
-	fd_parser(&game, argv + 1);	
+	fd_parser(&game, argv + 1);
 	mlx_window(&game);
 	garbage_collector(&game);
 	return (0);

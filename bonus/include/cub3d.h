@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/01 01:03:29 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/02 11:21:23 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ typedef struct s_game
 	uint64_t 	frame_count;
 	uint64_t 	text_draw_frame;
 	int 		fps;
+	size_t		total_dmg;
 } t_game;
 
 enum e_state
@@ -255,6 +256,8 @@ void load_fonts(t_mlx *g);
 void draw_str_to_font(t_mlx *g, char *str, int x, int y);
 void game_save(t_game *game);
 t_img *create_buffer(t_mlx *g, int w, int h);
+
+void paint_mid_wall(t_game *g);
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
