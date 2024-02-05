@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_linux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/24 00:18:01 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/05 21:36:23 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int on_key_press(int keycode, t_game *game)
     t_camera *camera = game->camera_s;
     t_player *player = game->player_s;
     player->speed = 0.5;
+	
 
     if (keycode == XK_Escape)
         return (window_destroy(game));
-
     double dx = 0, dy = 0;
     if (keycode == 0x77 || keycode == XK_W) // 'w' key
     {
@@ -78,17 +78,10 @@ int on_key_press(int keycode, t_game *game)
         dx += player->dir_y * player->speed;
         dy -= player->dir_x * player->speed;
     }
-
     if (player->pos_x != 0 || player->pos_y != 0)
         move_player(game, dx, dy);
     if (keycode == XK_Right || keycode == XK_Left) // 'left arrow' key
         player->angle = move_rot(camera, player, game->map_s->map, keycode);
-
-    printf("x: %f | y: %f\n \nAngle: %f rads | %dº\n(0 is looking EAST)\n", 
-        player->pos_x, player->pos_y, player->angle, rad_to_dg(player->angle));
-    printf("dir_x: %f\ndir_y: %f\n", game->player_s->dir_x, game->player_s->dir_y);
-    printf("Distance: %f\n", game->player_s->distance);
-
     return (0);
 }
 /*

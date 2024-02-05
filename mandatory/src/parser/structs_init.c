@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/23 21:17:57 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/05 20:45:15 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	camera_init(t_camera *camera, t_player *player)
 	camera->plane_multiplier = plane_mult(FOV);
 	camera->plane_x = player->dir_y;
 	camera->plane_y = -player->dir_x;
+	camera->wall_x = 0;
 	camera->ray_dir_x = 0;		// direction vector
 	camera->ray_dir_y = 0;
 	camera->camera_x = 0;		// x-coordinate in camera space
@@ -66,10 +67,24 @@ void	player_init(t_player *player)
 	player->dg_angle = 0;
 }
 
+void	game_init(t_game *game)
+{
+	
+	game->cub_s = malloc(sizeof(t_cub));
+	game->map_s = malloc(sizeof(t_map));
+	game->mlx_s = malloc(sizeof(t_mlx));
+	game->player_s = malloc(sizeof(t_player));
+	game->camera_s = malloc(sizeof(t_camera));
+	if (!game->cub_s || !game->map_s || !game->mlx_s || !game->player_s
+		|| !game->camera_s)
+	{
+		ft_printf("Error\nMalloc error\n");
+		exit(1);
+	}
+}
 
 void    window_init(t_mlx *window)
 {
 	window->mlx_p = NULL;
-	window->win = NULL;
 	window->pov = NULL;
 }
