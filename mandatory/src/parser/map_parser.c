@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2023/12/12 02:45:19 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/05 20:33:58 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,8 @@ void map_get_player_pos(t_map *map, t_player *player)
 		{
 			if(orientation_char(map->map[i][j]))
 			{
-					player->pos_x = j;
-					player->pos_y = i;
+				player->pos_x = j;
+				player->pos_y = i;
 			}
 			j++;
 		}
