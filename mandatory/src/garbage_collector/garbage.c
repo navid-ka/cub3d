@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/12/11 15:19:47 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/02/05 21:15:43 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,43 @@ void	fd_error(t_cub *cub, int err)
 	exit(1);
 }
 
+void free_img(t_mlx *g, t_img *img)
+{
+    if (img)
+    {
+        if (img->img)
+        {
+            mlx_destroy_image(g->mlx_p, img->img); // Liberar la imagen cargada
+            img->img = NULL;
+        }
+    }
+}
+
+void	free_images(t_mlx *g)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		free_img(g, &(g->img[i]));
+		i++;
+	}
+}
+
 void	garbage_collector(t_game *game)
 {
 	free_textures(game->cub_s);	//ok
-	//free_tab(game->cub_s->map);	//ok
-	//free_tab(game->map_s->map);	//ok
-	//free(game->map_s);			//ok
-	//free(game->cub_s);			//ok
-	//free(game->mlx_s);			//ok
+	free_tab(game->cub_s->map);	//ok
+	free_tab(game->map_s->map);	//ok
+	free_images(game->mlx_s);
+	free(game->mlx_s->buffer);
+	mlx_destroy_image(game->mlx_s->mlx_p, game->mlx_s->buffer->img);
+	mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->pov);
+	free(game->map_s);			//ok
+	free(game->cub_s);			//ok
+	free(game->mlx_s);			//ok
 	free(game->player_s);		//ok
+	free(game->camera_s);
 	printf("garbage collector\n");
 }

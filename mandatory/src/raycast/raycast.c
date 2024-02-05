@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/23 23:46:50 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/05 21:19:46 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,33 @@ int	colors(t_color *c)
 	return (c->r << 16 | c->g << 8 | c->b);
 }
 
+int	set_texture(t_game *game, t_img *src_image)
+{
+	int	text_x;
+
+	text_x = (int)(game->camera_s->wall_x * (double)(src_image->width));
+	if(game->camera_s->side == 0 && game->camera_s->ray_dir_x > 0) 
+		text_x = src_image->width - text_x - 1;
+    if(game->camera_s->side == 1 && game->camera_s->ray_dir_y < 0) 
+		text_x = src_image->width - text_x - 1;
+	return (text_x);
+}
+
 void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
 {
 	i = 0;
-    double step = 1.0 * source_img->height / (line->draw_end - line->draw_start);
-    double text_pos = (line->draw_start - img->height / 2 + (line->draw_end - line->draw_start) / 2) * step;
-    int text_x = (line->x_start * source_img->width) / img->width;
-    int text_y = (int)text_pos & (source_img->height - 1);		// what the fuck
+	line->text_x = set_texture(game, source_img);
+	line->step = 1.0 * source_img->height / line->line_height;
+    line->text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * line->step;
 	line->line_height = (int)(S_HEIGHT / game->camera_s->perp_wall_dist) - 1; // esta linea coge la perspectiva de la pared
 	while (i < (S_HEIGHT / 2 - line->line_height / 2))
 		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
     while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
     {
-        img_pix_put(img, line->x_start, i, get_pixel_img(source_img, text_x, text_y));
-        text_pos += step;
+    	line->text_y = (int)line->text_pos & (source_img->height - 1);		// what the fuck
+        line->text_pos += line->step;
+		if (line->text_y <= 62)
+        	img_pix_put(img, line->x_start, i, get_pixel_img(source_img, line->text_x, line->text_y));
         i++;
     }
 	while (i < S_HEIGHT)
@@ -77,12 +90,12 @@ void	init_ray(t_player *p, t_camera *c, int i)
 	
 	// distance the ray has to travel to go from 1 x-side to the next x-side
 	if (c->ray_dir_x == 0)
-		c->delta_dist_x = 1e6;
+		c->delta_dist_x = 1e30;
 	else
 		c->delta_dist_x = fabs(1 / c->ray_dir_x);
 
 	if (c->ray_dir_y == 0)
-		c->delta_dist_y = 1e6;
+		c->delta_dist_y = 1e30;
 	else
 		c->delta_dist_y = fabs(1 / c->ray_dir_y);
 }
@@ -167,6 +180,11 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 		c->perp_wall_dist = (c->map_x - p->pos_x + (1 - c->step_x) / 2) / c->ray_dir_x;	// calculate the distance to the point of impact
 	else
 		c->perp_wall_dist = (c->map_y - p->pos_y + (1 - c->step_y) / 2) / c->ray_dir_y;
+	if (c->side == 0)
+        c->wall_x = p->pos_y + c->perp_wall_dist * c->ray_dir_y;
+    else
+        c->wall_x = p->pos_x + c->perp_wall_dist * c->ray_dir_x;
+    c->wall_x -= floor((c->wall_x));
 }
 
 /*
@@ -200,35 +218,32 @@ void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 	if (cub->hit_direction == NORTH)
 		draw_line(g, line, w, image, &g->mlx_s->img[0]);
 	else if (cub->hit_direction == SOUTH)
-		draw_line(g, line, w, image, &g->mlx_s->img[2]);
+		draw_line(g, line, w, image, &g->mlx_s->img[1]);
 	else if (cub->hit_direction == WEST)
-		draw_line(g, line, w, image, &g->mlx_s->img[3]);
+		draw_line(g, line, w, image, &g->mlx_s->img[2]);
 	else if (cub->hit_direction == EAST)
-		draw_line(g, line, w, image, &g->mlx_s->img[4]);
+		draw_line(g, line, w, image, &g->mlx_s->img[3]);
 }
 
 void    raycast(t_game *game)
 {
 	t_line		line;
 	int			i;
-	t_img		*img;
+	t_img		img;
 	
 	i = 0;
 	img = create_new_img(game->mlx_s, 1280, 720);
 	while (i < S_WIDTH)
 	{
-		// 1. Get player position and get the structs needef for the raycasting
 		init_ray(game->player_s, game->camera_s, i);	// Gets the position from player and sets the direction vector
 		init_step(game->player_s, game->camera_s);	// Sets the step and the side distance
 		init_dda(&line, game->player_s, game->camera_s, game->map_s->map);	// Performs the DDA algorithm		
-		// 2. Get the height of the wall
 		init_line(&line, game->camera_s, i);
-		draw(game, game->camera_s, i, img, &line);
+		draw(game, game->camera_s, i, &img, &line);
 		i++;
 	}
-	put_img_to_img(game->mlx_s->buffer, img, 0, 0);
-	mlx_destroy_image(game->mlx_s->mlx_p, img->img);
-	
+	put_img_to_img(game->mlx_s->buffer, &img, 0, 0);
+	mlx_destroy_image(game->mlx_s->mlx_p, img.img);
 }
 
 /*
