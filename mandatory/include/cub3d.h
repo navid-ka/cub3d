@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/24 12:10:12 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/05 21:33:26 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@
 
 typedef struct s_line
 {
+	int		text_x;
+	int		text_y;
+	double	step;
+	double	text_pos;
 	double	y_start;
 	double	y_end;
 	double	x_start;
@@ -71,6 +75,7 @@ typedef struct s_camera
 	double	plane_y;
 	double	camera_x;	// x-coordinate in camera space
 	double	camera_y;
+	double	wall_x;
 	int		map_x;	// which box of the map we're in
 	int		map_y;
 	double	ray_dir_x;	// direction vector
@@ -84,7 +89,7 @@ typedef struct s_camera
 	int		step_y;
 	int		hit;	// was there a wall hit?
 	int		side;	// was a NS or a EW wall hit?
-	int		hit_direction;
+	int		hit_direction;		
 }	t_camera;
 
 typedef struct s_player
@@ -155,10 +160,9 @@ typedef struct s_image
 typedef struct s_mlx
 {
 	void	*mlx_p;	// mlx pointer
-	void	*win;	// 2d map window
 	void	*pov;	// raycaster window
 	t_img	*buffer;
-	t_img	*img;
+	t_img	img[4];
 	int		screen_height;
 	int		screen_width;
 }	t_mlx;
@@ -193,7 +197,8 @@ void 	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img
 double	dda_rays(t_game *game);
 void	render_3d_map(t_game *game);
 
-// Init structs 
+// Init structs
+void	game_init(t_game *game);
 void    cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
 void	player_init(t_player *player);
@@ -223,13 +228,14 @@ void    map_parser(t_game *game, t_cub *cub, t_map *map);
 void    mlx_window(t_game *game);
 
 // Img utils
-t_img	*create_new_img(t_mlx *g, int width, int height);
+t_img	*create_buffer(t_mlx *g, int w, int h);
+t_img	create_new_img(t_mlx *g, int width, int height);
 void	put_pixel_img(t_img *img, int x, int y, int color);
 void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
 unsigned int	get_pixel_img(t_img *img, int x, int y);
 t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
 void	img_pix_put(t_img *img, int x, int y, int color);
-t_img	*load_img(t_mlx *g, char *path, int w, int h);
+t_img	load_img(t_mlx *g, char *path, int w, int h);
 
 //Inputs
 int     on_key_press(int keycode, t_game *game);
