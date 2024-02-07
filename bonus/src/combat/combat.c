@@ -85,10 +85,9 @@ void level_player_up(t_game *g)
 
 void hit_enemy(t_game *g) 
 {
-    g->enemy->hp -= (g->player_s->dmg - g->enemy->armor);
+    g->enemy->hp -= (int)(g->player_s->dmg - g->enemy->armor);
     paint_enemy_sprite_white(g);
     printf("Enemy hp: %f\n", g->enemy->hp);
-    g->text_draw_frame =  120;
 }
 
 void handle_battle_click(t_game *g) 
@@ -96,9 +95,7 @@ void handle_battle_click(t_game *g)
     if(g->sword_state == 1)
     {
         hit_enemy(g);
-        
         g->total_dmg += (int)(g->player_s->dmg - g->enemy->armor);
-        printf("text_draw_frame: %lld\n",  g->frame_count - g->text_draw_frame);
     }
 }
 
