@@ -70,6 +70,8 @@ typedef struct s_player
 	double	dir_y;
     double  angle;	// in radians
 	double	speed;
+    double  dx;
+    double  dy;
 	int		dg_angle;
 	double	distance;
 	int 	hp;
