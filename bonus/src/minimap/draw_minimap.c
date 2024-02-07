@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:15:10 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/04 11:50:46 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/07 13:17:47 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ void	draw_minimap(t_game *g)
         j = 0;
         while (j < g->map_s->width)
         {
-            if (g->map_s->map[i][j] == '1')
+            if (ft_strchr(" 123", g->map_s->map[i][j]))
+            {
+                x = 1250 - (g->map_s->width - j) * img->width;
+                y = 10 + i * img->height;
+                put_img_to_img(g->mlx_s->buffer, img, x, y);
+            }
+            if (i == (int)g->player_s->pos_y && j == (int)g->player_s->pos_x)
             {
                 x = 1250 - (g->map_s->width - j) * img->width;
                 y = 10 + i * img->height;

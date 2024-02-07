@@ -112,7 +112,7 @@ int     on_key_press(int keycode, t_game *game)
 	static int flag = 0;
 	t_camera *camera = game->camera_s;
     t_player *player = game->player_s;
-    player->speed = 0.4;
+    player->speed = 0.25;
 
 	player = game->player_s;
 	//clear_player(game);
@@ -130,34 +130,34 @@ int     on_key_press(int keycode, t_game *game)
 	if (game->state == GAME)
 	{
 		printf("keycode: %d\n", keycode);
-		double dx = 0, dy = 0;
+		player->dx = 0, player->dy = 0;
 		if (keycode == W) // 'w' key
 		{
-			dx += player->dir_x * player->speed;
-			dy += player->dir_y *  player->speed;
+			player->dx += player->dir_x * player->speed;
+			player->dy += player->dir_y *  player->speed;
 			game->steps++;
 		}
 		if (keycode == S) // 's' key
 		{
-			dx -= player->dir_x * player->speed;
-			dy -= player->dir_y * player->speed;
+		    player->dx -= player->dir_x * player->speed;
+			player->dy -= player->dir_y * player->speed;
 			game->steps++;
 		}
 		if (keycode == A) // 'a' key
 		{
-			dx -= player->dir_y * player->speed;
-			dy += player->dir_x * player->speed;
+			player->dx -= player->dir_y * player->speed;
+			player->dy += player->dir_x * player->speed;
 			game->steps++;
 		}
 		if (keycode == D) // 'd' key
 		{
-			dx += player->dir_y * player->speed;
-			dy -= player->dir_x * player->speed;
+			player->dx += player->dir_y * player->speed;
+			player->dy -= player->dir_x * player->speed;
 			game->steps++;
 		}
 
 		if (player->pos_x != 0 || player->pos_y != 0)
-			move_player(game, dx, dy);
+			move_player(game, player->dx, player->dy);
 
 		//player->angle = look_with_mouse(game);
 
