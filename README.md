@@ -88,3 +88,6 @@ of your choice.
 
 ## Resources
 - [Cub3D Documentation](https://harm-smits.github.io/42docs/projects/cub3d)
+- [MATH IDDLE GAMES](https://blog.kongregate.com/the-math-of-idle-games-part-i/)
+- [XP MATH](https://bulbapedia.bulbagarden.net/wiki/Experience)
+  
