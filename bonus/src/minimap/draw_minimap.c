@@ -6,7 +6,7 @@
 /*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:15:10 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/07 13:17:47 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:55:25 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,15 @@ void	draw_minimap(t_game *g)
     int		i;
     int		j;
     t_img	*img;
-    int x;
-    int y;
+    static int x = 0;
+    static int y = 0;
 
     img = &g->mlx_s->img[0];
-    i = 0;
-    while (i < g->map_s->height)
+    i = -1;
+    while (++i < g->map_s->height)
     {
-        j = 0;
-        while (j < g->map_s->width)
+        j = -1;
+        while (++j < g->map_s->width)
         {
             if (ft_strchr(" 123", g->map_s->map[i][j]))
             {
@@ -61,11 +61,8 @@ void	draw_minimap(t_game *g)
                 y = 10 + i * img->height;
                 put_img_to_img(g->mlx_s->buffer, img, x, y);
             }
-            j++;
         }
-        i++;
     }
-    //draw_square(g->mlx_s, 1250 - (g->map_s->width) * 8, 10, g->map_s->width * 8, g->map_s->height * 8);
 }
 
 void clear_minimap(t_game *g, int color)
