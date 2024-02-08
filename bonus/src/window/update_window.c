@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:48:19 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/02 11:23:39 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/02/08 10:29:04 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int update(t_game *game)
     {
         raycast(game);
         draw_minimap(game);
+        if (game->player_s->door_collision == true)
+			draw_str_to_font(game->mlx_s, "Press E to open door", S_HEIGHT /2, S_WIDTH / 2);
     }
     put_img_to_img(game->mlx_s->buffer, &game->mlx_s->img[4], 20, 20);
     if (game->state == COMBAT)

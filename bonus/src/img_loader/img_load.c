@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:51:06 by bifrost           #+#    #+#             */
-/*   Updated: 2024/01/31 12:57:36 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/08 11:03:21 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,6 @@ void walls_image_init(t_game *g)
     g->mlx_s->wall[2] = load_img(g->mlx_s, "textures/walls/wall2.xpm", 64, 64);
     g->mlx_s->wall[3] = load_img(g->mlx_s, "textures/walls/wall3.xpm", 64, 64);
     g->mlx_s->wall[4] = load_img(g->mlx_s, "textures/walls/door0.xpm", 64, 64);
+    g->mlx_s->wall[5] = load_img(g->mlx_s, "textures/walls/door_left.xpm", 32, 64);
+    g->mlx_s->wall[6] = load_img(g->mlx_s, "textures/walls/door_right.xpm", 32, 64);
 }
