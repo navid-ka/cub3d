@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/02 15:56:00 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:32:12 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@
 
 # define KEY_ESC 53
 
+#define DOOR_MAX_DISTANCE 32
+
 #define ARGC "Error\nToo many arguments\n"
 
 typedef struct s_player
@@ -74,6 +76,7 @@ typedef struct s_player
     double  dy;
 	int		dg_angle;
 	double	distance;
+	bool	door_collision;
 	int 	hp;
 	double	dmg;
 	int		exp;
@@ -105,6 +108,12 @@ typedef struct s_line
 	int		line_height;
 	int		color;
 	int		color_fader;
+	int text_x;
+    double step;
+    double text_pos;
+	double brightness;
+	int text_y;
+	int offset;
 }	t_line;
 
 typedef struct s_camera
@@ -192,7 +201,7 @@ typedef struct s_mlx
 	t_img	enemy[2];
 	t_img	enemy_hit[2];
 	t_img	img[5];
-	t_img	wall[5];
+	t_img	wall[7];
 	t_img	fonts[94];
 	double  mouse_x;
 	double  mouse_y;
@@ -210,6 +219,8 @@ typedef struct s_game
 	t_enemy		*enemy;
 	int 		state;
 	int			sword_state;
+	int			door_state;
+	int			door_offset;
 	int			steps;
 	uint32_t	random;
 	uint64_t	created_at;
@@ -236,6 +247,14 @@ enum e_sword
 	ATACK
 };
 
+enum e_door
+{
+    CLOSED,
+    OPENING,
+    OPEN,
+    CLOSING
+};
+
 typedef struct state_manager
 {
     int (*f)(t_game *);
@@ -258,6 +277,8 @@ void load_fonts(t_mlx *g);
 void draw_str_to_font(t_mlx *g, char *str, int x, int y);
 void game_save(t_game *game);
 t_img *create_buffer(t_mlx *g, int w, int h);
+int	door_manager(t_game *g, enum e_door state);
+int    door_handler(t_game *game);
 
 void paint_mid_wall(t_game *g);
 

@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/01 00:03:41 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/08 12:58:46 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int on_mouse_click(int button, int x, int y, t_game *game)
 	}
     return (0);
 }
-
 int move_player(t_game *game, double dx, double dy)
 {
     t_player *player = game->player_s;
@@ -57,35 +56,41 @@ int move_player(t_game *game, double dx, double dy)
     // Introduce un pequeño margen alrededor de los bloques
     double margin = 0.07;
 
+    // Crea una cadena con todos los tipos de bloques que quieres evitar
+    char *blocks_to_avoid = "1234D";
+	if (game->door_state == OPEN || game->door_state == OPENING)
+		blocks_to_avoid = "1234";
+
     // Comprueba el movimiento en la dirección x
     if (new_pos_x + dx - margin >= 0 && new_pos_x + dx + margin < game->map_s->width &&
-        game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '1' &&
-        game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '1' &&
-		 game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '2'&&
-		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '2' && 
-		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '3' &&
-		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '3' &&
-		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '4' &&
-		game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '4')	
+        !ft_strchr(blocks_to_avoid, game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx - margin)]) &&
+        !ft_strchr(blocks_to_avoid, game->map_s->map[(int)player->pos_y][(int)(new_pos_x + dx + margin)]))
     {
         player->pos_x = new_pos_x;
     }
 
     // Comprueba el movimiento en la dirección y
     if (new_pos_y + dy - margin >= 0 && new_pos_y + dy + margin < game->map_s->height &&
-        game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '1' &&
-        game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '1' &&
-		game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '2' &&
-		game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '2' &&
-		game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '3' &&
-		game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '3' &&
-		game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '4' &&
-		game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '4')
+        !ft_strchr(blocks_to_avoid, game->map_s->map[(int)(new_pos_y + dy - margin)][(int)player->pos_x]) &&
+        !ft_strchr(blocks_to_avoid, game->map_s->map[(int)(new_pos_y + dy + margin)][(int)player->pos_x]))
     {
         player->pos_y = new_pos_y;
     }
 
     return 0;
+}
+
+int check_door_collision(t_game *game)
+{
+	t_player *player = game->player_s;
+	player->door_collision = false;
+	int x = (int)(player->pos_x + player->dir_x);
+	int y = (int)(player->pos_y + player->dir_y);
+	if (game->map_s->map[y][x] == 'D')
+	{
+		player->door_collision = true;
+	}
+	return (0);
 }
 
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
@@ -114,7 +119,7 @@ int     on_key_press(int keycode, t_game *game)
 	static int flag = 0;
 	t_camera *camera = game->camera_s;
     t_player *player = game->player_s;
-    player->speed = 0.1;
+    player->speed = 0.25;
 
 	player = game->player_s;
 	//clear_player(game);
@@ -128,7 +133,6 @@ int     on_key_press(int keycode, t_game *game)
 	}
 	if (game->state == GAME)
 	{
-		printf("keycode: %d\n", keycode);
 		double dx = 0, dy = 0;
 		if (keycode == 0x77 || keycode == XK_W) // 'w' key
 		{
@@ -154,7 +158,25 @@ int     on_key_press(int keycode, t_game *game)
 			dy -= player->dir_x * player->speed;
 			game->steps++;
 		}
-
+			//if (keycode == XK_e)
+				//open_door(game);
+		check_door_collision(game);
+		if (player->door_collision == true)
+		{
+			if (keycode == XK_e)
+			{
+				if (game->door_state == CLOSED || game->door_state == CLOSING)
+				{
+					game->door_state = OPENING;
+				}
+				else if (game->door_state == OPEN || game->door_state == OPENING)
+				{
+					game->door_state = CLOSING;
+				}
+				printf("door state: %d\n", game->door_state);
+				door_handler(game);
+			}
+		}
 		if (player->pos_x != 0 || player->pos_y != 0)
 			move_player(game, dx, dy);
 

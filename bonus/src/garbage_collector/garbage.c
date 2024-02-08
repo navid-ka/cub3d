@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/29 16:30:45 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/08 12:33:24 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void free_images(t_mlx *g)
     {
         free_img(g, &(g->img[i]));
     }
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < 7; i++)
     {
         printf("free img %p\n", g->wall[i].img);
         free_img(g, &(g->wall[i]));
