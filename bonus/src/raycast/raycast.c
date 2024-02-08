@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/02/01 17:05:32 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:49:12 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,9 @@ static void	dda_aux(t_camera *c)
 
 void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 {
-    int hit;
-    
-    hit = 0;
+    c->hit = 0;
     line->color_fader = 0;
-    while (hit == 0)
+    while (c->hit == 0)
     {
         if (c->side_dist_x < c->side_dist_y)	// if the next x-side is closer than the next y-side
         {
@@ -134,7 +132,7 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 			|| map[c->map_y][c->map_x] == '3' || map[c->map_y][c->map_x] == '4'
 			|| map[c->map_y][c->map_x] == 'D')
         {
-            hit = 1;
+            c->hit = 1;
 			c->type = map[c->map_y][c->map_x];
             dda_aux(c);
         }
@@ -180,54 +178,101 @@ void	init_line(t_line *line, t_camera *c, int i)
 	line->color = 0xFF0F00;
 }
 
-void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
+void draw_ceil(t_game *game, t_img *img, t_line *line, int *i)
 {
-	int text_x;
-	double step;
-	double text_pos;
+    while (*i < (S_HEIGHT / 2 - line->line_height / 2))
+        img_pix_put(img, line->x_start, (*i)++, colors(&game->cub_s->ceiling));
+}
 
-	text_x = (int)(game->camera_s->wall_x * (double)(source_img->width));
-	if(game->camera_s->side == 0 && game->camera_s->ray_dir_x > 0) 
-		text_x = source_img->width - text_x - 1;
+void draw_floor(t_game *game, t_img *img, t_line *line, int *i)
+{
+    while (*i < S_HEIGHT)
+        img_pix_put(img, line->x_start, (*i)++, colors(&game->cub_s->floor));
+}
+
+double apply_fog(t_game *game)
+{
+    double brightness;
+	
+	brightness = 1.0 - (game->camera_s->perp_wall_dist / 10);
+    if (brightness < 0)
+        brightness = 0;
+    if (game->camera_s->side == 1)
+        brightness *= 0.8;
+
+    return (brightness);
+}
+
+void calculate_line_properties(t_game *game, t_line *line, t_img *img, t_img *source_img)
+{
+    line->text_x = (int)(game->camera_s->wall_x * (double)(source_img->width));
+    if(game->camera_s->side == 0 && game->camera_s->ray_dir_x > 0) 
+        line->text_x = source_img->width - line->text_x - 1;
     if(game->camera_s->side == 1 && game->camera_s->ray_dir_y < 0) 
-		text_x = source_img->width - text_x - 1;
-    step = 1.0 * source_img->height / line->line_height;
-    text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * step;
-	double brightness = 1.0 - (game->camera_s->perp_wall_dist / 10);
-	if (brightness < 0)
-		brightness = 0;
-	//double shade;
-	if (game->camera_s->side == 1)
-		brightness *= 0.8;
-	//else
-		//shade = 1 * brightness;
-	i = 0;
-	while (i < (S_HEIGHT / 2 - line->line_height / 2))
-		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
+        line->text_x = source_img->width - line->text_x - 1;
+    line->step = 1.0 * source_img->height / line->line_height;
+    line->text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * line->step;
+}
+
+void draw_line(t_game *game, t_line *line, int w,  t_img *img, t_img *source_img)
+{
+    int i;
+
+	calculate_line_properties(game, line, img, source_img);
+    line->brightness = apply_fog(game);
+    i = 0;
+    draw_ceil(game, img, line, &i);
     while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
     {
-		int text_y = (int)text_pos & (source_img->height - 1);
-		text_pos += step;
-		if (text_y <= 62)
-			img_pix_put(img, line->x_start, i, get_pixel_color(source_img, text_x, text_y, brightness));
-		i++;
+        line->text_y = (int)line->text_pos & (source_img->height - 1);
+        line->text_pos += line->step;
+        if (line->text_y <= 62)
+        {
+            line->offset = w;
+            if (line->offset >= 0 && line->offset < img->width)
+            {
+                img_pix_put(img, line->offset, i, get_pixel_color(source_img, line->text_x, line->text_y, line->brightness));
+            }
+        }
+        i++;
     }
-	while (i < S_HEIGHT)
-		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->floor));
+    draw_floor(game, img, line, &i);
 }
+
 
 void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 {
-	if (cub->type == '1')
-		draw_line(g, line, w, image, &g->mlx_s->wall[0]);
-	else if (cub->type == '2')
-		draw_line(g, line, w, image, &g->mlx_s->wall[1]);
-	else if (cub->type == '3')
-		draw_line(g, line, w, image, &g->mlx_s->wall[2]);
-	else if (cub->type == '4')
-		draw_line(g, line, w, image, &g->mlx_s->wall[3]);
-	else if (cub->type == 'D')
-		draw_line(g, line, w, image, &g->mlx_s->wall[4]);
+    if (cub->type == '1')
+        draw_line(g, line, w, image, &g->mlx_s->wall[0]);
+    else if (cub->type == '2')
+        draw_line(g, line, w, image, &g->mlx_s->wall[1]);
+    else if (cub->type == '3')
+        draw_line(g, line, w, image, &g->mlx_s->wall[2]);
+    else if (cub->type == '4')
+        draw_line(g, line, w, image, &g->mlx_s->wall[3]);
+    else if (cub->type == 'D')
+    {
+		/*if (g->door_state == OPEN)
+		{
+			cub->hit = 0;
+			// Dibuja la puerta completamente abierta
+			//draw_line(g, line, w + (DOOR_MAX_DISTANCE -3), image, &g->mlx_s->wall[5]);
+			//draw_line(g, line, w - (DOOR_MAX_DISTANCE -3), image, &g->mlx_s->wall[6]);
+		}
+		else if (g->door_state == OPENING || g->door_state == CLOSING)
+		{
+			// Dibuja la puerta en proceso de abrirse o cerrarse
+			cub->hit = 0;
+			//draw_line(g, line, w + g->door_offset, image, &g->mlx_s->wall[4]);
+            //draw_line(g, line, w - g->door_offset / 2, image, &g->mlx_s->wall[5]);
+            //draw_line(g, line, w + g->door_offset / 2, image, &g->mlx_s->wall[6]);
+		}
+		else */if (g->door_state == CLOSED)
+		{
+			// Dibuja la puerta completamente cerrada
+			draw_line(g, line, w, image, &g->mlx_s->wall[4]);
+		}
+    }
 }
 
 void raycast(t_game *game)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/01 15:44:38 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:11:32 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int game_start(t_game *game)
         update(game);
 		look_with_mouse(game);
 		//printf("randi: %d\n", randi % 3);
-		if (randi % 3 == 0 && game->steps > 60)
+		if (randi % 3 == 0 && game->steps > 160)
 		{
 			game->state = screen_manager(game, COMBAT);
 		}
@@ -107,7 +107,8 @@ void    mlx_window(t_game *game)
 	window->buffer = create_buffer(window, fact*16, fact*9);
 	mlx_clear_window(window->mlx_p, window->win);
 	game->state = TITLE;
-	game->sword_state = 0;
+	game->sword_state = IDLE;
+	game->door_state = CLOSED;
 	sl_image_init(window);
 	walls_image_init(game);
 	load_sword_img(window);

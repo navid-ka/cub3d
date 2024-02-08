@@ -27,6 +27,7 @@ SRC = src/main.c \
 		src/img_loader/img_utils.c \
 		src/img_loader/img_utils2.c \
 		src/img_loader/fonts.c \
+		src/animations/door.c
 		
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
