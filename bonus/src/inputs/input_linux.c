@@ -58,7 +58,9 @@ int move_player(t_game *game, double dx, double dy)
 
     // Crea una cadena con todos los tipos de bloques que quieres evitar
     char *blocks_to_avoid = "1234D";
+
 	if (game->door_state == OPEN)
+
 		blocks_to_avoid = "1234";
 
     // Comprueba el movimiento en la dirección x
@@ -91,8 +93,8 @@ int check_door_collision(t_game *game)
     {
         player->door_collision = true;
     }
-    
     return (0);
+
 }
 
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir)

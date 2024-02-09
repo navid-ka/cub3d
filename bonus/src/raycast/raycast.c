@@ -241,6 +241,7 @@ void draw_line(t_game *game, t_line *line, int w,  t_img *img, t_img *source_img
 
 
 void draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
+
 {
     if (cub->type == '1')
         draw_line(g, line, w, image, &g->mlx_s->wall[0]);

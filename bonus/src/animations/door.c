@@ -61,6 +61,7 @@ int door_handler(t_game *game)
         }
     }
     printf("door frame index: %d\n", game->door_frame_index);
+
     return game->door_state;
 }
 
@@ -69,6 +70,7 @@ int door_manager(t_game *g, enum e_door state)
     static const t_state_manager door_state_lookup[2] = {
         [CLOSE] = {door_handler},
         [OPEN] = {door_handler},
+
     };
 
     g->door_state = state;

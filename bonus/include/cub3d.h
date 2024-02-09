@@ -280,6 +280,7 @@ void draw_str_to_font(t_mlx *g, char *str, int x, int y);
 void game_save(t_game *game);
 t_img *create_buffer(t_mlx *g, int w, int h);
 int	door_manager(t_game *g, enum e_door state);
+
 int door_handler(t_game *game);
 char *add_file_extension(char *file, int num);
 
