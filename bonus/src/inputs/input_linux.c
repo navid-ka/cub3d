@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/08 12:58:46 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/09 01:45:21 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int move_player(t_game *game, double dx, double dy)
 
     // Crea una cadena con todos los tipos de bloques que quieres evitar
     char *blocks_to_avoid = "1234D";
-	if (game->door_state == OPEN || game->door_state == OPENING)
+	if (game->door_state == OPEN)
 		blocks_to_avoid = "1234";
 
     // Comprueba el movimiento en la dirección x
@@ -82,15 +82,17 @@ int move_player(t_game *game, double dx, double dy)
 
 int check_door_collision(t_game *game)
 {
-	t_player *player = game->player_s;
-	player->door_collision = false;
-	int x = (int)(player->pos_x + player->dir_x);
-	int y = (int)(player->pos_y + player->dir_y);
-	if (game->map_s->map[y][x] == 'D')
-	{
-		player->door_collision = true;
-	}
-	return (0);
+    t_player *player = game->player_s;
+    player->door_collision = false;
+    int distance = 2;
+    int x = (int)(player->pos_x + player->dir_x * distance);
+    int y = (int)(player->pos_y + player->dir_y * distance);
+    if (game->map_s->map[y][x] == 'D')
+    {
+        player->door_collision = true;
+    }
+    
+    return (0);
 }
 
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
@@ -163,18 +165,20 @@ int     on_key_press(int keycode, t_game *game)
 		check_door_collision(game);
 		if (player->door_collision == true)
 		{
-			if (keycode == XK_e)
+			if (player->door_collision == true)
 			{
-				if (game->door_state == CLOSED || game->door_state == CLOSING)
+				if (keycode == XK_e)
 				{
-					game->door_state = OPENING;
+					if (game->door_state == CLOSE)
+					{
+						game->door_state = OPEN;
+					}
+					else if (game->door_state == OPEN)
+					{
+						game->door_state = CLOSE;
+					}
+					printf("door state: %d\n", game->door_state);
 				}
-				else if (game->door_state == OPEN || game->door_state == OPENING)
-				{
-					game->door_state = CLOSING;
-				}
-				printf("door state: %d\n", game->door_state);
-				door_handler(game);
 			}
 		}
 		if (player->pos_x != 0 || player->pos_y != 0)

@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/08 18:32:12 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/09 01:38:22 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ typedef struct s_mlx
 	t_img	enemy_hit[2];
 	t_img	img[5];
 	t_img	wall[7];
+	t_img   door[16];
 	t_img	fonts[94];
 	double  mouse_x;
 	double  mouse_y;
@@ -228,6 +229,7 @@ typedef struct s_game
 	uint64_t 	combat_started_at;
 	uint64_t 	frame_count;
 	uint64_t 	text_draw_frame;
+	int door_frame_index;
 	int 		fps;
 	size_t		total_dmg;
 } t_game;
@@ -249,16 +251,15 @@ enum e_sword
 
 enum e_door
 {
-    CLOSED,
-    OPENING,
+    CLOSE,
     OPEN,
-    CLOSING
 };
 
 typedef struct state_manager
 {
     int (*f)(t_game *);
 } t_state_manager;
+
 
 int		screen_manager(t_game *g, enum e_state state);
 int		game_start(t_game *game);
@@ -274,11 +275,13 @@ int	enemy_type_sprites(t_game *g, int type);
 void load_enemy_img(t_mlx *g);
 void load_enemy_hit(t_mlx *g);
 void load_fonts(t_mlx *g);
+void load_door_img(t_mlx *g);
 void draw_str_to_font(t_mlx *g, char *str, int x, int y);
 void game_save(t_game *game);
 t_img *create_buffer(t_mlx *g, int w, int h);
 int	door_manager(t_game *g, enum e_door state);
-int    door_handler(t_game *game);
+int door_handler(t_game *game);
+char *add_file_extension(char *file, int num);
 
 void paint_mid_wall(t_game *g);
 

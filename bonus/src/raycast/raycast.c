@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/02/08 18:49:12 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/09 01:40:34 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,7 @@ void draw_line(t_game *game, t_line *line, int w,  t_img *img, t_img *source_img
 }
 
 
-void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
+void draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
 {
     if (cub->type == '1')
         draw_line(g, line, w, image, &g->mlx_s->wall[0]);
@@ -252,26 +252,8 @@ void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
         draw_line(g, line, w, image, &g->mlx_s->wall[3]);
     else if (cub->type == 'D')
     {
-		/*if (g->door_state == OPEN)
-		{
-			cub->hit = 0;
-			// Dibuja la puerta completamente abierta
-			//draw_line(g, line, w + (DOOR_MAX_DISTANCE -3), image, &g->mlx_s->wall[5]);
-			//draw_line(g, line, w - (DOOR_MAX_DISTANCE -3), image, &g->mlx_s->wall[6]);
-		}
-		else if (g->door_state == OPENING || g->door_state == CLOSING)
-		{
-			// Dibuja la puerta en proceso de abrirse o cerrarse
-			cub->hit = 0;
-			//draw_line(g, line, w + g->door_offset, image, &g->mlx_s->wall[4]);
-            //draw_line(g, line, w - g->door_offset / 2, image, &g->mlx_s->wall[5]);
-            //draw_line(g, line, w + g->door_offset / 2, image, &g->mlx_s->wall[6]);
-		}
-		else */if (g->door_state == CLOSED)
-		{
-			// Dibuja la puerta completamente cerrada
-			draw_line(g, line, w, image, &g->mlx_s->wall[4]);
-		}
+        draw_line(g, line, w, image, &g->mlx_s->door[g->door_frame_index]);
+        door_handler(g);
     }
 }
 

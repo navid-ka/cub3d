@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/08 13:03:06 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/09 01:27:59 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	game_init(t_game *game)
 	game->updated_at = 0;
 	game->total_dmg = 0;
 	game->door_offset = 0;
+	game->door_frame_index = 0;
 	game->combat_started_at = 0;
 	game->enemy->lvl = 1;
 	game->enemy->hp = 0;
