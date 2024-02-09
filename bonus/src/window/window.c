@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/08 18:11:32 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/09 01:38:28 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,11 @@ void    mlx_window(t_game *game)
 	mlx_clear_window(window->mlx_p, window->win);
 	game->state = TITLE;
 	game->sword_state = IDLE;
-	game->door_state = CLOSED;
+	game->door_state = CLOSE;
 	sl_image_init(window);
 	walls_image_init(game);
 	load_sword_img(window);
+	load_door_img(window);
 	load_enemy_img(window);
 	load_enemy_hit(window);
 	load_fonts(window);
