@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:17:47 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 13:44:04 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/13 15:14:54 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,17 @@ void	move_right(t_player *player, t_game *game)
 	player->dy -= player->dir_x * player->speed;
 	game->steps++;
 }
+
 void	player_move(int keycode, t_player *player, t_game *game)
 {
-		player->dx = 0, player->dy = 0;
-		if (keycode == 0x77 || keycode == XK_W)
-			move_forward(player, game);
-		if (keycode == 0x73 || keycode == XK_S)
-			move_backward(player, game);
-		if (keycode == 0x61 || keycode == XK_A)
-			move_left(player, game);
-		if (keycode == 0x64 || keycode == XK_D)
-			move_right(player, game);
+	player->dx = 0;
+	player->dy = 0;
+	if (keycode == 0x77 || keycode == XK_W)
+		move_forward(player, game);
+	if (keycode == 0x73 || keycode == XK_S)
+		move_backward(player, game);
+	if (keycode == 0x61 || keycode == XK_A)
+		move_left(player, game);
+	if (keycode == 0x64 || keycode == XK_D)
+		move_right(player, game);
 }
