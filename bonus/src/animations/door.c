@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/09 01:40:04 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:54:39 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ int door_handler(t_game *game)
             game->door_frame_index--;
         }
     }
-    printf("door frame index: %d\n", game->door_frame_index);
-
     return game->door_state;
 }
 
