@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_linux.c                                      :+:      :+:    :+:   */
+/*   input_mac.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/13 15:16:31 by bifrost          ###   ########.fr       */
+/*   Created: 2024/02/13 14:58:54 by bifrost           #+#    #+#             */
+/*   Updated: 2024/02/13 15:13:49 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-#include <X11/keysym.h>
 
 void	look_with_mouse(t_game *game)
 {
@@ -20,9 +19,9 @@ void	look_with_mouse(t_game *game)
 	int				y;
 	double			angle;
 
-	mlx_mouse_get_pos(game->mlx_s->mlx_p, game->mlx_s->win, &x, &y);
+	mlx_mouse_get_pos(game->mlx_s->win, &x, &y);
 	mlx_mouse_hide(game->mlx_s->mlx_p, game->mlx_s->win);
-	mlx_mouse_move(game->mlx_s->mlx_p, game->mlx_s->win,
+	mlx_mouse_move(game->mlx_s->win,
 		game->mlx_s->screen_width / 2, game->mlx_s->screen_height / 2);
 	angle = -2 * PI * (x - game->mlx_s->screen_width / 2) / S_WIDTH * sens;
 	game->player_s->angle += angle;
@@ -39,7 +38,7 @@ double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
 	double	increment;
 
 	(void)map;
-	if (dir == XK_Right)
+	if (dir == ARROW_RIGHT)
 		increment = -ROTATE_SPEED;
 	else
 		increment = ROTATE_SPEED;
@@ -57,7 +56,7 @@ double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
 
 void	toggle_pause(t_game *game, int keycode, int *flag)
 {
-	if (keycode == XK_Tab)
+	if (keycode == TAB)
 	{
 		printf("Game state\n %d\n", PAUSE);
 		if (*flag == 0)
@@ -86,9 +85,9 @@ int	on_key_press(int keycode, t_game *game)
 	player = game->player_s;
 	camera = game->camera_s;
 	player->speed = 0.25;
-	if (keycode == XK_Escape)
+	if (keycode == ESC)
 		return (window_destroy(game));
-	if (game->state == TITLE && keycode == XK_Return)
+	if (game->state == TITLE && keycode == RETURN)
 		game->state = screen_manager(game, GAME);
 	if (game->state == GAME)
 	{
@@ -97,7 +96,7 @@ int	on_key_press(int keycode, t_game *game)
 		toggle_door_state(player, keycode, game);
 		if (player->pos_x != 0 || player->pos_y != 0)
 			collision_checker(game, player->dx, player->dy);
-		if (keycode == XK_Right || keycode == XK_Left)
+		if (keycode == ARROW_RIGHT || keycode == ARROW_LEFT)
 			player->angle = move_rot(camera, player, game->map_s->map, keycode);
 		if (game->steps % 300 == 0)
 			game->steps = 0;
@@ -111,13 +110,13 @@ int	on_key_release(int keycode, t_game *game)
 	t_player	*player;
 
 	player = game->player_s;
-	if (keycode == 0x77 || keycode == XK_W)
+	if (keycode == W)
 		player->pos_y -= 0;
-	else if (keycode == 0x73 || keycode == XK_S)
+	else if (keycode == S)
 		player->pos_y += 0;
-	else if (keycode == 0x61 || keycode == XK_A)
+	else if (keycode == A)
 		player->pos_x -= 0;
-	else if (keycode == 0x64 || keycode == XK_D)
+	else if (keycode == D)
 		player->pos_x += 0;
 	return (0);
 }

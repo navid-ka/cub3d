@@ -6,16 +6,12 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:11:31 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 13:52:32 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/13 15:27:15 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAC
-# define XK_e E
-#else
-# include <X11/keysym.h>
-#endif
 #include "../../include/cub3d.h"
+#include <X11/keysym.h>
 
 int	on_mouse_click(int button, int x, int y, t_game *game)
 {
@@ -89,9 +85,9 @@ int	check_collision_y(t_game *game, double dy, char *wall, double margin)
 	player = game->player_s;
 	new_y = player->pos_y + dy;
 	if (new_y + dy - margin >= 0 && new_y + dy + margin < game->map_s->height
-		&& !ft_strchr(wall,
+		&& !ft_strchr(wall, 
 			game->map_s->map[(int)(new_y + dy - margin)][(int)player->pos_x])
-		&& !ft_strchr(wall,
+		&& !ft_strchr(wall, 
 			game->map_s->map[(int)(new_y + dy + margin)][(int)player->pos_x]))
 	{
 		player->pos_y = new_y;
