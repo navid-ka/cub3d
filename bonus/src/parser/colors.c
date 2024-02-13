@@ -6,45 +6,46 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/03 14:30:45 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/13 11:29:32 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int is_digit_str(char *str) 
+int	is_digit_str(char *str)
 {
-    while (*str) 
+	while (*str)
 	{
-        if (!ft_isdigit(*str)) 
+		if (!ft_isdigit(*str))
 		{
-            return (0);
-        }
-        str++;
-    }
-    return (1);
+			return (0);
+		}
+		str++;
+	}
+	return (1);
 }
 
 int	validate_color_fd(char **colors)
 {
-    int i;
+	int	i;
 
 	i = 0;
-    while (i < 3) 
+	while (i < 3)
 	{
-        if (!is_digit_str(colors[i])) 
+		if (!is_digit_str(colors[i]))
 		{
-            ft_printf("Error\nNon-numeric value in color\n");
-            free_tab(colors);
-            return (1);
-        }
-        i++;
-    }
-    return (0);
+			ft_printf("Error\nNon-numeric value in color\n");
+			free_tab(colors);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
+
 int	color_validator(t_cub *cub, char *color, char type)
 {
-	char **colors;
+	char	**colors;
 
 	colors = ft_split(color, ',');
 	if (colors[3])
@@ -54,7 +55,7 @@ int	color_validator(t_cub *cub, char *color, char type)
 		return (1);
 	}
 	if (validate_color_fd(colors))
-        return (1);
+		return (1);
 	if (type == 'c')
 	{
 		cub->ceiling.r = cub_atoi(colors[0]);

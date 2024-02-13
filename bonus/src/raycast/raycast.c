@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/02/09 01:40:34 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/13 10:31:40 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,25 +91,6 @@ void	init_step(t_player *p, t_camera *c)
 	}
 }
 
-static void	dda_aux(t_camera *c)
-{
-	if (c->side == 0)
-	{
-		if (c->step_x > 0)
-			c->hit_direction = SOUTH;
-		else
-			c->hit_direction = NORTH;
-	}
-	else
-	{
-		if (c->step_y > 0)
-			c->hit_direction = EAST;
-		else
-			c->hit_direction = WEST;
-	}
-}
-
-
 void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 {
     c->hit = 0;
@@ -134,17 +115,12 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
         {
             c->hit = 1;
 			c->type = map[c->map_y][c->map_x];
-            dda_aux(c);
         }
-        line->color_fader += 0;
     }
-    // Calculations avoiding "fish eye" effect NOTE: I don't understand this part
     if (c->side == 0)	// if the NS side was hit
         c->perp_wall_dist = (c->map_x - p->pos_x + (1 - c->step_x) / 2) / c->ray_dir_x;	// calculate the distance to the point of impact
     else
         c->perp_wall_dist = (c->map_y - p->pos_y + (1 - c->step_y) / 2) / c->ray_dir_y;
-
-    // Calculate wall_x
     if (c->side == 0)
         c->wall_x = p->pos_y + c->perp_wall_dist * c->ray_dir_y;
     else
@@ -241,7 +217,6 @@ void draw_line(t_game *game, t_line *line, int w,  t_img *img, t_img *source_img
 
 
 void draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
-
 {
     if (cub->type == '1')
         draw_line(g, line, w, image, &g->mlx_s->wall[0]);

@@ -6,15 +6,15 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/01/03 14:30:34 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/13 11:43:14 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int    xpm_check_extension(char *str)
+int	xpm_check_extension(char *str)
 {
-	int     len;
+	int	len;
 
 	len = ft_strlen(str);
 	printf("str: %s\n", str);

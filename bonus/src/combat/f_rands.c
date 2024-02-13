@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   f_rands.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/11 20:46:57 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 12:11:24 by bifrost          ###   ########.fr       */
+/*   Created: 2024/02/13 12:12:29 by bifrost           #+#    #+#             */
+/*   Updated: 2024/02/13 12:13:24 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-#include <sys/time.h>
-#include <stdint.h>
 
-uint64_t	gettimeofday_ms(void)
+unsigned int	f_randi(uint32_t idx)
 {
-	static struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	idx = (idx << 13) ^ idx;
+	return ((idx * (idx * idx * 15731 + 789221) + 1376312589) & 0x7fffffff);
 }
 
-uint64_t	timestamp_in_ms(t_game *game)
+unsigned int	f_rand(void)
 {
-	if (game->created_at == 0)
-		game->created_at = gettimeofday_ms();
-	return (gettimeofday_ms() - game->created_at);
+	return (rand() % 100);
 }
