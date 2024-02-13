@@ -6,12 +6,12 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:11:31 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 15:27:15 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/13 17:42:05 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-#include <X11/keysym.h>
+#include "../../include/keysym.h"
 
 int	on_mouse_click(int button, int x, int y, t_game *game)
 {
@@ -47,7 +47,7 @@ void	toggle_door_state(t_player *player, int keycode, t_game *game)
 {
 	if (player->door_collision == true)
 	{
-		if (keycode == XK_e)
+		if (keycode == XK_e || keycode == E)
 		{
 			if (game->door_state == CLOSE)
 				game->door_state = OPEN;
