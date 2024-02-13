@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/09 01:45:21 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/13 01:08:46 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,24 @@ int move_player(t_game *game, double dx, double dy)
     return 0;
 }
 
+
+
 int check_door_collision(t_game *game)
 {
-    t_player *player = game->player_s;
+    t_player *player;
+	static double distance = 2.0f;
+	int x;
+	int y;
+
+	player = game->player_s;
     player->door_collision = false;
-    int distance = 2;
-    int x = (int)(player->pos_x + player->dir_x * distance);
-    int y = (int)(player->pos_y + player->dir_y * distance);
+    x = (int)(player->pos_x + player->dir_x * distance);
+    y = (int)(player->pos_y + player->dir_y * distance);
     if (game->map_s->map[y][x] == 'D')
     {
         player->door_collision = true;
     }
     return (0);
-
 }
 
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
@@ -137,33 +142,38 @@ int     on_key_press(int keycode, t_game *game)
 	}
 	if (game->state == GAME)
 	{
-		double dx = 0, dy = 0;
+		player->dx = 0, player->dy = 0;
 		if (keycode == 0x77 || keycode == XK_W) // 'w' key
 		{
-			dx += player->dir_x * player->speed;
-			dy += player->dir_y *  player->speed;
+			player->dx += player->dir_x * player->speed;
+			player->dy += player->dir_y *  player->speed;
 			game->steps++;
 		}
 		if (keycode == 0x73 || keycode == XK_S) // 's' key
 		{
-			dx -= player->dir_x * player->speed;
-			dy -= player->dir_y * player->speed;
+			player->dx -= player->dir_x * player->speed;
+			player->dy -= player->dir_y * player->speed;
 			game->steps++;
 		}
 		if (keycode == 0x61 || keycode == XK_A) // 'a' key
 		{
-			dx -= player->dir_y * player->speed;
-			dy += player->dir_x * player->speed;
+			player->dx -= player->dir_y * player->speed;
+			player->dy += player->dir_x * player->speed;
 			game->steps++;
 		}
 		if (keycode == 0x64 || keycode == XK_D) // 'd' key
 		{
-			dx += player->dir_y * player->speed;
-			dy -= player->dir_x * player->speed;
+			player->dx += player->dir_y * player->speed;
+			player->dy -= player->dir_x * player->speed;
 			game->steps++;
 		}
-			//if (keycode == XK_e)
-				//open_door(game);
+		if (keycode == XK_space)
+		{
+			//dash forward
+			player->dx += player->dir_x * 2;
+			player->dy += player->dir_y * 2;
+
+		}
 		check_door_collision(game);
 		if (player->door_collision == true)
 		{
@@ -184,7 +194,7 @@ int     on_key_press(int keycode, t_game *game)
 			}
 		}
 		if (player->pos_x != 0 || player->pos_y != 0)
-			move_player(game, dx, dy);
+			move_player(game, player->dx, player->dy);
 
 		//player->angle = look_with_mouse(game);
 

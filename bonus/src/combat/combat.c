@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   combat.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 04:01:07 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/02 15:59:39 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/02/13 01:16:46 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,29 +125,40 @@ void recieve_damage_afk(t_game *game)
     printf("Vida actual %d\n", game->player_s->hp);
 }
 
+void combat_stats_ui(t_game *g)
+{
+    char *hit_in;
+    char *dps;
+
+    dps = ft_itoa(g->total_dmg);
+    hit_in = ft_itoa((TIMETOGETHIT - (g->updated_at - g->combat_started_at) - 1) / 1000);
+    draw_str_to_font(g->mlx_s, "Getting hit in", 
+    (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 + 150, 250);
+    draw_str_to_font(g->mlx_s, hit_in, 
+            (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 + 150, 300);
+    draw_str_to_font(g->mlx_s, "DPS METER", 
+                (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 - 150, 250);
+    draw_str_to_font(g->mlx_s, dps, 
+                (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 - 150, 300);
+    free_null(&hit_in);
+    free_null(&dps);
+}
+
 void check_combat_status(t_game *g)
 {
     int status_end;
     status_end = g->state;
     status_end = check_hp_players(g);
-    if(status_end == GAME) {
+    if(status_end == GAME)
         g->state = screen_manager(g, GAME);
-    }
-    else if(status_end == END) {
+    else if(status_end == END)
+    {
         g->player_s->hp = HP_PLAYER;
         g->state = screen_manager(g, END);
     }
-    //leak
-    
-    draw_str_to_font(g->mlx_s, "Getting hit in", 
-    (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 + 150, 250);
-    draw_str_to_font(g->mlx_s, ft_itoa((TIMETOGETHIT - (g->updated_at - g->combat_started_at) - 1) / 1000), 
-            (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 + 150, 300);
-    draw_str_to_font(g->mlx_s, "DPS METER", 
-                (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 - 150, 250);
-    draw_str_to_font(g->mlx_s, ft_itoa(g->total_dmg), 
-                (g->mlx_s->screen_width - (g->mlx_s->enemy->width - (g->mlx_s->enemy->width / 2))) / 2 - 150, 300);
-    if(g->updated_at - g->combat_started_at > TIMETOGETHIT && status_end != END) {
+    combat_stats_ui(g);
+    if (g->updated_at - g->combat_started_at > TIMETOGETHIT && status_end != END)
+    {
         recieve_damage_afk(g);
         g->combat_started_at = g->updated_at;
     }
