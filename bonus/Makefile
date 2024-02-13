@@ -13,13 +13,20 @@ SRC = src/main.c \
 		src/parser/utils.c \
 		src/parser/orientations.c \
 		src/parser/map_parser.c \
+		src/parser/map_parser_utils.c \
 		src/raycast/raycast.c \
 		src/raycast/raycast_utils.c \
 		src/window/window.c \
+		src/inputs/input_common.c \
+		src/inputs/input_movement.c \
+		src/inputs/collision_checker.c \
 		src/screen_manager/screen_manager.c \
 		src/animations/sword.c \
 		src/minimap/draw_minimap.c \
 		src/combat/combat.c \
+		src/combat/combat_draws.c \
+		src/combat/dmg.c \
+		src/combat/f_rands.c \
 		src/combat/enemies_loader.c \
 		src/animations/time.c \
 		src/window/update_window.c \
@@ -27,7 +34,8 @@ SRC = src/main.c \
 		src/img_loader/img_utils.c \
 		src/img_loader/img_utils2.c \
 		src/img_loader/fonts.c \
-		src/animations/door.c
+		src/animations/door.c \
+		src/gamesave/save.c
 		
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
@@ -60,7 +68,7 @@ ifeq ($(UNAME), Darwin)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@printf "$(COLOR)\rCompiling (╮°-°)╮┳━┳ : $(COLOR_RESET)$<"
 	@mkdir -p $(@D)
-	@gcc $(CFLAGS) -c $< -o $@ -Iinclude/libft/include -I$(MLXDIR)
+	@gcc $(CFLAGS) -DMAC -c $< -o $@ -Iinclude/libft/include -I$(MLXDIR)
 
 ${NAME}: ${OBJECTS} ${HEADERS} Makefile ${LIBFT} ${MLX}
 	@mkdir -p $(@D)

@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/09 01:38:22 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/13 13:47:01 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@
 # define W 13
 # define S 1
 # define D 2
+# define E 14
 
 # include "raycast.h"
 
@@ -62,6 +63,10 @@
 #define DOOR_MAX_DISTANCE 32
 
 #define ARGC "Error\nToo many arguments\n"
+
+
+#define MOVE_DISTANCE 1
+#define MAX_DISTANCE 5
 
 typedef struct s_player
 {
@@ -201,7 +206,7 @@ typedef struct s_mlx
 	t_img	enemy[2];
 	t_img	enemy_hit[2];
 	t_img	img[5];
-	t_img	wall[7];
+	t_img	wall[5];
 	t_img   door[16];
 	t_img	fonts[94];
 	double  mouse_x;
@@ -263,28 +268,24 @@ typedef struct state_manager
 
 int		screen_manager(t_game *g, enum e_state state);
 int		game_start(t_game *game);
-unsigned int f_randi(uint32_t idx);
-unsigned int f_rand(void) ;
+
 uint64_t	timestamp_in_ms(t_game *game);
 uint64_t	gettimeofday_ms(void);
-int		combat(t_game *g);
-void handle_battle_click(t_game *g);
-void combat_manager(t_game *g);
-int enemy_type_stats(t_game *g, int type);
-int	enemy_type_sprites(t_game *g, int type);
+
 void load_enemy_img(t_mlx *g);
 void load_enemy_hit(t_mlx *g);
 void load_fonts(t_mlx *g);
 void load_door_img(t_mlx *g);
 void draw_str_to_font(t_mlx *g, char *str, int x, int y);
-void game_save(t_game *game);
+void	game_save(t_game *game);
+void	load_save_file(t_game *game);
 t_img *create_buffer(t_mlx *g, int w, int h);
 int	door_manager(t_game *g, enum e_door state);
 
 int door_handler(t_game *game);
 char *add_file_extension(char *file, int num);
 
-void paint_mid_wall(t_game *g);
+
 
 // Parser
 void    fd_parser(t_game *game, char **argv);
@@ -294,7 +295,6 @@ void    cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
 void	player_init(t_player *player);
 void    window_init(t_mlx *window);
-int     key_press(int keycode, t_game *game);
 void	sl_image_init(t_mlx *g);
 void	walls_image_init(t_game *g);
 
@@ -315,6 +315,11 @@ void    fd_check_extension(t_cub *cub);
 void    fd_check_integrity(t_cub *cub, t_map *map);
 
 // Map parser
+void    map_lengh(t_map *map);
+int     orientation_char(char cub);
+int     around_zero(t_cub *cub, int index, char *line, int i);
+int     around_pl(t_cub *cub, int i, int index);
+int     check_possiblty(char c);
 void    map_parser(t_game *game, t_cub *cub, t_map *map);
 
 // Mlx
@@ -330,6 +335,16 @@ int		on_mouse_click(int button, int x, int y, t_game *game);
 void	look_with_mouse(t_game *game);
 int     on_key_press(int keycode, t_game *game);
 int     on_key_release(int keycode, t_game *game);
+void	move_forward(t_player *player, t_game *game);
+void	move_backward(t_player *player, t_game *game);
+void	move_left(t_player *player, t_game *game);
+void	move_right(t_player *player, t_game *game);
+void	player_move(int keycode, t_player *player, t_game *game);
+int		check_door_collision(t_game *game);
+void	toggle_door_state(t_player *player, int keycode, t_game *game);
+int		check_collision_x(t_game *game, double dx, char *wall, double margin);
+int		check_collision_y(t_game *game, double dy, char *wall, double margin);
+int		collision_checker(t_game *game, double dx, double dy);
 
 //Raycast or angles
 void    raycast(t_game *game);
@@ -351,6 +366,23 @@ int		sword_manager(t_game *g, enum e_sword state);
 // minimap 
 void	draw_minimap(t_game *g);
 //void draw_square(t_mlx *g, int x, int y, int width, int height);
+// Combat
+void    paint_enemy_sprite_white(t_game *g);
+int		combat(t_game *g);
+void handle_battle_click(t_game *g);
+void combat_manager(t_game *g);
+int enemy_type_stats(t_game *g, int type);
+int	enemy_type_sprites(t_game *g, int type);
+void paint_mid_wall(t_game *g);
+void combat_stats_ui(t_game *g);
+
+// Combat DMG
+void	hit_enemy(t_game *g);
+void	recieve_damage_afk(t_game *game);
+void	level_player_up(t_game *g);
+void	level_enemy_up(t_game *g);
+int	check_hp_players(t_game *g);
+
 
 // Img utils
 t_img	create_new_img(t_mlx *g, int width, int height);
@@ -361,6 +393,9 @@ t_img resize_image(t_mlx *g, t_img img, int nw, int nh);
 void	img_pix_put(t_img *img, int x, int y, int color);
 t_img	load_img(t_mlx *g, char *path, int w, int h);
 
+// Math
+unsigned int f_randi(uint32_t idx);
+unsigned int f_rand(void);
 
 //Garbage collectors
 int		window_destroy(t_game *game);
