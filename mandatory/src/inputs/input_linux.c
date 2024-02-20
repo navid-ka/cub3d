@@ -6,25 +6,25 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/05 21:36:23 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:00:20 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 #include <X11/keysym.h>
 
-#define XK_Left                          0xff51  /* Move left, left arrow */
-#define XK_Up                            0xff52  /* Move up, up arrow */
-#define XK_Right                         0xff53  /* Move right, right arrow */
-#define XK_Down                          0xff54  /* Move down, down arrow */
+#define XK_L                             0xff51  /* Move left, left arrow */
+#define XK_U                             0xff52  /* Move up, up arrow */
+#define XK_R                             0xff53  /* Move right, right arrow */
+#define XK_D                             0xff54  /* Move down, down arrow */
 
 //https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h for keycodes
 
-int move_player(t_game *game, double dx, double dy)
+int	move_player(t_game *game, double dx, double dy)
 {
-    t_player *player = game->player_s;
-    double new_pos_x = player->pos_x + dx;
-    double new_pos_y = player->pos_y + dy;
+	t_player *player = game->player_s;
+	double new_pos_x = player->pos_x + dx;
+	double new_pos_y = player->pos_y + dy;
 
     // Introduce un pequeño margen alrededor de los bloques
     double margin = 0.03;

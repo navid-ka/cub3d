@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:51:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/20 17:49:22 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:53:51 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	put_pixel_img(t_img *img, int x, int y, int color)
 	char	*dst;
 
 	if (color == (int)0xFF000000)
-		return (NULL);
+		return ;
 	if (x >= 0 && y >= 0 && x < img->width && y < img->height)
 	{
 		dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
