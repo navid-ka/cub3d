@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/20 18:31:59 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:02:06 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int	move_player(t_game *game, double dx, double dy)
 	new_pos_x = player->pos_x + dx;
 	new_pos_y = player->pos_y + dy;
 	player = game->player_s;
-	if (new_pos_x + dx - margin >= 0 && new_pos_x + dx + margin < width &&
-		map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '1' &&
+	if (new_pos_x + dx - margin >= 0 && new_pos_x + dx + margin < width && \
+		map[(int)player->pos_y][(int)(new_pos_x + dx - margin)] != '1' && \
 		map[(int)player->pos_y][(int)(new_pos_x + dx + margin)] != '1')
 	{
 		player->pos_x = new_pos_x;
 	}
-	if (new_pos_y + dy - margin >= 0 && new_pos_y + dy + margin < height &&
-		map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '1' &&
+	if (new_pos_y + dy - margin >= 0 && new_pos_y + dy + margin < height && \
+		map[(int)(new_pos_y + dy - margin)][(int)player->pos_x] != '1' && \
 		map[(int)(new_pos_y + dy + margin)][(int)player->pos_x] != '1')
 	{
 		player->pos_y = new_pos_y;
@@ -50,37 +50,30 @@ int	move_player(t_game *game, double dx, double dy)
 
 int	on_key_press(int keycode, t_game *game)
 {
-	t_camera *camera = game->camera_s;
-	t_player *player = game->player_s;
-	player->speed = 0.5;
+	t_camera	*camera;
+	t_player	*player;
+	double		dx;
+	double		dy;
 
+	player->speed = 0.5;
+	camera = game->camera_s;
+	player = game->player_s;
 	if (keycode == XK_Escape)
 		return (window_destroy(game));
-	double dx = 0, dy = 0;
-	if (keycode == 0x77 || keycode == XK_W) // 'w' key
-	{
-		dx += player->dir_x * player->speed;
-		dy += player->dir_y *  player->speed;
-    }
-	if (keycode == 0x73 || keycode == XK_S) // 's' key
-    {
-		dx -= player->dir_x * player->speed;
-		dy -= player->dir_y * player->speed;
-	}
-	if (keycode == 0x61 || keycode == XK_A) // 'a' key
-	{
-		dx -= player->dir_y * player->speed;
-		dy += player->dir_x * player->speed;
-	}
-	if (keycode == 0x64 || keycode == XK_D) // 'd' key
-	{
-		dx += player->dir_y * player->speed;
-		dy -= player->dir_x * player->speed;
-	}
+	dx = 0;
+	dy = 0;
+	if (keycode == 0x77 || keycode == XK_U)
+		move_up(player, &dx, &dy);
+	if (keycode == 0x73 || keycode == XK_D)
+		move_down(player, &dx, &dy);
+	if (keycode == 0x61 || keycode == XK_L)
+		move_left(player, &dx, &dy);
+	if (keycode == 0x64 || keycode == XK_R)
+		move_right(player, &dx, &dy);
 	if (player->pos_x != 0 || player->pos_y != 0)
 		move_player(game, dx, dy);
-	if (keycode == XK_Right || keycode == XK_Left) // 'left arrow' key
-	player->angle = move_rot(camera, player, map, keycode);
+	if (keycode == XK_R || keycode == XK_L)
+		player->angle = move_rot(camera, player, keycode);
 	return (0);
 }
 /*
