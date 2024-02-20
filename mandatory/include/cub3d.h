@@ -6,11 +6,12 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/20 17:23:53 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:37:57 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef _CUB3D_H_
+#ifndef _CUB3D_H_
+
 # define _CUB3D_H_
 # include <libft.h>
 # include <unistd.h>
@@ -42,8 +43,6 @@
 # define W 13
 # define S 1
 # define D 2
-
-# include "raycast.h"
 
 # define KEY_ESC 53
 
@@ -195,17 +194,17 @@ void	render_3d_map(t_game *game);
 
 // Init structs
 void	game_init(t_game *game);
-void    cub_init(t_cub *init, char **argv);
+void	cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
 void	player_init(t_player *player);
-void    window_init(t_mlx *window);
+void	window_init(t_mlx *window);
 void	sl_image_init(t_game *g);
 
 // FD utils 
 int		open_path(t_cub *cub);
 char	*fd_setter(t_cub *cub, char *line);
 int		cub_atoi(const char *str);
-void    fd_print(t_cub *cub);
+void	fd_print(t_cub *cub);
 
 // orientation
 int		fd_orientation_checker(t_cub *cub, char *line, int *flag);
@@ -214,14 +213,14 @@ int		fd_orientation_checker(t_cub *cub, char *line, int *flag);
 int		fd_color_checker(t_cub *cub, char *line, int *flag);
 
 // FD checker
-void    fd_check_extension(t_cub *cub);
-void    fd_check_integrity(t_cub *cub, t_map *map);
+void	fd_check_extension(t_cub *cub);
+void	fd_check_integrity(t_cub *cub, t_map *map);
 
 // Map parser
-void    map_parser(t_game *game, t_cub *cub, t_map *map);
+void	map_parser(t_game *game, t_cub *cub, t_map *map);
 
 // Mlx
-void    mlx_window(t_game *game);
+void	mlx_window(t_game *game);
 
 // Img utils
 t_img	*create_buffer(t_mlx *g, int w, int h);
@@ -234,14 +233,18 @@ void	img_pix_put(t_img *img, int x, int y, int color);
 t_img	load_img(t_mlx *g, char *path, int w, int h);
 
 //Inputs
-int     on_key_press(int keycode, t_game *game);
-int     on_key_release(int keycode, t_game *game);
-
+int		on_key_press(int keycode, t_game *game);
+int		on_key_release(int keycode, t_game *game);
 
 //Garbage collectors
 int		window_destroy(t_game *game);
 void	free_tab(char **args);
 void	fd_error(t_cub *cub, int err);
 void	garbage_collector(t_game *game);
+void	free_textures(t_cub *cub);
+void	free_null(char **ptr);
+void	fd_error_1(t_cub *cub);
+void	fd_error_2(t_cub *cub);
+void	fd_error(t_cub *cub, int err);
 
 #endif

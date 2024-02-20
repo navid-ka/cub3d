@@ -3,9 +3,10 @@ CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 SRCDIR = src
 OBJDIR = obj
 UNAME  = $(shell uname)
-HEADERS = include/cub3d.h include/raycast.h include/colors.h
+HEADERS = include/cub3d.h include/colors.h
 SRC = src/main.c \
 		src/garbage_collector/garbage.c \
+		src/garbage_collector/garbage_utils.c \
 		src/img_loader/img_load.c \
 		src/img_loader/img_utils.c \
 		src/img_loader/img_utils2.c \
