@@ -6,11 +6,11 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/05 21:33:26 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:23:53 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _CUB3D_H_
+# ifndef _CUB3D_H_
 # define _CUB3D_H_
 # include <libft.h>
 # include <unistd.h>
@@ -21,19 +21,18 @@
 # include <mlx.h>
 # include <errno.h>
 
+# define NORTH 100
+# define SOUTH 200
+# define EAST 300
+# define WEST 400
 
-#define NORTH 100
-#define SOUTH 200
-#define EAST 300
-#define WEST 400
-
-#define PI 3.14159265358979323846
-#define S_WIDTH 1280
-#define S_HEIGHT 720
-#define MOVE_SPEED 0.025
-#define ROTATE_SPEED 0.050
-#define	FOV 90
-#define RENDER_DIST 10 //* 32 + 16
+# define PI 3.14159265358979323846
+# define S_WIDTH 1280
+# define S_HEIGHT 720
+# define MOVE_SPEED 0.025
+# define ROTATE_SPEED 0.050
+# define FOV 90
+# define RENDER_DIST 10 //* 32 + 16
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
@@ -48,8 +47,7 @@
 
 # define KEY_ESC 53
 
-
-#define ARGC "Error\nToo many arguments\n"
+# define ARGC "Error\nToo many arguments\n"
 
 typedef struct s_line
 {
@@ -80,12 +78,12 @@ typedef struct s_camera
 	int		map_y;
 	double	ray_dir_x;	// direction vector
 	double	ray_dir_y;
-	double	side_dist_x;	// length of ray from current position to next x or y-side
+	double	side_dist_x;	// len of ray from current position to next x side
 	double	side_dist_y;
-	double	delta_dist_x;	// length of ray from one x or y-side to next x or y-side
+	double	delta_dist_x;	// len of ray from one x-side to next x
 	double	delta_dist_y;
-	double	perp_wall_dist;	// length of ray from current position to next x or y-side
-	int		step_x;	// what direction to step in x or y-direction (either +1 or -1)
+	double	perp_wall_dist;	// length of ray from position to next x or y-side
+	int		step_x;	// what direction to step in x or y-direction (+1 or -1)
 	int		step_y;
 	int		hit;	// was there a wall hit?
 	int		side;	// was a NS or a EW wall hit?
@@ -95,16 +93,15 @@ typedef struct s_camera
 typedef struct s_player
 {
 	double	fov;	// field of view is 90 degrees
-    double  pos_x; //position
-    double  pos_y;
-	double	dir_x; //direction
+	double	pos_x;	//position
+	double	pos_y;
+	double	dir_x;	//direction
 	double	dir_y;
-    double  angle;	// in radians
+	double	angle;	// in radians
 	double	speed;
 	int		dg_angle;
 	double	distance;
 }	t_player;
-
 
 typedef struct s_map
 {
@@ -142,9 +139,9 @@ typedef struct s_cub
 
 typedef struct s_position
 {
-    int x;
-    int y;
-}              t_position;
+	int	x;
+	int	y;
+}	t_position;
 
 typedef struct s_image
 {
@@ -155,7 +152,7 @@ typedef struct s_image
 	int		endian;
 	int		width;
 	int		height;
-} t_img;
+}	t_img;
 
 typedef struct s_mlx
 {
@@ -176,11 +173,10 @@ typedef struct s_game
 	t_player	*player_s;
 	t_camera	*camera_s;
 
-} t_game;
-
+}	t_game;
 
 // Parser
-void    fd_parser(t_game *game, char **argv);
+void	fd_parser(t_game *game, char **argv);
 void	camera_init(t_camera *camera, t_player *player);
 double	plane_mult(int fov);
 
@@ -190,10 +186,10 @@ double	move_y(t_player *p, char **map, int dir);
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
 
 //Raycast or angles
-void    raycast(t_game *game);
+void	raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
-void 	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img);
+void	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *s_img);
 double	dda_rays(t_game *game);
 void	render_3d_map(t_game *game);
 

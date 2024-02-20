@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/02/05 21:19:46 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:22:58 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,21 @@ int	set_texture(t_game *game, t_img *src_image)
 	return (text_x);
 }
 
-void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img)
+void draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *s_img)
 {
 	i = 0;
-	line->text_x = set_texture(game, source_img);
-	line->step = 1.0 * source_img->height / line->line_height;
+	line->text_x = set_texture(game, s_img);
+	line->step = 1.0 * s_img->height / line->line_height;
     line->text_pos = (line->draw_start - img->height / 2 + (line->line_height) / 2) * line->step;
 	line->line_height = (int)(S_HEIGHT / game->camera_s->perp_wall_dist) - 1; // esta linea coge la perspectiva de la pared
 	while (i < (S_HEIGHT / 2 - line->line_height / 2))
 		img_pix_put(img, line->x_start, i++, colors(&game->cub_s->ceiling));
     while (i < S_HEIGHT && i < (S_HEIGHT / 2 + line->line_height / 2))
     {
-    	line->text_y = (int)line->text_pos & (source_img->height - 1);		// what the fuck
+    	line->text_y = (int)line->text_pos & (s_img->height - 1);		// what the fuck
         line->text_pos += line->step;
 		if (line->text_y <= 62)
-        	img_pix_put(img, line->x_start, i, get_pixel_img(source_img, line->text_x, line->text_y));
+        	img_pix_put(img, line->x_start, i, get_pixel_img(s_img, line->text_x, line->text_y));
         i++;
     }
 	while (i < S_HEIGHT)
