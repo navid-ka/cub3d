@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:30 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/29 23:04:49 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/23 19:11:13 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,44 @@
 double	plane_mult(int fov)
 {
 	double	plane_multiplier;
+
 	plane_multiplier = deg_to_rad(fov);
 	plane_multiplier = tan(plane_multiplier / 2);
 	plane_multiplier = 2 / plane_multiplier;
 	return (plane_multiplier);
+}
+
+void	init_line(t_line *line, t_camera *c, int i)
+{
+	line->line_height = (int)(S_HEIGHT / c->perp_wall_dist) * 2;
+	line->draw_start = -line->line_height / 2 + S_HEIGHT / 2;
+	if (line->draw_start < 0)
+		line->draw_start = 0;
+	line->draw_end = line->line_height / 2 + S_HEIGHT / 2;
+	if (line->draw_end >= S_HEIGHT)
+		line->draw_end = S_HEIGHT - 1;
+	line->x_start = i;
+	line->color_fader = 0;
+	line->x_end = i;
+	line->color = 0xFF0F00;
+}
+
+void	dda_aux(t_camera *c)
+{
+	if (c->side == 0)
+	{
+		if (c->step_x > 0)
+			c->hit_direction = SOUTH;
+		else
+			c->hit_direction = NORTH;
+	}
+	else
+	{
+		if (c->step_y > 0)
+			c->hit_direction = EAST;
+		else
+			c->hit_direction = WEST;
+	}
 }
 
 double	deg_to_rad(int dg_angle)
@@ -31,64 +65,37 @@ int		rad_to_dg(double angle)
 	return ((int)(angle * 180 / PI));
 }
 
-double dda_rays(t_game *game)
+/*
+
+void	dda_step(t_game *game, int map_x, int map_y)
 {
 	double	x0;
 	double	y0;
 
 	x0 = game->player_s->pos_x;
 	y0 = game->player_s->pos_y;
-	int map_x = (int)game->player_s->pos_x;
-    int map_y = (int)game->player_s->pos_y;
-
-    // calculate step and initial sideDist
-    game->camera_s->delta_dist_x = fabs(1 / game->player_s->dir_x);
-    game->camera_s->delta_dist_y = fabs(1 / game->player_s->dir_y);
-    if (game->player_s->dir_x < 0)
-    {
-        game->camera_s->step_x = -1;
-        game->camera_s->side_dist_x = (x0 - map_x) * game->camera_s->delta_dist_x;
-    }
-    else
-    {
-        game->camera_s->step_x = 1;
-        game->camera_s->side_dist_x = (map_x + 1.0 - x0) * game->camera_s->delta_dist_x;
-    }
-    if (game->player_s->dir_y < 0)
-    {
-        game->camera_s->step_y = -1;
-        game->camera_s->side_dist_y = (y0 - map_y) * game->camera_s->delta_dist_y;
-    }
-    else
-    {
-        game->camera_s->step_y = 1;
-        game->camera_s->side_dist_y = (map_y + 1.0 - y0) * game->camera_s->delta_dist_y;
-    }
-
-    // perform DDA
-    int hit = 0;
-    while (hit == 0)
-    {
-        if (game->camera_s->side_dist_x < game->camera_s->side_dist_y)
-        {
-            game->camera_s->side_dist_x += game->camera_s->delta_dist_x;
-            map_x += game->camera_s->step_x;
-        }
-        else
-        {
-            game->camera_s->side_dist_y += game->camera_s->delta_dist_y;
-            map_y += game->camera_s->step_y;
-        }
-        if (game->map_s->map[map_y][map_x] == '1')
-            hit = 1;
-    }
-
-    // calculate distance to the point of impact
-    if (game->camera_s->side_dist_x < game->camera_s->side_dist_y)
-        return (map_x - x0 + (1 - game->camera_s->step_x) / 2) / game->player_s->dir_x;
-    else
-        return (map_y - y0 + (1 - game->camera_s->step_y) / 2) / game->player_s->dir_y;
+	if (game->player_s->dir_x < 0)
+	{
+		game->camera_s->step_x = -1;
+		game->camera_s->side_dist_x = (x0 - map_x) * game->camera_s->ddx;
+	}
+	else
+	{
+		game->camera_s->step_x = 1;
+		game->camera_s->side_dist_x = (map_x + 1.0 - x0) * game->camera_s->ddx;
+	}
+	if (game->player_s->dir_y < 0)
+	{
+		game->camera_s->step_y = -1;
+		game->camera_s->side_dist_y = (y0 - map_y) * game->camera_s->ddy;
+	}
+	else
+	{
+		game->camera_s->step_y = 1;
+		game->camera_s->side_dist_y = (map_y + 1.0 - y0) * game->camera_s->ddy;
+	}
 }
+
 
 void render_3d_map(t_game *game)
 {
@@ -123,3 +130,4 @@ void render_3d_map(t_game *game)
         }
     }
 }
+*/

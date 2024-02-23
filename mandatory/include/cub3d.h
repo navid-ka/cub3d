@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/20 19:10:46 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:08:32 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ typedef struct s_camera
 	double	ray_dir_y;
 	double	side_dist_x;	// len of ray from current position to next x side
 	double	side_dist_y;
-	double	delta_dist_x;	// len of ray from one x-side to next x
-	double	delta_dist_y;
+	double	ddx;	// len of ray from one x-side to next x
+	double	ddy;
 	double	perp_wall_dist;	// length of ray from position to next x or y-side
 	int		step_x;	// what direction to step in x or y-direction (+1 or -1)
 	int		step_y;
@@ -171,8 +171,22 @@ typedef struct s_game
 	t_cub		*cub_s;
 	t_player	*player_s;
 	t_camera	*camera_s;
+	int			screen_x;
 
 }	t_game;
+
+// Draw + colours
+void	draw(t_game *g, t_camera *cub, t_img *image, t_line *line);
+int		colors(t_color *c);
+
+
+// Parser Utils
+int		orientation_char(char cub);
+void	print_flood(t_cub *cub);
+int		around_pl(t_cub *cub, int i, int index);
+int		around_zero(t_cub *cub, int index, char *line, int i);
+int		check_possiblty(char c);
+void	map_lengh(t_map *map);
 
 // Parser
 void	fd_parser(t_game *game, char **argv);
@@ -190,9 +204,11 @@ double	move_rot(t_camera *cam, t_player *p, int dir);
 void	raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
-void	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *s_img);
+void	draw_line(t_game *game, t_line *line, t_img *img, t_img *s_img);
 double	dda_rays(t_game *game);
+void	dda_aux(t_camera *c);
 void	render_3d_map(t_game *game);
+void	init_line(t_line *line, t_camera *c, int i);
 
 // Init structs
 void	game_init(t_game *game);

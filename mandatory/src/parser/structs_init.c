@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/23 17:52:37 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:01:47 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	camera_init(t_camera *camera, t_player *player)
 	camera->ray_dir_y = 0;
 	camera->camera_x = 0;
 	camera->camera_y = 0;
-	camera->delta_dist_x = 0;
-	camera->delta_dist_y = 0;
+	camera->ddx = 0;
+	camera->ddy = 0;
 	camera->side_dist_x = 0;
 	camera->side_dist_y = 0;
 	camera->perp_wall_dist = 0;

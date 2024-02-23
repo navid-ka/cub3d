@@ -20,6 +20,7 @@ SRC = src/main.c \
 		src/parser/map_parser_utils.c \
 		src/raycast/raycast.c \
 		src/raycast/raycast_utils.c \
+		src/raycast/draw.c \
 		src/window/window.c
 		
 
@@ -32,7 +33,7 @@ LIBFT = include/libft/bin/libft.a
 
 ifeq ($(UNAME), Darwin)
 SRC += src/inputs/input.c
-SRC += src/map_renderer/player.c
+#SRC += src/map_renderer/player.c
 MLXDIR = include/mlx/
 OLD_MAKE = /usr/bin/make3.81 #make
 MLX = $(MLXDIR)libmlx.a
