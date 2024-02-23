@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/05 21:15:12 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:11:27 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,8 @@ int window_destroy(t_game *game)
 
 int check_input(t_game *game)
 {
-	//	raycaster window
 	mlx_hook(game->mlx_s->pov, 2, 0, &on_key_press, game);
-	//mlx_hook(game->mlx_s->pov, 3, 0, &on_key_release, game);
 	mlx_hook(game->mlx_s->pov, 17, 1L<<0, &window_destroy, game);
-	
 	return (0);
 }
 

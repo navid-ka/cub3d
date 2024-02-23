@@ -17,6 +17,7 @@ SRC = src/main.c \
 		src/parser/utils.c \
 		src/parser/orientations.c \
 		src/parser/map_parser.c \
+		src/parser/map_parser_utils.c \
 		src/raycast/raycast.c \
 		src/raycast/raycast_utils.c \
 		src/window/window.c

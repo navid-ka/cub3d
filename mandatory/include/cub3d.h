@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/20 17:37:57 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:10:46 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,9 +180,11 @@ void	camera_init(t_camera *camera, t_player *player);
 double	plane_mult(int fov);
 
 //Movement
-double	move_x(t_player *p, char **map, int dir);
-double	move_y(t_player *p, char **map, int dir);
-double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
+void	move_up(t_player *p, double *dx, double *dy);
+void	move_down(t_player *p, double *dx, double *dy);
+void	move_left(t_player *p, double *dx, double *dy);
+void	move_right(t_player *p, double *dx, double *dy);
+double	move_rot(t_camera *cam, t_player *p, int dir);
 
 //Raycast or angles
 void	raycast(t_game *game);

@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/05 20:41:42 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/23 17:47:07 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	angle_init(t_player *player, t_map *map)
 }
 
 //	Initialize the cub struct and parse the map
-void    fd_parser(t_game *game, char **argv)
+void	fd_parser(t_game *game, char **argv)
 {
 	player_init(game->player_s);
 	cub_init(game->cub_s, argv);
