@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/27 18:35:03 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:36:08 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,6 @@ typedef struct s_game
 
 } t_game;
 
-
 // Parser
 void    fd_parser(t_game *game, char **argv);
 void	camera_init(t_camera *camera, t_player *player);
@@ -190,13 +189,26 @@ double	plane_mult(int fov);
 void	player_move(int keycode, t_player *player, t_game *game);
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
 
+// draw
+void 	draw_line(t_game *game, t_line *line, t_img *img, t_img *source_img);
+void	draw(t_game *g, t_camera *cub, t_img *image, t_line *line);
+
 //Raycast or angles
 void    raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
-void 	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img);
 double	dda_rays(t_game *game);
 void	render_3d_map(t_game *game);
+
+// Raycast Init
+void	init_step(t_player *p, t_camera *c);
+void	init_ray(t_player *p, t_camera *c, int i);
+
+// Raycast Utils
+double	deg_to_rad(int dg_angle);
+int		rad_to_dg(double angle);
+double	plane_mult(int fov);
+
 
 // Init structs
 void	game_init(t_game *game);
@@ -228,25 +240,33 @@ void    map_parser(t_game *game, t_cub *cub, t_map *map);
 // Mlx
 void    mlx_window(t_game *game);
 
+
 // Img utils
 t_img	*create_buffer(t_mlx *g, int w, int h);
 t_img	create_new_img(t_mlx *g, int width, int height);
 void	put_pixel_img(t_img *img, int x, int y, int color);
 void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
-unsigned int	get_pixel_img(t_img *img, int x, int y);
-t_img	*resize_image(t_mlx *g, t_img *img, int nw, int nh);
+typedef unsigned int ui8;
+ui8		get_pixel_img(t_img *img, int x, int y);
 void	img_pix_put(t_img *img, int x, int y, int color);
 t_img	load_img(t_mlx *g, char *path, int w, int h);
 
 //Inputs
 int     on_key_press(int keycode, t_game *game);
 int     on_key_release(int keycode, t_game *game);
-
+int		check_collision_y(t_game *game, double dy, char *wall, double margin);
+int		check_collision_x(t_game *game, double dx, char *wall, double margin);
 
 //Garbage collectors
 int		window_destroy(t_game *game);
 void	free_tab(char **args);
+void	free_textures(t_cub *cub);
+void	free_null(char **ptr);
 void	fd_error(t_cub *cub, int err);
 void	garbage_collector(t_game *game);
+void	free_images(t_mlx *g);
+void	free_img(t_mlx *g, t_img *img);
+void	fd_error_2(t_cub *cub);
+void	fd_error_1(t_cub *cub);
 
 #endif
