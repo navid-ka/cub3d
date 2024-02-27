@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/05 21:36:23 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:30:02 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int move_player(t_game *game, double dx, double dy)
     t_player *player = game->player_s;
     double new_pos_x = player->pos_x + dx;
     double new_pos_y = player->pos_y + dy;
-
-    // Introduce un pequeño margen alrededor de los bloques
     double margin = 0.03;
 
     // Comprueba el movimiento en la dirección x

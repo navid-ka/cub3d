@@ -6,13 +6,13 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/05 20:32:36 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:49:45 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_game		game;
 
@@ -24,4 +24,3 @@ int main(int argc, char **argv)
 	garbage_collector(&game);
 	return (0);
 }
-

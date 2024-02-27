@@ -6,6 +6,7 @@ UNAME  = $(shell uname)
 HEADERS = include/cub3d.h include/raycast.h include/colors.h
 SRC = src/main.c \
 		src/garbage_collector/garbage.c \
+		src/garbage_collector/garbage_2.c \
 		src/img_loader/img_load.c \
 		src/img_loader/img_utils.c \
 		src/img_loader/img_utils2.c \
@@ -18,6 +19,8 @@ SRC = src/main.c \
 		src/parser/map_parser.c \
 		src/raycast/raycast.c \
 		src/raycast/raycast_utils.c \
+		src/raycast/raycast_init.c \
+		src/raycast/draw.c \
 		src/window/window.c \
 		src/inputs/movement.c
 		
