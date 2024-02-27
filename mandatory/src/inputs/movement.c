@@ -5,88 +5,55 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/29 21:25:00 by plinscho          #+#    #+#             */
-/*   Updated: 2024/01/07 18:08:44 by plinscho         ###   ########.fr       */
+/*   Created: 2024/02/13 13:17:47 by bifrost           #+#    #+#             */
+/*   Updated: 2024/02/27 18:40:53 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MAC
+# define XK_W W
+# define XK_S S
+# define XK_A A
+# define XK_D D
+#else
+# include <X11/keysym.h>
+#endif
 #include "../../include/cub3d.h"
-#define WALL_SAYS ft_printf("\nYou touch the wall...\nIt's Cold.\n");
-#include <X11/keysym.h>
 
-double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
+void	move_forward(t_player *player, __attribute__((unused))t_game *game)
 {
-	double increment;
-	
-	(void)map;
-	if (dir == XK_Right) // moving left
-		increment = -ROTATE_SPEED;
-	else// if (dir == 0x64) // moving right
-		increment = ROTATE_SPEED;
-	p->angle += increment;
-	if (p->angle < 0)
-		p->angle += 2 * PI;
-	else if (p->angle > 2 * PI)
-		p->angle -= 2 * PI;
-	p->dir_x = cos(p->angle);
-	p->dir_y = sin(p->angle);
-	cam->plane_x = p->dir_y * cam->plane_multiplier;
-	cam->plane_y = -p->dir_x * cam->plane_multiplier;
-	return (p->angle);
+	player->dx += player->dir_x * player->speed;
+	player->dy += player->dir_y * player->speed;
 }
 
-double	move_y(t_player *p, char **map, int dir)
+void	move_backward(t_player *player, __attribute__((unused))t_game *game)
 {
-	int x;
-	int y;
-
-	x = (int)p->pos_x;
-	y = (int)p->pos_y;
-	if (dir == XK_W) // moving up
-	{
-		if (map[y - 1][x] == '1') // if there is a wall in the
-		{
-			WALL_SAYS;
-			return (0);
-		}	
-			
-		return (MOVE_SPEED);		
-	}
-	else// if (dir == 0x73) // moving down
-	{
-		if (map[y + 1][x] == '1') // if there is a wall in the
-		{
-			WALL_SAYS;
-			return (0);
-		}
-		return (MOVE_SPEED);
-		
-	}
+	player->dx -= player->dir_x * player->speed;
+	player->dy -= player->dir_y * player->speed;
 }
 
-double	move_x(t_player *p, char **map, int dir)
+void	move_left(t_player *player, __attribute__((unused))t_game *game)
 {
-	int x;
-	int y;
+	player->dx -= player->dir_y * player->speed;
+	player->dy += player->dir_x * player->speed;
+}
 
-	x = (int)p->pos_x;
-	y = (int)p->pos_y;
-	if (dir == XK_A) // moving left
-	{
-		if (map[y][x - 1] == '1')
-		{
-			WALL_SAYS;
-			return (0);
-		}
-		return (MOVE_SPEED);
-	}
-	else// if (dir == 0x64) // moving right
-	{
-		if (map[y][x + 1] == '1')
-		{
-			WALL_SAYS;
-			return (0);
-		}
-		return (MOVE_SPEED);
-	}
+void	move_right(t_player *player, __attribute__((unused))t_game *game)
+{
+	player->dx += player->dir_y * player->speed;
+	player->dy -= player->dir_x * player->speed;
+}
+
+void	player_move(int keycode, t_player *player, t_game *game)
+{
+	player->dx = 0;
+	player->dy = 0;
+	if (keycode == 0x77 || keycode == XK_W)
+		move_forward(player, game);
+	if (keycode == 0x73 || keycode == XK_S)
+		move_backward(player, game);
+	if (keycode == 0x61 || keycode == XK_A)
+		move_left(player, game);
+	if (keycode == 0x64 || keycode == XK_D)
+		move_right(player, game);
 }
