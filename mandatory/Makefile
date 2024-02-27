@@ -18,7 +18,8 @@ SRC = src/main.c \
 		src/parser/map_parser.c \
 		src/raycast/raycast.c \
 		src/raycast/raycast_utils.c \
-		src/window/window.c
+		src/window/window.c \
+		src/inputs/movement.c
 		
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
@@ -30,7 +31,6 @@ LIBFT = include/libft/bin/libft.a
 
 ifeq ($(UNAME), Darwin)
 SRC += src/inputs/input.c
-SRC += src/map_renderer/player.c
 MLXDIR = include/mlx/
 OLD_MAKE = /usr/bin/make3.81 #make
 MLX = $(MLXDIR)libmlx.a
@@ -38,7 +38,6 @@ LMLX = -Iinclude/libft/include -Linclude/libft/bin -lft \
 	-I$(MLXDIR) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit
 else
 SRC += src/inputs/input_linux.c
-SRC += src/inputs/movement.c
 MLXDIR = include/mlx_linux/
 OLD_MAKE = make
 MLX = $(MLXDIR)libmlx.a

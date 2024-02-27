@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/05 21:33:26 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:35:03 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ typedef struct s_player
     double  pos_y;
 	double	dir_x; //direction
 	double	dir_y;
+	double	dx;
+	double	dy;
     double  angle;	// in radians
 	double	speed;
 	int		dg_angle;
@@ -185,8 +187,7 @@ void	camera_init(t_camera *camera, t_player *player);
 double	plane_mult(int fov);
 
 //Movement
-double	move_x(t_player *p, char **map, int dir);
-double	move_y(t_player *p, char **map, int dir);
+void	player_move(int keycode, t_player *player, t_game *game);
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
 
 //Raycast or angles
