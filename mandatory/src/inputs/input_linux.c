@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/27 19:30:02 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:58:13 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,27 @@ int move_player(t_game *game, double dx, double dy)
     }
 
     return 0;
+}
+
+double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
+{
+	double	increment;
+
+	(void)map;
+	if (dir == ARROW_RIGHT)
+		increment = -ROTATE_SPEED;
+	else
+		increment = ROTATE_SPEED;
+	p->angle += increment;
+	if (p->angle < 0)
+		p->angle += 2 * PI;
+	else if (p->angle > 2 * PI)
+		p->angle -= 2 * PI;
+	p->dir_x = cos(p->angle);
+	p->dir_y = sin(p->angle);
+	cam->plane_x = p->dir_y * cam->plane_multiplier;
+	cam->plane_y = -p->dir_x * cam->plane_multiplier;
+	return (p->angle);
 }
 
 int on_key_press(int keycode, t_game *game)
