@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/28 19:42:51 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/28 20:04:31 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,10 +216,7 @@ void map_parser(t_game *game, t_cub *cub, t_map *map)
 	if (!is_valid)
 	{
 		printf("Error\nMap did not meet requirements.\n");
-		free(cub);
-		free(map);
-		//garbage_collector(game);
-		exit (1);
+		fd_error_3(game, cub, map);
 	}
 	print_flood(cub);
 	printf("player pos x: [%f]\n", player->pos_x);

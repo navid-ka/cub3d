@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/28 19:13:05 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/28 20:00:43 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	player_init(t_player *player)
 	player->fov = FOV * (PI / 180);
 	player->angle = 0;
 	player->dg_angle = 0;
+
 }
 
 void	game_init(t_game *game)

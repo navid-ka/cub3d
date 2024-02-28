@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/28 19:24:27 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/28 20:04:03 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,5 +268,6 @@ void	free_images(t_mlx *g);
 void	free_img(t_mlx *g, t_img *img);
 void	fd_error_2(t_cub *cub, t_map *map);
 void	fd_error_1(t_cub *cub, t_map *map);
+void	fd_error_3(t_game *game, t_cub *cub, t_map *map);
 
 #endif
