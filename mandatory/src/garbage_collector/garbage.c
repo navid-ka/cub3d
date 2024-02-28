@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/28 18:03:44 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:22:38 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	garbage_collector(t_game *game)
 	free_tab(game->cub_s->map);
 	free_tab(game->map_s->map);
 	free_images(game->mlx_s);
+	mlx_destroy_image(game->mlx_s->mlx_p, game->mlx_s->buffer->img);
 	free(game->mlx_s->buffer);
 	mlx_destroy_window(game->mlx_s->mlx_p, game->mlx_s->pov);
-	mlx_destroy_image(game->mlx_s->mlx_p, game->mlx_s->buffer->img);
 	free(game->map_s);
 	free(game->cub_s);
 	free(game->mlx_s);

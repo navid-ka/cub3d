@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:50:45 by plinscho          #+#    #+#             */
-/*   Updated: 2024/02/27 18:52:53 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:52:15 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	fd_error_2(t_cub *cub)
 	free_textures(cub);
 	if (cub->map)
 		free_tab(cub->map);
+	free(cub->tmp);
+	free(cub);
 	printf("Error\nMap not valid\n");
 	exit(1);
 }
