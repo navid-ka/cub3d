@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/28 19:15:21 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/28 20:02:58 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	fd_parser(t_game *game, char **argv)
 	fd_check_integrity(game->cub_s, game->map_s);
 	game_init(game);
 	player_init(game->player_s);
+	map_parser(game, game->cub_s, game->map_s);
 	angle_init(game->player_s, game->map_s);
 	camera_init(game->camera_s, game->player_s);
-	map_parser(game, game->cub_s, game->map_s);
 }

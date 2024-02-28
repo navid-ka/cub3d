@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/13 11:29:32 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:18:52 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_digit_str(char *str)
 {
-	while (*str)
+	while (str && *str)
 	{
 		if (!ft_isdigit(*str))
 		{
@@ -47,7 +47,7 @@ int	color_validator(t_cub *cub, char *color, char type)
 {
 	char	**colors;
 
-	colors = ft_split(color, ',');
+	colors =  ft_split(color, ',');
 	if (colors[3])
 	{
 		ft_printf("Error\nColors could not be loaded\n");
@@ -77,6 +77,11 @@ int	fd_color_checker(t_cub *cub, char *line, int *flag)
 	if (line && ft_strnstr(line, "F", 2))
 	{
 		cub->f_color = fd_setter(cub, line);
+		if (!cub->f_color)
+		{
+			flag += 1;
+			return (*flag);
+		}
 		if (color_validator(cub, cub->f_color, 'f'))
 			flag += 1;
 		free(cub->f_color);
@@ -84,6 +89,11 @@ int	fd_color_checker(t_cub *cub, char *line, int *flag)
 	if (line && ft_strnstr(line, "C", 2))
 	{
 		cub->c_color = fd_setter(cub, line);
+		if (!cub->c_color)
+		{
+			flag += 1;
+			return (*flag);
+		}
 		if (color_validator(cub, cub->c_color, 'c'))
 			flag += 1;
 		free(cub->c_color);

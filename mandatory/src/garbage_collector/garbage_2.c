@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:50:45 by plinscho          #+#    #+#             */
-/*   Updated: 2024/02/28 19:24:48 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/28 20:06:59 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,23 @@ void	fd_error_2(t_cub *cub, t_map *map)
 	free(cub->tmp);
 	free(cub);
 	free(map);
-	printf("Error\nMap not valid\n");
+	printf("Error\nMap not valid, level 2\n");
+	exit(1);
+}
+
+void	fd_error_3(t_game *game, t_cub *cub, t_map *map)
+{
+	free_textures(cub);
+	if (cub->map)
+		free_tab(cub->map);
+	free(cub);
+	if (map->map)
+		free_tab(map->map);
+	free(map);
+	free(game->player_s);
+	free(game->mlx_s);
+	free(game->camera_s);
+	printf("Map not valid, level 3\n");
 	exit(1);
 }
 
