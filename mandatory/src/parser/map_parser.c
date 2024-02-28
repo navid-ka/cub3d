@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/05 20:33:58 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:42:51 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int around_pl(t_cub *cub, int i, int index)
     }
     return 1;
 }
+
 int	check_possiblty(char c)
 {
 	if (c != ' ' && c != '1' && c != '0' && c != 'S'
@@ -108,7 +109,10 @@ int check_map(t_cub *cub)
         while (cub->map[i][j])
         {
             if (orientation_char(cub->map[i][j]))
-            	around_pl(cub, j, i);
+			{
+            	if (!around_pl(cub, j, i))
+					return (0);
+			}
             else if (cub->map[i][j] == '0')
 			{
                 if (around_zero(cub, i, cub->map[i], j))
@@ -212,6 +216,9 @@ void map_parser(t_game *game, t_cub *cub, t_map *map)
 	if (!is_valid)
 	{
 		printf("Error\nMap did not meet requirements.\n");
+		free(cub);
+		free(map);
+		//garbage_collector(game);
 		exit (1);
 	}
 	print_flood(cub);
