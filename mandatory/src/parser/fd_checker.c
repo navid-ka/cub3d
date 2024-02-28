@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/28 18:44:52 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/28 19:22:28 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	read_map(t_cub *cub, char *line)
 	cub->tmp = cub->new_tmp;
 }
 
-int	fd_check_map(t_cub *cub, int map_started)
+int	fd_check_map(t_cub *cub, t_map *map, int map_started)
 {
 	int		fd;
 	char	*line;
 
-	fd = open_path(cub);
+	fd = open_path(cub, map);
 	cub->tmp = ft_strdup("");
 	line = ft_strdup("");
 	while (line)
@@ -82,7 +82,7 @@ void	fd_check_integrity(t_cub *cub, t_map *map)
 	char	*line;
 	int		flag;
 
-	fd = open_path(cub);
+	fd = open_path(cub, map);
 	line = ft_strdup("");
 	while (line)
 	{
@@ -96,10 +96,10 @@ void	fd_check_integrity(t_cub *cub, t_map *map)
 	}
 	close(fd);
 	if (cub->count < 6)
-		cub->err = 1;
-	fd_check_map(cub, 0);
+		fd_error(cub, map, 1);
+	fd_check_map(cub, map, 0);
 	if (cub->err)
-		fd_error(cub, cub->err);
+		fd_error(cub, map, cub->err);
 	cub->map = ft_split(cub->tmp, '\n');
 	map->map = ft_split(cub->tmp, '\n');
 	free(cub->tmp);

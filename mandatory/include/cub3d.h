@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/27 19:36:08 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:24:27 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ void    window_init(t_mlx *window);
 void	sl_image_init(t_game *g);
 
 // FD utils 
-int		open_path(t_cub *cub);
+int		open_path(t_cub *cub, t_map *map);
 char	*fd_setter(t_cub *cub, char *line);
 int		cub_atoi(const char *str);
 void    fd_print(t_cub *cub);
@@ -262,11 +262,11 @@ int		window_destroy(t_game *game);
 void	free_tab(char **args);
 void	free_textures(t_cub *cub);
 void	free_null(char **ptr);
-void	fd_error(t_cub *cub, int err);
+void	fd_error(t_cub *cub, t_map *map, int err);
 void	garbage_collector(t_game *game);
 void	free_images(t_mlx *g);
 void	free_img(t_mlx *g, t_img *img);
-void	fd_error_2(t_cub *cub);
-void	fd_error_1(t_cub *cub);
+void	fd_error_2(t_cub *cub, t_map *map);
+void	fd_error_1(t_cub *cub, t_map *map);
 
 #endif
