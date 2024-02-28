@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/28 17:59:18 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:44:52 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,4 @@ void	fd_check_integrity(t_cub *cub, t_map *map)
 	cub->map = ft_split(cub->tmp, '\n');
 	map->map = ft_split(cub->tmp, '\n');
 	free(cub->tmp);
-	fd_print(cub);
 }

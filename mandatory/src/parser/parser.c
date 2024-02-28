@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/05 20:41:42 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:43:23 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,18 @@ void	angle_init(t_player *player, t_map *map)
 }
 
 //	Initialize the cub struct and parse the map
-void    fd_parser(t_game *game, char **argv)
+void	fd_parser(t_game *game, char **argv)
 {
-	player_init(game->player_s);
+	game->cub_s = malloc(sizeof(t_cub));
+	if (!game->cub_s)
+		(printf("Error Malloc\n"), exit(0));
 	cub_init(game->cub_s, argv);
-	map_init(game->map_s);
 	fd_check_extension(game->cub_s);
 	fd_check_integrity(game->cub_s, game->map_s);
 	map_parser(game, game->cub_s, game->map_s);
+	game_init(game);
+	map_init(game->map_s);
+	player_init(game->player_s);
 	angle_init(game->player_s, game->map_s);
 	camera_init(game->camera_s, game->player_s);
 }

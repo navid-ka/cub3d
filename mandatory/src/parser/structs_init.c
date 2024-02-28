@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/05 20:45:15 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:44:12 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	player_init(t_player *player)
 
 void	game_init(t_game *game)
 {
-	
-	game->cub_s = malloc(sizeof(t_cub));
 	game->map_s = malloc(sizeof(t_map));
 	game->mlx_s = malloc(sizeof(t_mlx));
 	game->player_s = malloc(sizeof(t_player));
@@ -79,6 +77,7 @@ void	game_init(t_game *game)
 		|| !game->camera_s)
 	{
 		ft_printf("Error\nMalloc error\n");
+		garbage_collector(game);
 		exit(1);
 	}
 }
