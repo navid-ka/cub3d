@@ -3,27 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/28 19:21:12 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/29 18:10:47 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	cub_atoi(const char *str)
+int	cub_atoi(const char *str, t_cub *cub)
 {
 	int num = 0;
 	int i = 0;
 
-	while (str[i] >= '0' && str[i] <= '9')
+	if (str[i] == '-')
+	{
+		ft_printf("Negative numbers are not allowed\n");
+		cub->err = 1;
+	}
+	while (str[i] >= '0' && str[i] <= '9' && cub->err == 0)
 	{
 		num = num * 10 + (str[i] - '0');
 		if (num > 255) 
 		{
 			ft_printf("Number out of range (0-255)\n");
-			exit (1); //TODO; aqui puede que tengamos que hacer garbage collection
+			cub->err = 1;
 		}
 		i++;
 	}
@@ -36,6 +41,9 @@ char *fd_setter(t_cub *cub, char *line)
 	char	*trimmed;
 	char	*dup;
 	
+	if (!line)
+		return (NULL);
+	printf("line: %s\n", line);
 	opt = ft_split(line, ' ');
 	if (opt[2])
 	{
@@ -47,6 +55,7 @@ char *fd_setter(t_cub *cub, char *line)
 	free(trimmed);
 	free_tab(opt);
 	cub->count++;
+	printf("count: %d\n", cub->count);
 	return(dup);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/28 19:22:28 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/29 18:05:23 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	fd_check_map(t_cub *cub, t_map *map, int map_started)
 	int		fd;
 	char	*line;
 
+	if (cub->err)
+		return (cub->err);
 	fd = open_path(cub, map);
 	cub->tmp = ft_strdup("");
 	line = ft_strdup("");
