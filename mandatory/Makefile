@@ -20,6 +20,7 @@ SRC = src/main.c \
 		src/raycast/raycast.c \
 		src/raycast/raycast_utils.c \
 		src/raycast/raycast_init.c \
+		src/inputs/input_utils.c \
 		src/raycast/draw.c \
 		src/window/window.c \
 		src/inputs/movement.c
