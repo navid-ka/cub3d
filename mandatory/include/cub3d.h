@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/28 20:04:03 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/02/29 18:29:04 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,17 @@
 # include <mlx.h>
 # include <errno.h>
 
-
-#define NORTH 100
-#define SOUTH 200
-#define EAST 300
-#define WEST 400
-
-#define PI 3.14159265358979323846
-#define S_WIDTH 1280
-#define S_HEIGHT 720
-#define MOVE_SPEED 0.025
-#define ROTATE_SPEED 0.050
-#define	FOV 90
-#define RENDER_DIST 10 //* 32 + 16
+# define NORTH 100
+# define SOUTH 200
+# define EAST 300
+# define WEST 400
+# define PI 3.14159265358979323846
+# define S_WIDTH 1280
+# define S_HEIGHT 720
+# define MOVE_SPEED 0.025
+# define ROTATE_SPEED 0.050
+# define	FOV 90
+# define RENDER_DIST 10 //* 32 + 16
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
@@ -43,14 +41,10 @@
 # define W 13
 # define S 1
 # define D 2
-
-# include "raycast.h"
-
 # define KEY_ESC 53
+# define ARGC "Error\nToo many arguments\n"
 
-
-#define ARGC "Error\nToo many arguments\n"
-
+typedef unsigned int ui8;
 typedef struct s_line
 {
 	int		text_x;
@@ -221,7 +215,7 @@ void	sl_image_init(t_game *g);
 // FD utils 
 int		open_path(t_cub *cub, t_map *map);
 char	*fd_setter(t_cub *cub, char *line);
-int		cub_atoi(const char *str);
+int		cub_atoi(const char *str, t_cub *cub);
 void    fd_print(t_cub *cub);
 
 // orientation
@@ -235,6 +229,12 @@ void    fd_check_extension(t_cub *cub);
 void    fd_check_integrity(t_cub *cub, t_map *map);
 
 // Map parser
+
+void	map_lengh(t_map *map);
+int		orientation_char(char cub);
+int		around_zero(t_cub *cub, int index, char *line, int i);
+int		around_pl(t_cub *cub, int i, int index);
+int		check_possiblty(char c);
 void    map_parser(t_game *game, t_cub *cub, t_map *map);
 
 // Mlx
@@ -246,7 +246,6 @@ t_img	*create_buffer(t_mlx *g, int w, int h);
 t_img	create_new_img(t_mlx *g, int width, int height);
 void	put_pixel_img(t_img *img, int x, int y, int color);
 void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
-typedef unsigned int ui8;
 ui8		get_pixel_img(t_img *img, int x, int y);
 void	img_pix_put(t_img *img, int x, int y, int color);
 t_img	load_img(t_mlx *g, char *path, int w, int h);
