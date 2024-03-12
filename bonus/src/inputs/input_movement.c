@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   input_movement.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:17:47 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 15:14:54 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:26:35 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAC
+//#ifndef MAC
 # define XK_W W
 # define XK_S S
 # define XK_A A
 # define XK_D D
-#else
-# include <X11/keysym.h>
-#endif
+//#else
+//# include <X11/keysym.h>
+//#endif
 #include "../../include/cub3d.h"
 
 void	move_forward(t_player *player, t_game *game)
