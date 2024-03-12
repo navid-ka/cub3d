@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/13 15:04:11 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:48:08 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <string.h>
 # include <stdlib.h>
 # include <math.h>
 # include <mlx.h>

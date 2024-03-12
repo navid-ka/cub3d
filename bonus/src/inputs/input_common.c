@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   input_common.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:11:31 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 15:27:15 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:38:41 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-#include <X11/keysym.h>
+//#include <X11/keysym.h>
 
 int	on_mouse_click(int button, int x, int y, t_game *game)
 {
@@ -27,15 +27,15 @@ int	on_mouse_click(int button, int x, int y, t_game *game)
 
 int	check_door_collision(t_game *game)
 {
-	static double	distance = 2.0f;
+	//static double	distance = 2.0f;
 	t_player		*player;
 	int				x;
 	int				y;
 
 	player = game->player_s;
 	player->door_collision = false;
-	x = (int)(player->pos_x + player->dir_x * distance);
-	y = (int)(player->pos_y + player->dir_y * distance);
+	x = (int)(player->pos_x + player->dir_x /* * distance*/);
+	y = (int)(player->pos_y + player->dir_y /* * distance*/);
 	if (game->map_s->map[y][x] == 'D')
 	{
 		player->door_collision = true;
@@ -47,7 +47,7 @@ void	toggle_door_state(t_player *player, int keycode, t_game *game)
 {
 	if (player->door_collision == true)
 	{
-		if (keycode == XK_e)
+		if (keycode == E)
 		{
 			if (game->door_state == CLOSE)
 				game->door_state = OPEN;

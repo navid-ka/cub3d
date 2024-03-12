@@ -3,63 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   save.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:26:33 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 10:44:13 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:18:05 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static int	set_save(char *line)
-{
-	char	**opt;
-	char	*trimmed;
-	char	*dup;
-	int		value;
+// static int	set_save(char *line)
+// {
+// 	char	**opt;
+// 	char	*trimmed;
+// 	char	*dup;
+// 	int		value;
 
-	value = 0;
-	ft_printf("line: %s", line);
-	opt = ft_split(line, ' ');
-	if (opt[2])
-	{
-		free_tab(opt);
-		return (-1);
-	}
-	trimmed = ft_strtrim(opt[1], "\n");
-	dup = ft_strdup(trimmed);
-	free(trimmed);
-	free_tab(opt);
-	value = ft_atoi(dup);
-	printf("value: %d\n", value);
-	free(dup);
-	return (value);
-}
+// 	value = 0;
+// 	ft_printf("line: %s", line);
+// 	opt = ft_split(line, ' ');
+// 	if (opt[2])
+// 	{
+// 		free_tab(opt);
+// 		return (-1);
+// 	}
+// 	trimmed = ft_strtrim(opt[1], "\n");
+// 	dup = ft_strdup(trimmed);
+// 	free(trimmed);
+// 	free_tab(opt);
+// 	value = ft_atoi(dup);
+// 	printf("value: %d\n", value);
+// 	free(dup);
+// 	return (value);
+// }
 
 void	load_save_file(t_game *game)
 {
 	int		fd;
 	char	*line;
+	int		elem;
 
+	elem = 0;
 	fd = open("./save/game.save", O_RDONLY);
-	printf("%d\n", fd);
 	line = ft_strdup("");
-	while (line)
+	while (line && elem < 5)
 	{
 		free(line);
 		line = get_next_line(fd);
-		if (line && ft_strnstr(line, "lvl", 4))
-			game->player_s->lvl = set_save(line);
-		else if (line && ft_strnstr(line, "exp", 4))
-			game->player_s->exp = set_save(line);
-		else if (line && ft_strnstr(line, "enemy", 6))
-			game->enemy->lvl = set_save(line);
+		if (!line)
+			return ;
+		printf("%s", line);
+		game->player_s->lvl = ft_atoi(line);
+		game->player_s->exp = ft_atoi(line);
+		game->enemy->lvl = (int)round(ft_atoi(line));
+		game->player_s->pos_x = (int)round(ft_atoi(line));
+		game->player_s->pos_y = (int)round(ft_atoi(line));
+		elem++;
 	}
 	close(fd);
 }
 
 void	game_save(t_game *game)
+{
+	FILE	*fd;
+
+	fd = fopen("./save/game.save", "w");
+	fprintf(fd, "%d\n", game->player_s->lvl);
+	fprintf(fd, "%d\n", game->player_s->exp);
+	fprintf(fd, "%d\n", (int)round(game->enemy->lvl));
+	fprintf(fd, "%d\n", (int)round(game->player_s->pos_x));
+	fprintf(fd, "%d\n", (int)round(game->player_s->pos_y));
+	fclose(fd);
+	printf("Save successful.\n");
+}
+
+/*void	game_save(t_game *game)
 {
 	int		fd;
 	char	*lvl;
@@ -86,4 +104,4 @@ void	game_save(t_game *game)
 	free(exp);
 	free(enemy);
 	printf("Save successful.\n");
-}
+}*/
