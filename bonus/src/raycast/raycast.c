@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/03/13 12:43:18 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/13 21:39:39 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	raycast(t_game *game)
 		draw(game, game->camera_s, &img, &line);
 		i++;
 		line.w = i;
+		game->camera_s->door_state = game->door_state;
 	}
 	put_img_to_img(game->mlx_s->buffer, &img, 0, 0);
 	mlx_destroy_image(game->mlx_s->mlx_p, img.img);

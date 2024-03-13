@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:06:43 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/13 12:27:35 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/13 21:40:44 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 			c->map_y += c->step_y;
 			c->side = 1;
 		}
-		if (map[c->map_y][c->map_x] == '1' || map[c->map_y][c->map_x] == '2'
-			|| map[c->map_y][c->map_x] == '3' || map[c->map_y][c->map_x] == '4'
-			|| map[c->map_y][c->map_x] == 'D')
+		if ((map[c->map_y][c->map_x] == '1' || map[c->map_y][c->map_x] == '2'
+			|| map[c->map_y][c->map_x] == '3' || map[c->map_y][c->map_x] == '4')
+			|| (map[c->map_y][c->map_x] == 'D' && c->door_state == CLOSE))
 		{
 			c->hit = 1;
 			c->type = map[c->map_y][c->map_x];

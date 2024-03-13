@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/13 12:44:23 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/13 21:38:54 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_camera
 	int		hit_direction;
 	double		wall_x;
 	char	type;
+	int		door_state;
 }	t_camera;
 
 typedef struct s_position
