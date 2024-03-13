@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/13 12:24:32 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:44:23 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,9 @@ typedef struct s_line
     double step;
     double text_pos;
 	double brightness;
-	int text_y;
+	int	text_y;
 	int offset;
+	int w;
 }	t_line;
 
 typedef struct s_camera
@@ -358,8 +359,8 @@ void	init_ray(t_player *p, t_camera *c, int i);
 void    raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
-void 	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *src_img);
-void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line);
+void 	draw_line(t_game *game, t_line *line, t_img *img, t_img *src_img);
+void	draw(t_game *g, t_camera *cub, t_img *image, t_line *line);
 double  apply_fog(t_game *game);
 int		get_pixel_color(t_img *img, int x, int y, double brightness);
 int		colors(t_color *c);

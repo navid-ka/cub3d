@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:08:42 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/13 12:25:44 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:45:13 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	calc_line_props(t_game *game, t_line *line, t_img *img, t_img *src_img)
 		(line->line_height) / 2) * line->step;
 }
 
-void	draw_line(t_game *game, t_line *line, int w, t_img *img, t_img *src_img)
+void	draw_line(t_game *game, t_line *line, t_img *img, t_img *src_img)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ void	draw_line(t_game *game, t_line *line, int w, t_img *img, t_img *src_img)
 		line->text_pos += line->step;
 		if (line->text_y <= 62)
 		{
-			line->offset = w;
+			line->offset = line->w;
 			if (line->offset >= 0 && line->offset < img->width)
 			{
 				img_pix_put(img, line->offset, i,
@@ -63,19 +63,19 @@ void	draw_line(t_game *game, t_line *line, int w, t_img *img, t_img *src_img)
 	draw_floor(game, img, line, &i);
 }
 
-void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line)
+void	draw(t_game *g, t_camera *cub, t_img *image, t_line *line)
 {
 	if (cub->type == '1')
-		draw_line(g, line, w, image, &g->mlx_s->wall[0]);
+		draw_line(g, line, image, &g->mlx_s->wall[0]);
 	else if (cub->type == '2')
-		draw_line(g, line, w, image, &g->mlx_s->wall[1]);
+		draw_line(g, line, image, &g->mlx_s->wall[1]);
 	else if (cub->type == '3')
-		draw_line(g, line, w, image, &g->mlx_s->wall[2]);
+		draw_line(g, line, image, &g->mlx_s->wall[2]);
 	else if (cub->type == '4')
-		draw_line(g, line, w, image, &g->mlx_s->wall[3]);
+		draw_line(g, line, image, &g->mlx_s->wall[3]);
 	else if (cub->type == 'D')
 	{
-		draw_line(g, line, w, image, &g->mlx_s->door[g->door_frame_index]);
+		draw_line(g, line, image, &g->mlx_s->door[g->door_frame_index]);
 		door_handler(g);
 	}
 }
