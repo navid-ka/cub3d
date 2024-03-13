@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/13 11:06:50 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:24:32 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@
 
 #define MOVE_DISTANCE 1
 #define MAX_DISTANCE 5
+
+typedef unsigned char uic8;
 
 typedef struct s_player
 {
@@ -349,12 +351,19 @@ int		check_collision_y(t_game *game, double dy, char *wall, double margin);
 int		collision_checker(t_game *game, double dx, double dy);
 
 //Raycast or angles
+void	init_line(t_line *line, t_camera *c, int i);
+void	init_dda(t_line *line, t_player *p, t_camera *c, char **map);
+void	init_step(t_player *p, t_camera *c);
+void	init_ray(t_player *p, t_camera *c, int i);
 void    raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
-void 	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *source_img);
-double	dda_rays(t_game *game);
-void	render_3d_map(t_game *game);
+void 	draw_line(t_game *game, t_line *line, int i, t_img *img, t_img *src_img);
+void	draw(t_game *g, t_camera *cub, int w, t_img *image, t_line *line);
+double  apply_fog(t_game *game);
+int		get_pixel_color(t_img *img, int x, int y, double brightness);
+int		colors(t_color *c);
+int	char_to_int(uic8 t, uic8 r, uic8 g, uic8 b);
 
 // Anim 
 int	update(t_game *game);

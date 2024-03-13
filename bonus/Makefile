@@ -17,6 +17,10 @@ SRC = src/main.c \
 		src/parser/map_parser_utils.c \
 		src/raycast/raycast.c \
 		src/raycast/raycast_utils.c \
+		src/raycast/ray_draw.c \
+		src/raycast/ray_init.c \
+		src/raycast/shaders.c \
+		src/raycast/pixel_utils.c \
 		src/window/window.c \
 		src/inputs/input_common.c \
 		src/inputs/input_movement.c \
