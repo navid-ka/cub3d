@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:47 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/12 17:16:43 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:42:59 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,11 @@ void	var_init(t_game *game)
 
 void	game_init(t_game *game)
 {
-	game->cub_s = malloc(sizeof(t_cub));
-	game->map_s = malloc(sizeof(t_map));
 	game->mlx_s = malloc(sizeof(t_mlx));
 	game->player_s = malloc(sizeof(t_player));
 	game->enemy = malloc(sizeof(t_enemy));
 	game->camera_s = malloc(sizeof(t_camera));
-	if (!game->cub_s || !game->map_s || !game->mlx_s || !game->player_s)
+	if (!game->mlx_s || !game->player_s || !game->enemy || !game->camera_s)
 	{
 		ft_printf("Error\nMalloc error\n");
 		exit(1);
@@ -57,7 +55,6 @@ int	main(int argc, char **argv)
 
 	if (argc > 2 || argc < 2)
 		return (printf(ARGC));
-	game_init(&game);
 	fd_parser(&game, argv + 1);
 	mlx_window(&game);
 	garbage_collector(&game);

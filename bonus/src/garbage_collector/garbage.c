@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/13 10:37:50 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:10:51 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,121 +37,39 @@ void free_img(t_mlx *g, t_img *img)
     {
         if (img->img)
         {
-            mlx_destroy_image(g->mlx_p, img->img); // Liberar la imagen cargada
+            mlx_destroy_image(g->mlx_p, img->img);
             img->img = NULL;
         }
     }
 }
-/*
-void free_fonts(t_mlx *g) 
-{
-    int i = 33;
-
-    if (g->fonts) 
-	{
-        while (i <= 126) 
-		{
-            free_img(g, &(g->fonts[i]));
-            i++;
-        }
-        free(g->fonts);
-        g->fonts = NULL;
-    }
-}
-
-void free_sword(t_mlx *g) 
-{
-    int i = 0;
-
-    if (g->sword) 
-	{
-        while (i < 30) 
-		{
-            free_img(g, &(g->sword[i]));
-            i++;
-        }
-        free(g->sword);
-        g->sword = NULL;
-    }
-}
-
-void free_enemies(t_mlx *g)
-{
-    int i = 0;
-    if (g->enemy)
-    {
-        while (i < 2) 
-        {
-            free_img(g, &(g->enemy[i]));
-            i++;
-        }
-        free(g->enemy);
-        g->enemy = NULL;
-    }
-}
-
-void free_images(t_mlx *g)
-{
-    int i = 0;
-
-    if (g->img) 
-	{
-        while (i < 5) 
-        {
-            free_img(g, &(g->img[i]));
-            i++;
-        }
-        free(g->img);
-        g->img = NULL;
-    }
-    i = 0;
-    if (g->wall) 
-	{
-        while (i < 5) 
-		{
-            free_img(g, &(g->wall[i]));
-            i++;
-        }
-        free(g->wall);
-        g->wall = NULL;
-    }
-}
-*/
 
 void free_images(t_mlx *g)
 {
     int i;
 
-    for (i = 0; i < 5; i++)
-    {
+	i = -1;
+    while (++i < 5)
         free_img(g, &(g->img[i]));
-    }
-    for (i = 0; i < 5; i++)
-    {
-        printf("free img %p\n", g->wall[i].img);
+    i = -1;
+    while (++i < 5)
         free_img(g, &(g->wall[i]));
-        printf("free img %p\n", g->wall[i].img);
-    }
-    for (i = 0; i < 30; i++)
-    {
+    i = -1;
+    while (++i < 30)
         free_img(g, &(g->sword[i]));
-    }
-    for (i = 0; i < 2; i++)
-    {
-        printf("free img %p\n", g->enemy[i].img);
+    i = -1;
+    while (++i < 2)
         free_img(g, &(g->enemy[i]));
-        printf("free img %p\n", g->enemy[i].img);
-    }
-    for (i = 0; i <= 93; i++)
-    {
+    i = -1;
+    while (++i <= 93)
         free_img(g, &(g->fonts[i]));
-    }
-    for (i = 0; i < 2; i++)
-    {
+    i = -1;
+    while (++i < 2)
         free_img(g, &(g->enemy_hit[i]));
-    }
-
+    i = -1;
+    while (++i <= 15)
+        free_img(g, &(g->door[i]));
 }
+
 
 
 void	free_null(char **ptr)
@@ -174,30 +92,52 @@ void	free_textures(t_cub *cub)
 		free_null(&cub->we);
 }
 
-void	fd_error_1(t_cub *cub)
+void	fd_error_1(t_cub *cub, t_map *map)
 {
 	free_textures(cub);
+	free(cub);
+	free(map);
 	ft_printf("Error\nTexture could not be loaded\n");
 	exit(1);
 }
 
-void	fd_error_2(t_cub *cub)
+void	fd_error_2(t_cub *cub, t_map *map)
 {
 	free_textures(cub);
 	if (cub->map)
 		free_tab(cub->map);
-	printf("Error\nMap not valid\n");
+	free(cub->tmp);
+	free(cub);
+	free(map);
+	printf("Error\nMap not valid, level 2\n");
 	exit(1);
 }
 
-void	fd_error(t_cub *cub, int err)
+void	fd_error_3(t_game *game, t_cub *cub, t_map *map)
+{
+	free_textures(cub);
+	if (cub->map)
+		free_tab(cub->map);
+	free(cub);
+	if (map->map)
+		free_tab(map->map);
+	free(map);
+	free(game->player_s);
+	free(game->mlx_s);
+	free(game->camera_s);
+	printf("Map not valid, level 3\n");
+	exit(1);
+}
+
+void	fd_error(t_cub *cub, t_map *map, int err)
 {
 	if (err == -1)
 		free_null(&cub->path);
 	if (err == 1)
-		fd_error_1(cub);
+		fd_error_1(cub, map);
 	else if (err == 2)
-		fd_error_2(cub);
+		fd_error_2(cub, map);
+	free(map);
 	exit(1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/12 16:48:08 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:06:50 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,6 +292,7 @@ char *add_file_extension(char *file, int num);
 void    fd_parser(t_game *game, char **argv);
 
 // Init structs 
+void	game_init(t_game *game);
 void    cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
 void	player_init(t_player *player);
@@ -300,9 +301,9 @@ void	sl_image_init(t_mlx *g);
 void	walls_image_init(t_game *g);
 
 // FD utils 
-int		open_path(t_cub *cub);
+int		open_path(t_cub *cub, t_map *map);
 char	*fd_setter(t_cub *cub, char *line);
-int		cub_atoi(const char *str);
+int		cub_atoi(const char *str, t_cub *cub);
 void    fd_print(t_cub *cub);
 
 // orientation
@@ -401,9 +402,14 @@ unsigned int f_rand(void);
 //Garbage collectors
 int		window_destroy(t_game *game);
 void	free_tab(char **args);
+void	free_textures(t_cub *cub);
 void	free_null(char **ptr);
-void 	free_img(t_mlx *g, t_img *img);
-void	fd_error(t_cub *cub, int err);
+void	fd_error(t_cub *cub, t_map *map, int err);
 void	garbage_collector(t_game *game);
+void	free_images(t_mlx *g);
+void	free_img(t_mlx *g, t_img *img);
+void	fd_error_2(t_cub *cub, t_map *map);
+void	fd_error_1(t_cub *cub, t_map *map);
+void	fd_error_3(t_game *game, t_cub *cub, t_map *map);
 
 #endif
