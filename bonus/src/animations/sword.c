@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:16:11 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 12:33:36 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:17:02 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	load_sword_img(t_mlx *g)
 {
 	static int	width = 1008;
 	static int	height = 874;
-	int					i;
-	char				*file;
-	char				*file_with_extension;
+	int			i;
+	char		*file;
+	char		*file_with_extension;
 
 	file = "textures/sword/sword-";
 	i = 0;
@@ -69,9 +69,9 @@ int	draw_idle(t_game *game)
 
 int	draw_sword_animation(t_game *game)
 {
-	static int			i = 0;
-	int	y;
-	int	x;
+	static int	i = 0;
+	int			y;
+	int			x;
 
 	y = game->mlx_s->screen_height \
 			- game->mlx_s->sword[0].height + 300;

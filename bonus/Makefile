@@ -6,6 +6,7 @@ UNAME  = $(shell uname)
 HEADERS = include/cub3d.h include/raycast.h
 SRC = src/main.c \
 		src/garbage_collector/garbage.c \
+		src/garbage_collector/garbage_2.c \
 		src/parser/parser.c \
 		src/parser/structs_init.c \
 		src/parser/fd_checker.c \
