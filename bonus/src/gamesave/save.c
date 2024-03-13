@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:26:33 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/12 17:18:05 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:53:12 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	load_save_file(t_game *game)
 		game->player_s->pos_y = (int)round(ft_atoi(line));
 		elem++;
 	}
+	if (line)
+		free(line);
 	close(fd);
 }
 
