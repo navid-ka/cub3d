@@ -12,6 +12,28 @@
 
 #include "../../include/cub3d.h"
 
+#define DIR_LEN 50
+
+void	draw_minimap_dir(t_game *g, t_img *img, int x, int y)
+{
+	t_img	*p_buffer;
+	int		i;
+	double	mod_dx;
+	double	mod_dy;
+
+	i = 0;
+	mod_dx = 1;
+	mod_dy = 1;
+	p_buffer = g->mlx_s->buffer;
+	while (i < DIR_LEN)
+	{
+		mod_dx = g->player_s->dir_x * (x + i);
+		mod_dy = g->player_s->dir_y * (y + i);
+		put_img_to_img(p_buffer, img, (int)mod_dx, (int)mod_dy);
+		i++;
+	}
+}
+
 void	draw_minimap_player(int i, int j, t_img *img, t_game *g)
 {
 	int		x;
@@ -22,6 +44,7 @@ void	draw_minimap_player(int i, int j, t_img *img, t_game *g)
 		x = 1250 - (g->map_s->width - j) * img->width;
 		y = 10 + i * img->height;
 		put_img_to_img(g->mlx_s->buffer, img, x, y);
+		draw_minimap_dir(g, img, x, y);
 	}
 }
 
