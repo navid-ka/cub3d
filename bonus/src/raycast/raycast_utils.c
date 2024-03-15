@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:30 by plinscho          #+#    #+#             */
-/*   Updated: 2024/03/15 17:37:25 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:11:33 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ double	plane_mult(double fov)
 {
 	double	plane_multiplier = 0.0;
 	
-	printf("Plane mult 1: %f\n fov: %f sum: %f\n", plane_multiplier, fov, fov * PI / 180);
 	plane_multiplier = fov;
 	plane_multiplier = tan(plane_multiplier / 2);
 	plane_multiplier = 2 / plane_multiplier;
-	printf("Plane mult 2: %f\n", plane_multiplier);
 	return (plane_multiplier);
 }
 

@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:15:10 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/15 19:00:15 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:36:58 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	draw_minimap(t_game *g)
 				y = 10 + i * img->height;
 				put_img_to_img(g->mlx_s->buffer, img, x, y);
 			}
-			draw_minimap_player(i, j, img, g);
+			draw_minimap_player(i, j, &g->mlx_s->img[5], g);
 		}
 	}
 }
