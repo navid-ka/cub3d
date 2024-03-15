@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/15 18:22:02 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:17:22 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ typedef struct s_mlx
 	t_img	sword[30];
 	t_img	enemy[2];
 	t_img	enemy_hit[2];
-	t_img	img[5];
+	t_img	img[6];
 	t_img	wall[5];
 	t_img   door[16];
 	t_img	fonts[94];
