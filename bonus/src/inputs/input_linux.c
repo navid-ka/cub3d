@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   input_linux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:51:39 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/13 15:16:31 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/15 17:06:48 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-#include <X11/keysym.h>
+//#include <X11/keysym.h>
 
 void	look_with_mouse(t_game *game)
 {

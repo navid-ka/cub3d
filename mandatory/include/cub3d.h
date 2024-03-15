@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/29 18:29:04 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:02:33 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define S_HEIGHT 720
 # define MOVE_SPEED 0.025
 # define ROTATE_SPEED 0.050
-# define	FOV 90
+# define	FOV 160
 # define RENDER_DIST 10 //* 32 + 16
 # define ESC	53
 # define ARROW_LEFT 123

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:26:33 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/13 10:53:12 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:30:29 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	load_save_file(t_game *game)
 		game->player_s->lvl = ft_atoi(line);
 		game->player_s->exp = ft_atoi(line);
 		game->enemy->lvl = (int)round(ft_atoi(line));
-		game->player_s->pos_x = (int)round(ft_atoi(line));
-		game->player_s->pos_y = (int)round(ft_atoi(line));
 		elem++;
 	}
 	if (line)
@@ -73,8 +71,6 @@ void	game_save(t_game *game)
 	fprintf(fd, "%d\n", game->player_s->lvl);
 	fprintf(fd, "%d\n", game->player_s->exp);
 	fprintf(fd, "%d\n", (int)round(game->enemy->lvl));
-	fprintf(fd, "%d\n", (int)round(game->player_s->pos_x));
-	fprintf(fd, "%d\n", (int)round(game->player_s->pos_y));
 	fclose(fd);
 	printf("Save successful.\n");
 }

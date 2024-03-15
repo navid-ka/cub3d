@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   input_common.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:11:31 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/13 21:42:38 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:06:23 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-#include <X11/keysym.h>
+//#include <X11/keysym.h>
 
 int	on_mouse_click(int button, int x, int y, t_game *game)
 {

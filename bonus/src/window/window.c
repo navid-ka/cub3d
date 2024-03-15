@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:19:26 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/13 11:38:36 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/15 17:54:38 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	game_start(t_game *game)
 	{
 		clear_image(game->mlx_s->buffer);
 		update(game);
-		look_with_mouse(game);
 		if (randi % 3 == 0 && game->steps > 160)
 		{
 			game->state = screen_manager(game, COMBAT);

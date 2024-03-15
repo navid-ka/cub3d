@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 11:45:08 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/15 17:38:58 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,13 @@ void	map_init(t_map *map)
 
 void	camera_init(t_camera *camera, t_player *player)
 {
-	camera->plane_multiplier = plane_mult(FOV);
-	camera->plane_x = player->dir_y;
-	camera->plane_y = -player->dir_x;
+	double	fov_rad;
+
+	fov_rad = FOV * ( PI / 180);
+	printf("FOV: %d | fov_rad: %f\n", FOV, fov_rad);
+	camera->plane_multiplier = plane_mult(fov_rad);
+	camera->plane_x = player->dir_y * camera->plane_multiplier;
+	camera->plane_y = -player->dir_x * camera->plane_multiplier;
 	camera->ray_dir_x = 0;
 	camera->ray_dir_y = 0;
 	camera->camera_x = 0;
