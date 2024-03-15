@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_mac.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:58:54 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 15:13:49 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/15 18:18:15 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,24 @@ void	look_with_mouse(t_game *game)
 	int				x;
 	int				y;
 	double			angle;
+	static int		flag = 0;
 
 	mlx_mouse_get_pos(game->mlx_s->win, &x, &y);
 	mlx_mouse_hide(game->mlx_s->mlx_p, game->mlx_s->win);
 	mlx_mouse_move(game->mlx_s->win,
 		game->mlx_s->screen_width / 2, game->mlx_s->screen_height / 2);
-	angle = -2 * PI * (x - game->mlx_s->screen_width / 2) / S_WIDTH * sens;
-	game->player_s->angle += angle;
-	game->player_s->dir_x = cos(game->player_s->angle);
-	game->player_s->dir_y = sin(game->player_s->angle);
-	game->camera_s->plane_x = game->player_s->dir_y \
-		* game->camera_s->plane_multiplier;
-	game->camera_s->plane_y = -game->player_s->dir_x \
-		* game->camera_s->plane_multiplier;
+	if (flag > 0)
+	{
+		angle = -2 * PI * (x - game->mlx_s->screen_width / 2) / S_WIDTH * sens;
+		game->player_s->angle += angle;
+		game->player_s->dir_x = cos(game->player_s->angle);
+		game->player_s->dir_y = sin(game->player_s->angle);
+		game->camera_s->plane_x = game->player_s->dir_y \
+			* game->camera_s->plane_multiplier;
+		game->camera_s->plane_y = -game->player_s->dir_x \
+			* game->camera_s->plane_multiplier;
+	}
+	flag++;
 }
 
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir)

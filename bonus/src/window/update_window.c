@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:48:19 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/13 11:40:00 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/15 17:54:58 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int	update(t_game *game)
 	draw_player_hp(game);
 	mlx_put_image_to_window(game->mlx_s->mlx_p, game->mlx_s->win,
 		game->mlx_s->buffer->img, 0, 0);
+	look_with_mouse(game);
 	return (0);
 }

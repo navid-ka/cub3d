@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/13 10:37:33 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:28:29 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int	map_valid_orientation(t_cub *cub, t_map *map)
 			if (orientation_char(cub->map[i][j]))
 			{
 				if (cub->map[i][j] == 'N')
-					map->orientation = 90;
-				else if (cub->map[i][j] == 'S')
 					map->orientation = 270;
+				else if (cub->map[i][j] == 'S')
+					map->orientation = 90;
 				else if (cub->map[i][j] == 'W')
 					map->orientation = 180;
 				else if (cub->map[i][j] == 'E')

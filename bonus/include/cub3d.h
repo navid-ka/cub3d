@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/13 21:38:54 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/15 18:22:02 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,7 +331,7 @@ void    map_parser(t_game *game, t_cub *cub, t_map *map);
 // Mlx
 void    mlx_window(t_game *game);
 void	camera_init(t_camera *camera, t_player *player);
-double	plane_mult(int fov);
+double	plane_mult(double fov);
 
 //Inputs
 double	move_x(t_player *p, char **map, int dir);
@@ -358,7 +358,7 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map);
 void	init_step(t_player *p, t_camera *c);
 void	init_ray(t_player *p, t_camera *c, int i);
 void    raycast(t_game *game);
-double	deg_to_rad(int dg_angle);
+double	deg_to_rad(double dg_angle);
 int		rad_to_dg(double angle);
 void 	draw_line(t_game *game, t_line *line, t_img *img, t_img *src_img);
 void	draw(t_game *g, t_camera *cub, t_img *image, t_line *line);
