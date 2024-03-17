@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   pixel_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:05:41 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/13 12:26:59 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/17 16:36:16 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	char_to_int(uic8 t, uic8 r, uic8 g, uic8 b)
+int	char_to_int(t_uic8 t, t_uic8 r, t_uic8 g, t_uic8 b)
 {
-	return (*(int *)(uic8 [4]){b, g, r, t});
+	return (*(int *)(t_uic8 [4]){b, g, r, t});
 }
 
 int	get_pixel_color(t_img *img, int x, int y, double brightness)
