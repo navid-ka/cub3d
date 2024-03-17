@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:51:06 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/15 19:24:12 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:17:23 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	sl_image_init(t_mlx *g)
 	original = g->img[5];
 	g->img[5] = resize_image(g, original, 10, 10);
 	free_img(g, &original);
-	
 }
 
 void	walls_image_init(t_game *g)
