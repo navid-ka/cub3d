@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/15 17:01:55 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:57:11 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	map_init(t_map *map)
 void	camera_init(t_camera *camera, t_player *player)
 {
 	camera->plane_multiplier = plane_mult(FOV);
-//	camera->plane_x = player->dir_y;
-//	camera->plane_y = -player->dir_x;
 	camera->plane_x = player->dir_y * camera->plane_multiplier;
 	camera->plane_y = -player->dir_x * camera->plane_multiplier;
 	camera->wall_x = 0;

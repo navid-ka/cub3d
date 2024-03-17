@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/02/28 18:22:38 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/17 16:58:48 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
+void	free_images(t_mlx *g)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		free_img(g, &(g->img[i]));
+		i++;
+	}
+}
 
 void	free_tab(char **args)
 {

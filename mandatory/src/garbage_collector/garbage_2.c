@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:50:45 by plinscho          #+#    #+#             */
-/*   Updated: 2024/02/28 20:06:59 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/17 17:29:50 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,5 @@ void	free_img(t_mlx *g, t_img *img)
 			mlx_destroy_image(g->mlx_p, img->img);
 			img->img = NULL;
 		}
-	}
-}
-
-void	free_images(t_mlx *g)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		free_img(g, &(g->img[i]));
-		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/15 17:38:58 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:20:31 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	camera_init(t_camera *camera, t_player *player)
 {
 	double	fov_rad;
 
-	fov_rad = FOV * ( PI / 180);
-	printf("FOV: %d | fov_rad: %f\n", FOV, fov_rad);
+	fov_rad = FOV * (PI / 180);
 	camera->plane_multiplier = plane_mult(fov_rad);
 	camera->plane_x = player->dir_y * camera->plane_multiplier;
 	camera->plane_y = -player->dir_x * camera->plane_multiplier;

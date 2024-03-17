@@ -6,12 +6,12 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/15 17:02:33 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:39:50 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _CUB3D_H_
-# define _CUB3D_H_
+#ifndef CUB3D_H
+# define CUB3D_H
 # include <libft.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -30,8 +30,8 @@
 # define S_HEIGHT 720
 # define MOVE_SPEED 0.025
 # define ROTATE_SPEED 0.050
-# define	FOV 160
-# define RENDER_DIST 10 //* 32 + 16
+# define FOV 90
+# define RENDER_DIST
 # define ESC	53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
@@ -44,7 +44,7 @@
 # define KEY_ESC 53
 # define ARGC "Error\nToo many arguments\n"
 
-typedef unsigned int ui8;
+typedef unsigned int	t_ui8;
 typedef struct s_line
 {
 	int		text_x;
@@ -64,43 +64,42 @@ typedef struct s_line
 
 typedef struct s_camera
 {
-	double	plane_multiplier;	// used to calculate the camera plane
-	double	plane_x;	// camera plane ortogonal to the direction vector
+	double	plane_multiplier;
+	double	plane_x;
 	double	plane_y;
-	double	camera_x;	// x-coordinate in camera space
+	double	camera_x;
 	double	camera_y;
 	double	wall_x;
-	int		map_x;	// which box of the map we're in
+	int		map_x;
 	int		map_y;
-	double	ray_dir_x;	// direction vector
+	double	ray_dir_x;
 	double	ray_dir_y;
-	double	side_dist_x;	// length of ray from current position to next x or y-side
+	double	side_dist_x;
 	double	side_dist_y;
-	double	delta_dist_x;	// length of ray from one x or y-side to next x or y-side
+	double	delta_dist_x;
 	double	delta_dist_y;
-	double	perp_wall_dist;	// length of ray from current position to next x or y-side
-	int		step_x;	// what direction to step in x or y-direction (either +1 or -1)
+	double	perp_wall_dist;
+	int		step_x;
 	int		step_y;
-	int		hit;	// was there a wall hit?
-	int		side;	// was a NS or a EW wall hit?
-	int		hit_direction;		
+	int		hit;
+	int		side;
+	int		hit_direction;
 }	t_camera;
 
 typedef struct s_player
 {
-	double	fov;	// field of view is 90 degrees
-    double  pos_x; //position
-    double  pos_y;
-	double	dir_x; //direction
+	double	fov;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
 	double	dir_y;
 	double	dx;
 	double	dy;
-    double  angle;	// in radians
+	double	angle;
 	double	speed;
 	int		dg_angle;
 	double	distance;
 }	t_player;
-
 
 typedef struct s_map
 {
@@ -138,9 +137,9 @@ typedef struct s_cub
 
 typedef struct s_position
 {
-    int x;
-    int y;
-}              t_position;
+	int	x;
+	int	y;
+}	t_position;
 
 typedef struct s_image
 {
@@ -151,7 +150,7 @@ typedef struct s_image
 	int		endian;
 	int		width;
 	int		height;
-} t_img;
+}	t_img;
 
 typedef struct s_mlx
 {
@@ -172,10 +171,10 @@ typedef struct s_game
 	t_player	*player_s;
 	t_camera	*camera_s;
 
-} t_game;
+}	t_game;
 
 // Parser
-void    fd_parser(t_game *game, char **argv);
+void	fd_parser(t_game *game, char **argv);
 void	camera_init(t_camera *camera, t_player *player);
 double	plane_mult(int fov);
 
@@ -184,15 +183,15 @@ void	player_move(int keycode, t_player *player, t_game *game);
 double	move_rot(t_camera *cam, t_player *p, char **map, int dir);
 
 // draw
-void 	draw_line(t_game *game, t_line *line, t_img *img, t_img *source_img);
+void	draw_line(t_game *game, t_line *line, t_img *img, t_img *source_img);
 void	draw(t_game *g, t_camera *cub, t_img *image, t_line *line);
 
 //Raycast or angles
-void    raycast(t_game *game);
+void	raycast(t_game *game);
 double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
-double	dda_rays(t_game *game);
-void	render_3d_map(t_game *game);
+//double	dda_rays(t_game *game);
+//void	render_3d_map(t_game *game);
 
 // Raycast Init
 void	init_step(t_player *p, t_camera *c);
@@ -203,20 +202,19 @@ double	deg_to_rad(int dg_angle);
 int		rad_to_dg(double angle);
 double	plane_mult(int fov);
 
-
 // Init structs
 void	game_init(t_game *game);
-void    cub_init(t_cub *init, char **argv);
+void	cub_init(t_cub *init, char **argv);
 void	map_init(t_map *map);
 void	player_init(t_player *player);
-void    window_init(t_mlx *window);
+void	window_init(t_mlx *window);
 void	sl_image_init(t_game *g);
 
 // FD utils 
 int		open_path(t_cub *cub, t_map *map);
 char	*fd_setter(t_cub *cub, char *line);
 int		cub_atoi(const char *str, t_cub *cub);
-void    fd_print(t_cub *cub);
+void	fd_print(t_cub *cub);
 
 // orientation
 int		fd_orientation_checker(t_cub *cub, char *line, int *flag);
@@ -225,8 +223,8 @@ int		fd_orientation_checker(t_cub *cub, char *line, int *flag);
 int		fd_color_checker(t_cub *cub, char *line, int *flag);
 
 // FD checker
-void    fd_check_extension(t_cub *cub);
-void    fd_check_integrity(t_cub *cub, t_map *map);
+void	fd_check_extension(t_cub *cub);
+void	fd_check_integrity(t_cub *cub, t_map *map);
 
 // Map parser
 
@@ -235,24 +233,23 @@ int		orientation_char(char cub);
 int		around_zero(t_cub *cub, int index, char *line, int i);
 int		around_pl(t_cub *cub, int i, int index);
 int		check_possiblty(char c);
-void    map_parser(t_game *game, t_cub *cub, t_map *map);
+void	map_parser(t_game *game, t_cub *cub, t_map *map);
 
 // Mlx
-void    mlx_window(t_game *game);
-
+void	mlx_window(t_game *game);
 
 // Img utils
 t_img	*create_buffer(t_mlx *g, int w, int h);
 t_img	create_new_img(t_mlx *g, int width, int height);
 void	put_pixel_img(t_img *img, int x, int y, int color);
 void	put_img_to_img(t_img *dst, t_img *src, int x, int y);
-ui8		get_pixel_img(t_img *img, int x, int y);
+t_ui8	get_pixel_img(t_img *img, int x, int y);
 void	img_pix_put(t_img *img, int x, int y, int color);
 t_img	load_img(t_mlx *g, char *path, int w, int h);
 
 //Inputs
-int     on_key_press(int keycode, t_game *game);
-int     on_key_release(int keycode, t_game *game);
+int		on_key_press(int keycode, t_game *game);
+int		on_key_release(int keycode, t_game *game);
 int		check_collision_y(t_game *game, double dy, char *wall, double margin);
 int		check_collision_x(t_game *game, double dx, char *wall, double margin);
 

@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:15:10 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/15 19:36:58 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:17:05 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	draw_minimap_dir(t_game *g, t_img *img, int i, int j)
 	int		ray_dist;
 	double	mod_dx;
 	double	mod_dy;
-//	double	angle[2];
 
 	ray_dist = 0;
 	mod_dx = 1;

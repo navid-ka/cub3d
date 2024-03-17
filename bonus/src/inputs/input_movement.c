@@ -6,15 +6,15 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:17:47 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/15 16:48:21 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:19:51 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#ifndef MAC
-# define XK_W W
-# define XK_S S
-# define XK_A A
-# define XK_D D
+#define XK_W W
+#define XK_S S
+#define XK_A A
+#define XK_D D
 //#else
 //# include <X11/keysym.h>
 //#endif
