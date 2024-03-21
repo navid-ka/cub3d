@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:06:43 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/13 21:40:44 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/21 19:41:18 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	init_ray(t_player *p, t_camera *c, int i)
 
 	fov_scale = p->fov / PI;
 	c->camera_x = 2 * fov_scale * (i / (double)S_WIDTH) - fov_scale;
-	c->ray_dir_x = p->dir_x + c->plane_x * c->camera_x;
-	c->ray_dir_y = p->dir_y + c->plane_y * c->camera_x;
+	c->ray_dir_x = -p->dir_x + c->plane_x * c->camera_x;
+	c->ray_dir_y = -p->dir_y + c->plane_y * c->camera_x;
 	c->map_x = (int)p->pos_x;
 	c->map_y = (int)p->pos_y;
 	if (c->ray_dir_x == 0)

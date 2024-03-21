@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:17:47 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/17 16:19:51 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 19:41:53 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void	player_move(int keycode, t_player *player, t_game *game)
 {
 	player->dx = 0;
 	player->dy = 0;
-	if (keycode == 0x77 || keycode == XK_W)
-		move_forward(player, game);
 	if (keycode == 0x73 || keycode == XK_S)
+		move_forward(player, game);
+	if (keycode == 0x77 || keycode == XK_W)
 		move_backward(player, game);
 	if (keycode == 0x61 || keycode == XK_A)
 		move_left(player, game);
