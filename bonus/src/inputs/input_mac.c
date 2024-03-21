@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:58:54 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/15 18:18:15 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 19:44:48 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ double	move_rot(t_camera *cam, t_player *p, char **map, int dir)
 
 	(void)map;
 	if (dir == ARROW_RIGHT)
-		increment = -ROTATE_SPEED;
-	else
 		increment = ROTATE_SPEED;
+	else
+		increment = -ROTATE_SPEED;
 	p->angle += increment;
 	if (p->angle < 0)
 		p->angle += 2 * PI;

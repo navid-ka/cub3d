@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:15:10 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/17 16:17:05 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 19:46:16 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	draw_minimap_dir(t_game *g, t_img *img, int i, int j)
 		mod_dx = 1250 - (g->map_s->width - j) * img->width;
 		mod_dx += ray_dist * -g->player_s->dir_x + 4;
 		mod_dy = 10 + i * img->height;
-		mod_dy += ray_dist * g->player_s->dir_y + 4;
+		mod_dy += ray_dist * -g->player_s->dir_y + 4;
 		put_pixel_img(g->mlx_s->buffer, (int)mod_dx, (int)mod_dy, 0xFFFFFF);
 		ray_dist++;
 	}
