@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/21 22:52:02 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/21 22:57:08 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ typedef unsigned char	t_uic8;
 
 typedef struct s_player
 {
-	double	fov;	// field of view is 90 degrees
-	double	pos_x; //position
+	double	fov;
+	double	pos_x;
 	double	pos_y;
-	double	dir_x; //direction
+	double	dir_x;
 	double	dir_y;
-	double	angle;	// in radians
+	double	angle;
 	double	speed;
 	double	dx;
 	double	dy;
