@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:11:31 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/17 16:20:12 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 20:05:17 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	check_door_collision(t_game *game)
 
 	player = game->player_s;
 	player->door_collision = false;
-	x = (int)(player->pos_x + player->dir_x);
-	y = (int)(player->pos_y + player->dir_y);
+	x = (int)(player->pos_x + -player->dir_x);
+	y = (int)(player->pos_y + -player->dir_y);
 	if (game->map_s->map[y][x] == 'D')
 	{
 		player->door_collision = true;

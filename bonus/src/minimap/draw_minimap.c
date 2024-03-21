@@ -6,13 +6,13 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:15:10 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/21 19:46:16 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 20:06:06 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-#define DIR_LEN 30
+#define DIR_LEN 10
 
 void	draw_minimap_dir(t_game *g, t_img *img, int i, int j)
 {
