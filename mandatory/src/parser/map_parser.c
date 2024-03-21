@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/21 19:27:28 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:47:09 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	map_parser(t_game *game, t_cub *cub, t_map *map)
 	t_player	*player;
 
 	player = game->player_s;
-	map_lengh(map);
+	map_lengh(game, map, cub);
 	map_get_player_pos(map, player);
 	is_valid = map_has_valid_char(cub)
 		&& map_valid_orientation(cub, map)

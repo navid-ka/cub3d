@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:26:27 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/17 16:49:49 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:52:02 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,7 +309,7 @@ void		fd_check_extension(t_cub *cub);
 void		fd_check_integrity(t_cub *cub, t_map *map);
 
 // Map parser
-void		map_lengh(t_map *map);
+void		map_lengh(t_game *g, t_map *map, t_cub *cub);
 int			orientation_char(char cub);
 int			around_zero(t_cub *cub, int index, char *line, int i);
 int			around_pl(t_cub *cub, int i, int index);

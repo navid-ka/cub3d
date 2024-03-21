@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/13 10:34:10 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/21 22:50:48 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,19 @@ char	*fd_setter(t_cub *cub, char *line)
 	char	**opt;
 	char	*trimmed;
 	char	*dup;
+	int		i;
 
 	if (!line)
 		return (NULL);
-	printf("line: %s\n", line);
 	opt = ft_split(line, ' ');
-	if (opt[2])
+	i = 0;
+	while (opt[i])
+		i++;
+	if (i != 2)
 	{
+		ft_printf("Error\n[errno: %d] .cub file is not well formatted.\n",
+			errno);
+		cub->err = 1;
 		free_tab(opt);
 		return (NULL);
 	}
@@ -57,7 +63,6 @@ char	*fd_setter(t_cub *cub, char *line)
 	free(trimmed);
 	free_tab(opt);
 	cub->count++;
-	printf("count: %d\n", cub->count);
 	return (dup);
 }
 

@@ -6,26 +6,30 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:33:00 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/13 11:41:18 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/21 22:51:38 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	map_lengh(t_map *map)
+void	map_lengh(t_game *g, t_map *map, t_cub *cub)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (map->map[i])
 	{
+		j = 0;
 		while (map->map[i][j])
 			j++;
 		if (j > map->width)
 			map->width = j;
-		j = 0;
+		if (i > 0 && j != map->width)
+		{
+			printf("Error\nMap is not a square matrix.\n");
+			fd_error_3(g, cub, map);
+		}
 		i++;
 	}
 	map->height = i;
