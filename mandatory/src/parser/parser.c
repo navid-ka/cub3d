@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/28 20:02:58 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/21 19:28:45 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	angle_init(t_player *player, t_map *map)
 {
-	player->dg_angle = map->orientation;
-	player->angle = map->orientation * PI / 180;
+	player->angle = -map->orientation * PI / 180;
 	player->dir_x = cos(player->angle);
 	player->dir_y = sin(player->angle);
 }

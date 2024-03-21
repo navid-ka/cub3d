@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:14:03 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/17 16:57:11 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 19:05:59 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	player_init(t_player *player)
 	player->pos_y = 0;
 	player->dir_x = 0;
 	player->dir_y = 0;
-	player->fov = FOV * (PI / 180);
+	player->fov = (FOV * (PI / 180));
 	player->angle = 0;
 	player->dg_angle = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:58:54 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/21 19:44:48 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 19:55:21 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	look_with_mouse(t_game *game)
 	if (flag > 0)
 	{
 		angle = -2 * PI * (x - game->mlx_s->screen_width / 2) / S_WIDTH * sens;
-		game->player_s->angle += angle;
+		game->player_s->angle += -angle;
 		game->player_s->dir_x = cos(game->player_s->angle);
 		game->player_s->dir_y = sin(game->player_s->angle);
 		game->camera_s->plane_x = game->player_s->dir_y \
