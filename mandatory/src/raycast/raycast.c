@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 23:33:34 by plinscho          #+#    #+#             */
-/*   Updated: 2024/03/15 16:56:23 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 19:18:42 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	init_dda(t_line *line, t_player *p, t_camera *c, char **map)
 
 void	init_line(t_line *line, t_camera *c, int i)
 {
-	line->line_height = (int)(S_HEIGHT / c->perp_wall_dist) * 2;
+	line->line_height = (int)(S_HEIGHT / c->perp_wall_dist);
 	line->draw_start = -line->line_height / 2 + S_HEIGHT / 2;
 	if (line->draw_start < 0)
 		line->draw_start = 0;

@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2024/03/17 19:29:45 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 19:27:28 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	map_valid_orientation(t_cub *cub, t_map *map)
 				else if (cub->map[i][j] == 'S')
 					map->orientation = 90;
 				else if (cub->map[i][j] == 'W')
-					map->orientation = 0;
-				else if (cub->map[i][j] == 'E')
 					map->orientation = 180;
+				else if (cub->map[i][j] == 'E')
+					map->orientation = 0;
 				return (1);
 			}
 		}

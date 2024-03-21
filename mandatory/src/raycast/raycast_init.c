@@ -6,7 +6,7 @@
 /*   By: plinscho <plinscho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:15:59 by plinscho          #+#    #+#             */
-/*   Updated: 2024/02/27 19:22:12 by plinscho         ###   ########.fr       */
+/*   Updated: 2024/03/21 19:35:14 by plinscho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	init_ray(t_player *p, t_camera *c, int i)
 
 	fov_scale = p->fov / PI;
 	c->camera_x = 2 * fov_scale * (i / (double)S_WIDTH) - fov_scale;
-	c->ray_dir_x = p->dir_x + c->plane_x * c->camera_x;
-	c->ray_dir_y = p->dir_y + c->plane_y * c->camera_x;
+	c->ray_dir_x = -p->dir_x + c->plane_x * c->camera_x;
+	c->ray_dir_y = -p->dir_y + c->plane_y * c->camera_x;
 	c->map_x = (int)p->pos_x;
 	c->map_y = (int)p->pos_y;
 	if (c->ray_dir_x == 0)
