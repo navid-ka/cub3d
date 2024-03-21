@@ -3,29 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkeyani- <nkeyani-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:47:35 by bifrost           #+#    #+#             */
-/*   Updated: 2024/02/29 18:34:03 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:48:52 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	map_lengh(t_map *map)
+void	map_lengh(t_game *g, t_map *map, t_cub *cub)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (map->map[i])
 	{
+		j = 0;
 		while (map->map[i][j])
 			j++;
 		if (j > map->width)
 			map->width = j;
-		j = 0;
+		if (i > 0 && j != map->width)
+		{
+			printf("Error\nMap is not a square matrix.\n");
+			fd_error_3(g, cub, map);
+		}
 		i++;
 	}
 	map->height = i;

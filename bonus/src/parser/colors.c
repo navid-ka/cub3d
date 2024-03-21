@@ -6,7 +6,7 @@
 /*   By: bifrost <bifrost@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:05:37 by nkeyani-          #+#    #+#             */
-/*   Updated: 2024/03/13 10:30:19 by bifrost          ###   ########.fr       */
+/*   Updated: 2024/03/21 22:50:07 by bifrost          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,8 @@ int	validate_color_fd(char **colors)
 	return (0);
 }
 
-int	color_validator(t_cub *cub, char *color, char type)
+void	append_colors(t_cub *cub, char **colors, char type)
 {
-	char	**colors;
-
-	colors = ft_split(color, ',');
-	if (colors[3])
-	{
-		ft_printf("Error\nColors could not be loaded\n");
-		free_tab(colors);
-		return (1);
-	}
-	if (validate_color_fd(colors))
-		return (1);
 	if (type == 'c')
 	{
 		cub->ceiling.r = cub_atoi(colors[0], cub);
@@ -80,6 +69,26 @@ int	color_validator(t_cub *cub, char *color, char type)
 		cub->floor.g = cub_atoi(colors[1], cub);
 		cub->floor.b = cub_atoi(colors[2], cub);
 	}
+}
+
+int	color_validator(t_cub *cub, char *color, char type)
+{
+	char	**colors;
+	int		i;
+
+	colors = ft_split(color, ',');
+	i = 0;
+	while (colors[i])
+		i++;
+	if (i != 3)
+	{
+		ft_printf("Error\nColor format is not correct\n");
+		free_tab(colors);
+		return (1);
+	}
+	if (validate_color_fd(colors))
+		return (1);
+	append_colors(cub, colors, type);
 	free_tab(colors);
 	return (0);
 }
