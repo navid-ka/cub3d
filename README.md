@@ -1,6 +1,6 @@
 # Program Name: cub3D
 
-## Turn in Files
+## Project created by  [Paulus Aka Plinscho](https://github.com/plinscho) && [Navid](https://github.com/navid-ka)
 - All your files
 
 ## Makefile
@@ -12,14 +12,6 @@
 
 ## Arguments
 - A map in the format *.cub
-
-## External Functions
-- `open`, `close`, `read`, `write`, `printf`, `malloc`, `free`, `perror`, `strerror`, `exit`
-- All functions of the math library (`-lm man man 3 math`)
-- All functions of the MinilibX
-
-## Libft Authorized
-Yes
 
 ## Description
 You must create a "realistic" 3D graphical representation of the inside of a maze from a first-person perspective. This representation should be created using the Ray-Casting principles mentioned earlier.
